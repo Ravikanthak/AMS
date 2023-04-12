@@ -1,0 +1,118 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6, img, p, span, font, input, button { color: #111; font-family: "Open Sans", sans-serif; margin: 0; padding: 0; }
+body {width: 100%;display: flex;flex-direction: column;justify-content: center;align-items: center;background-color: #fbfbfb;color: #222;font-family: "Open Sans", sans-serif;font-weight: normal;background: linear-gradient(-45deg, rgba(147, 26, 222, 0.83) 0%, #1cceead1 100%);}
+
+
+/* Common */
+.btn {border: none;border-radius: 2px;color: #fff;width: 180px;height: 45px;text-transform: capitalize;font-weight: 400;font-size: 14px;cursor: pointer;float: right;margin-left: 4px;margin-bottom: 0px;margin-top: 0px;position: relative;border-radius: 8px;background: linear-gradient(360deg, #0096aed1 0%, #1cceead1 100%);}
+.line {width: 100%;float: left;border-top: 1px solid #f0f0f0;margin-top: 35px;margin-bottom: 35px;}
+.dis_btn {width: 77px;border: none;border-radius: 7px;color: #fff;height: 32px;font-weight: 400;font-size: 13px;cursor: pointer;background: linear-gradient(360deg, #c60f33 0%, #f5365c 100%);}
+.dis_btn:before {font-family: FontAwesome;content: "\f05e";font-size: 15px;padding-right: 5px;position: relative;bottom: 0px;}
+/* Common */
+
+
+
+.main {width: 1100px;background-color: #fff;border: 1px solid #efefef;padding: 30px 20px 30px 20px;margin-top: 30px;margin-bottom: 30px;border-radius: 8px;}
+
+.main .step_title {width: 100%;float: left;color: #111;font-size: 15px;padding-bottom: 12px;}
+.main .step_title span {display: inline-block;color: #fff;padding: 3px 9px 4px 9px;border-radius: 6px;margin-right: 6px;text-transform: uppercase;font-size: 14px;background: linear-gradient(360deg, #7a12bc 0%, #a542e4 100%);}
+
+.step1 {width: 100%;display: flex;flex-direction: column;background-color: #eee;border: 1px solid #e6e6e6;padding: 15px 15px 15px 15px;border-radius: 8px;margin-bottom: 5px;}
+
+/* Product Description Text Editor */
+.richText .richText-help { display: none !important;}
+/* Product Description Text Editor */
+
+
+.main.form-top, .form-bottom { display: flex; flex-direction: column; align-items: flex-end; width: 100%; float: left; }
+.form-top {float: left;margin-bottom: 5px;}
+.form-bottom {margin-top: 35px;}
+.main textarea {border: 1px solid #ececec;outline: none;padding: .5rem;border-radius: 8px 8px 8px 8px;width: 100% !important;height: 140px !important;} 
+
+#create_slot_btn:before {font-family: FontAwesome;content: "\f044";font-size: 20px;padding-right: 8px;position: relative;bottom: -2px;}
+
+.main #editable_area {width: 100%;float: left;}
+
+.buttons_sec {width: 100%;float: left;display: flex;align-items: center;justify-content: space-between;}
+.buttons_sec .step_title {padding-bottom: 0px;width: auto;}
+.buttons_sec div {}
+.buttons_sec div button {float: right;}
+.buttons_sec2  { margin-top: 30px;}
+
+#create_html_btn:before {font-family: FontAwesome;content: "\f1c9";font-size: 17px;padding-right: 8px;position: relative;bottom: 0px;}
+#save_html_btn:before {font-family: FontAwesome;content: "\f0c7";font-size: 18px;padding-right: 8px;position: relative;bottom: -1px;}
+#preview_html_btn:before {font-family: FontAwesome;content: "\f002";font-size: 20px;padding-right: 8px;position: relative;bottom: -1px;}
+#copy_all_btn:before {font-family: FontAwesome;content: "\f0c5";font-size: 20px;padding-right: 8px;position: relative;bottom: -1px;}
+#copy_all_btn .copied {position: absolute;top: -29px;left: 64px;background-color: #111;color: #fff;padding: 4px 10px 5px 10px;border-radius: 3px;font-size: 13px;display: none;}
+
+
+
+/* DYNAMIC SECTIONS */
+.dyn_sec {width: 100%;float: left;display: flex;align-items: center;padding: 10px 0px 10px 0px;}
+
+.dyn_sec_image_main {background-color: #eee;border: 1px solid #e6e6e6;padding: 20px;margin-bottom: 30px;}
+.dyn_sec_image_main .img_div { }
+.dyn_sec_image_main > div > div.number > span {font-size: 15px;text-align: center;width: 70px;height: 70px;display: flex;border-radius: 7px;font-weight: 600;}
+
+.dyn_sec_images {width: 100%;float: left;background-color: #eeeeee;border: 1px solid #e6e6e6;padding: 15px 20px 15px 20px;border-radius: 3px;}
+.dyn_sec .img_div {width: 100%;display: flex;background-color: #ffffff;border: 1px solid #ededed;border-radius: 3px;padding: 20px 0px 20px 0px;flex-direction: row;border-radius: 8px;}
+#editable_area .disable_section { opacity: 0.4 ;}
+
+.img_div .number {width: 10%;display: flex;justify-content: center;align-items: center; }
+.img_div .number span {font-size: 30px;color: #555;background-color: #eeeeee;width: 45px;height: 45px;display: flex;justify-content: center;align-items: center;border-radius: 7px;}
+
+.img_div .inputs {width: 80%;display: flex;flex-wrap: wrap;}
+.img_div .inputs .name {width: 12%;display: flex;align-items: center;justify-content: center;}
+.img_div .inputs .name label {color: #111;font-size: 14px;font-weight: 400;width: 100px;}
+.img_div .inputs .input {width: 88%;position: relative; overflow: hidden;}
+.img_div .inputs .input input {width: 100%;float: left;height: 32px;padding: 1px 65px 0px 7px;font-size: 14px;color: #555;background-color: #fbfbfb;border: 1px solid #e8e8e8;border-radius: 6px;margin-bottom: 1px;margin-top: 1px;}
+.img_div .img1_new_link_alt:before {font-family: FontAwesome;content: "\f0c7";font-size: 18px;padding-right: 8px;position: relative;bottom: -1px;}
+
+.img_div .inputs .input .btn_ico {position: absolute; width: 26px;height: 26px;border: none;border-radius: 3px;color: #191919;font-weight: 400;font-size: 14px;cursor: pointer; display: none; transition: 1s;}
+.img_div .inputs .input .paste_btn { top: 5px;right: 4px;}
+.img_div .inputs .input .clear_btn { top: 5px;right: 32px;}
+.paste_btn:before {font-family: FontAwesome;content: "\f0ea";font-size: 13px;position: relative;}
+.img_div .inputs .input:hover .paste_btn { display: block;  }
+.clear_btn:before {font-family: FontAwesome;content: "\f1f8";font-size: 14px;position: relative;}
+.img_div .inputs .input:hover .clear_btn { display: block;  }
+
+.img_div .inputs .input .btn_hide { right: -40px; }
+
+.img_div .disable_button {width: 10%;display: flex;justify-content: center;align-items: center;}
+.img_div .disable_button button {}
+.img_div .disable_button button:before {}
+
+.dyn_sec_title {background-color: #eee;border: 1px solid #e6e6e6;padding: 20px 20px 20px 20px;border-radius: 8px;}
+.dyn_sec_title label {color: #111;font-size: 14px;font-weight: 600;width: 110px;}
+.dyn_sec_title input {width: 100%;float: left;height: 44px;padding: 1px 10px 0px 10px;font-size: 14px;color: #555;background-color: #fbfbfb;border-radius: 8px;margin-bottom: 1px;margin-top: 1px;border: 1px solid #e8e8e8;}
+
+.dyn_sec_bullets {width: 100%;float: left;background-color: #eee;border: 1px solid #e6e6e6;padding: 10px 20px 10px 20px;border-radius: 3px;}
+
+.dyn_sec_des {display: flex;flex-wrap: wrap;background-color: #eee;border: 1px solid #e6e6e6;padding: 20px 20px 20px 20px;border-radius: 8px;}
+.dyn_sec_des label {color: #111;font-size: 14px;font-weight: 600;width: auto;padding-bottom: 9px;}
+
+.dyn_sec_fea {display: flex;flex-direction: column;background-color: #eee;border: 1px solid #e6e6e6;padding: 20px 20px 20px 20px;border-radius: 8px;margin-bottom: 15px;}
+.dyn_sec_fea label {width: auto;float: left;color: #111;font-size: 14px;font-weight: 600;}
+.dyn_sec_fea div {width: 100%;display: flex;align-items: center;margin-bottom: 3px;justify-content: space-between;}
+
+.dyn_sec_spec {display: flex;flex-direction: column;background-color: #eee;border: 1px solid #e6e6e6;padding: 20px 20px 20px 20px;border-radius: 8px;margin-bottom: 15px;}
+.dyn_sec_spec label {width: auto;float: left;color: #111;font-size: 14px;font-weight: 600;}
+.dyn_sec_spec div {width: 100%;display: flex;align-items: center;margin-bottom: 5px;float: left;justify-content: space-between;}
+
+.dyn_sec_pkg {display: flex;flex-direction: column;background-color: #eee;border: 1px solid #e6e6e6;padding: 20px 20px 20px 20px;border-radius: 8px;}
+.dyn_sec_pkg label {width: auto;float: left;color: #111;font-size: 14px;font-weight: 600;}
+.dyn_sec_pkg div {width: 100%;display: flex;align-items: center;margin-bottom: 5px;justify-content: space-between;}
+
+
+
+.dyn_sec_promo {background-color: #eee;border: 1px solid #e6e6e6;padding: 15px 15px 15px 15px;margin-bottom: 30px;border-radius: 8px;}
+.dyn_sec_promo .img_div { padding: 20px 12px 20px 12px; justify-content: center}
+.dyn_sec_promo .img_div .inputs { width: 100%;}
+.dyn_sec_promo .img_div .disable_button { justify-content: flex-end;}
+
+
+
+
+
