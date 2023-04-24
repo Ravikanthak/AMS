@@ -5,5 +5,3 @@
 <script src="{{ asset('AdminLTE/Chart.min.js') }}"></script>
 <script src="{{ asset('AdminLTE/dashboard3.js') }}"></script>
 
-<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>

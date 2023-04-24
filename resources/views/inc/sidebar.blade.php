@@ -112,6 +112,16 @@
             </a>
           </li>
         </ul>
+
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('estb_armoury.index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Add Estb Armory</p>
+            </a>
+          </li>
+        </ul>
+
         <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="../tables/simple.html" class="nav-link">
