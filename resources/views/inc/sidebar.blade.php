@@ -5,6 +5,19 @@
 
 <div class="sidebar">
 
+  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+      <!-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+    </div>
+    <div class="info">
+      @if ($username == 'admin')
+      <a href="#" class="d-block">Super Admin</a>
+      @else
+      <a href="#" class="d-block">{{$username}}</a>
+      @endif
+    </div>
+  </div>
+
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -16,9 +29,9 @@
       </li>    
 
       <li class="nav-item add_establishment_li">
-        <a href="{{route('add_establishment')}}" class="nav-link">
+        <a href="{{route('add_org')}}" class="nav-link">
           <i class="nav-icon fas fa-solid fa-building"></i>
-          <p>Add Establishment</p>
+          <p>Add Organization</p>
         </a>
       </li>  
 
@@ -97,30 +110,36 @@
         </ul>
       </li>
 
-      <li class="nav-item settings_li">
-        <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-cog"></i>
-          <p>Settings
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{route('create_user')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Create User</p>
-            </a>
-          </li>
-        </ul>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="../tables/simple.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Change Password</p>
-            </a>
-          </li>
-        </ul>
-      </li>
+
+      @if (auth()->user()->user_type == '1')
+        <li class="nav-item settings_li">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-cog"></i>
+            <p>Settings
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('create_user')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Create Admin User</p>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="../tables/simple.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Change Password</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      @else
+      @endif
+
+      
 
 
       <li class="nav-item logout_li">

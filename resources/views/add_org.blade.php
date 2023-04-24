@@ -25,7 +25,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Establishment</h1>
+            <h1>Add Organization</h1>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
                   <div class="col-md-12">
                     <div class="col-md-8 m-0 float-left pl-0">
                       <div class="form-group">
-                        <label for="establishment_name" class="form-label">Establishment Name</label>
+                        <label for="establishment_name" class="form-label">Organization Name</label>
                         <input id="establishment_name" name="establishment_name" type="text" placeholder="" class="form-control">
                       </div>
                     </div>
