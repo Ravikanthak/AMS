@@ -296,7 +296,7 @@ a {text-decoration: none !important;}
 
 .dropdown-toggle { border: 1px solid #ced4da !important; }
 
-
+[class*=sidebar-dark-] .sidebar .d-block { text-transform: uppercase; }
 
 
 

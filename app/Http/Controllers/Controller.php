@@ -42,7 +42,8 @@ class Controller extends BaseController
             if (auth()->user()->user_type == '2') { // 2 = User
                 auth()->user()->assignRole('user');
             }
-            return view('dashboard');
+            $username = auth()->user()->username;
+            return view('dashboard' , compact('username'));
         }
         return view('login');
     }
@@ -61,7 +62,11 @@ class Controller extends BaseController
     }
 
     public function create_user(){
-        return view('create_user');
+        $user_type = DB::table('user_type')
+        ->select('*')
+        ->where('user_type','!=','1')
+        ->get();
+        return view("create_user" , compact('user_type') );
     } 
 
     
@@ -211,14 +216,46 @@ class Controller extends BaseController
     }
     
 
+    public function create_admin_user_func(Request $req){
+        $validator = Validator::make($req->all(), [
+            'location_name' => 'required|min:2|max:50',
+            'account_type' => 'required|min:2|max:50',
+            'username' => 'required|min:2|max:20',
+            'password' => 'required|min:2|max:20',
+        ],
+        [
+            'location_name' => 'Location is Needed',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['status' => 1 , 'error' => $validator->errors()->toArray()]);
+        }
+        elseif ($validator->passes()) {
+            
+            $auth_req_lttr = new User();
+            $auth_req_lttr->name = $req->location_name;
+            $auth_req_lttr->user_type = $req->account_type;
+            $auth_req_lttr->username = $req->username;
+            $auth_req_lttr->password = $req->password;
+            $auth_req_lttr->added_by = auth()->user()->username;
+            $auth_req_lttr->save();
+
+            return response()->json(['status' => 0 , 'msg' => 'Registration Success' ]);
+        }
+        else{
+            echo 'System Error';
+        }
+    }
+
+
 
 
 
     //// DATA TABLE ////
 
-    public function add_establishment(){
+    public function add_org(){
         $suppplier_data = User::all();
-        return view('add_establishment' , ['supplier' => $suppplier_data ]);
+        return view('add_org' , ['supplier' => $suppplier_data ]);
     }
     
     public function delete_sup_func($id){
