@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AuthReqLttrModel extends Model
+class EstablishmentArmory extends Model
 {
     use HasFactory;
-
-    protected $table = 'auth_req_lttrs';
-
+    protected $guarded = [''];
+    use SoftDeletes;
 }
