@@ -55,7 +55,7 @@
                                 </div>
 
 
-                            <form method="POST" action="">
+                            <form method="POST" action="{{route('admin.store')}}">
                                 @csrf
                                 <div class="row mt-5">
                                     <div class="col-md-8">
