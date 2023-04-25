@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AuthReqLttrModel extends Model
+class LogsModel extends Model
 {
     use HasFactory;
-
-    protected $table = 'auth_req_lttrs';
-
+    protected $table = 'logs';
+    public $timestamps = false;
 }
