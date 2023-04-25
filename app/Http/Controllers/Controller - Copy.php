@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\EstablishmentArmory;
-use App\Models\LogsModel;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -53,13 +52,6 @@ class Controller extends BaseController
 
 
     public function logout(){
-
-        // Save Logs
-        $LogsLogins = new LogsModel;
-        $LogsLogins->user = auth()->user()->username;
-        $LogsLogins->status = 'logout success';
-        $LogsLogins->save();
-
         Session::flush();
         Auth::logout();
         return redirect('login');
@@ -72,11 +64,11 @@ class Controller extends BaseController
     public function create_user(){
 
         $establishments = EstablishmentArmory::all();
-        // $user_type = DB::table('user_type')
-        // ->select('*')
-        // ->where('user_type','!=','1')
-        // ->get();
-        return view("create_user" ,compact('establishments'));
+        $user_type = DB::table('user_type')
+        ->select('*')
+        ->where('user_type','!=','1')
+        ->get();
+        return view("create_user" , compact('user_type') ,compact('establishments'));
     } 
 
     
@@ -110,23 +102,10 @@ class Controller extends BaseController
         
                 Cookie::queue('username', $req->username , 60*24); // Set Cookie // 24 hours
 
-                // Save Logs // Success
-                $LogsLogins = new LogsModel;
-                $LogsLogins->user = $req->username;
-                $LogsLogins->status = 'login success';
-                $LogsLogins->save();
-
                 return response()->json(['status' => 0 , 'msg' => 'Login Success' ]);
 
             }
             else{ // Credentials incorrect // Login Fail
-
-                // Save Logs // Fail
-                $LogsLogins = new LogsModel;
-                $LogsLogins->user = $req->username;
-                $LogsLogins->status = 'login fail';
-                $LogsLogins->save();
-
                 return response()->json(['status' => 2 , 'msg' => 'Login Fail' ]);
             }
         }
@@ -179,6 +158,37 @@ class Controller extends BaseController
         dd('es');
     }
     
+
+    public function create_admin_user_func(Request $req){
+        $validator = Validator::make($req->all(), [
+            'location_name' => 'required|min:2|max:50',
+            'account_type' => 'required|min:2|max:50',
+            'username' => 'required|min:2|max:20',
+            'password' => 'required|min:2|max:20',
+        ],
+        [
+            'location_name' => 'Location is Needed',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['status' => 1 , 'error' => $validator->errors()->toArray()]);
+        }
+        elseif ($validator->passes()) {
+            
+            $auth_req_lttr = new User();
+            $auth_req_lttr->name = $req->location_name;
+            $auth_req_lttr->user_type = $req->account_type;
+            $auth_req_lttr->username = $req->username;
+            $auth_req_lttr->password = $req->password;
+            $auth_req_lttr->added_by = auth()->user()->username;
+            $auth_req_lttr->save();
+
+            return response()->json(['status' => 0 , 'msg' => 'Registration Success' ]);
+        }
+        else{
+            echo 'System Error';
+        }
+    }
 
 
     public function create_admin_user_func(Request $req){
