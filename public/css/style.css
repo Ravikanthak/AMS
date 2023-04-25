@@ -1,6 +1,5 @@
 a {text-decoration: none !important;}
-.main_section { width: 100%; background: rgb(22,87,21);
-    background: linear-gradient(171deg, rgba(22,87,21,1) 0%, rgba(1,43,0,1) 100%);}
+.main_section { background-image: url(../img/background.jpg); background-repeat: no-repeat; background-size: cover; width: 100%;}
 
 .main_div {display: flex;flex-direction: column;height: 100vh;padding: 30px;align-items: center;justify-content: center;}
 
