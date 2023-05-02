@@ -118,7 +118,7 @@
 
                                     <div class="col-md-12 ">
                                         <div class="form-group mb-3">
-                                            <label for="establishment" class="form-label">Select Establishment</label>
+                                            <label for="establishment" class="form-label">Select Organization</label>
                                             <div class="dropdown">
                                                 <select class="form-select" name="establishment" id="establishment">
                                                     @foreach($establishments as $establishment)
