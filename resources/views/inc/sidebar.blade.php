@@ -106,7 +106,7 @@
       </li>
 
 
-      @if (auth()->user()->user_type == '1')
+      @if (isset(auth()->user()->user_type) && auth()->user()->user_type == '1')
         <li class="nav-item settings_li">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
@@ -133,6 +133,35 @@
         </li>
       @else
       @endif
+
+
+      <li class="nav-item settings_li">
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-cog"></i>
+          <p>User Management
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('roles.index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Role Manage</p>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('org_armoury.index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Organization Armoury</p>
+            </a>
+          </li>
+        </ul>
+
+
+      </li>
 
       
 

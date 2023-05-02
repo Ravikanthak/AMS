@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EstablishmentArmory;
 use App\Models\LogsModel;
+use App\Models\OrganizationArmory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -71,7 +72,12 @@ class Controller extends BaseController
 
     public function create_user(){
 
-        $establishments = EstablishmentArmory::all();
+        $establishments = OrganizationArmory::all();
+
+//        $roles = Role::where('mess_id', Auth::user()->mess_id)
+//            ->pluck('name','id')->all();
+
+
         // $user_type = DB::table('user_type')
         // ->select('*')
         // ->where('user_type','!=','1')
