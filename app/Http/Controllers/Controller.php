@@ -8,7 +8,6 @@ use App\Models\OrganizationArmory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -18,6 +17,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
+
 
 class Controller extends BaseController
 {
@@ -27,7 +28,7 @@ class Controller extends BaseController
         return view('test');
     }
 
-    public function login(){
+    public function login(Request $request){
         return view('login');
     }
 
