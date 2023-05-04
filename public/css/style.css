@@ -7,6 +7,11 @@ a {text-decoration: none !important;}
 .logo_a img {width: 160px;padding-bottom: 20px;}
 .logo_a:hover { color: #fff; }
 
+
+.login_body {
+    background: rgb(2,75,1);
+    background: linear-gradient(180deg, rgba(2,75,1,1) 0%, rgba(0,33,0,1) 100%);
+}
 .main_div_inner {width: 450px;background-color: #f1c40f;border: 1px solid #374151;border-radius: 7px;padding: 30px 28px 30px 28px;background: rgb(241,196,15);background: linear-gradient(180deg, rgb(255 255 255) 0%, rgb(250 250 250) 100%);}
 .main_div_innerin { }
 .main_div_innerin h1 {color: #fff;font-size: 25px;font-weight: 600;margin-bottom: 20px;}

@@ -2,24 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrganizationArmoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 
 
-Route::get('/login' , [Controller::class , 'login'] )->name('login');
-Route::get('/register' , [Controller::class , 'register'] )->name('register');
+//Route::get('/login' , [Controller::class , 'login'] )->name('login');
+//Route::get('/register' , [Controller::class , 'register'] )->name('register');
 
 
 
 
 
-Route::get('/dashboard' , [Controller::class , 'dashboard'] )->name('dashboard');
+Route::get('/dashboard' , [HomeController::class , 'index'] )->name('dashboard');
 
-//Route::get('/logout' , [Controller::class , 'logout'] )->name('logout');
+//Route::get('/logout' , [AdminController::class , 'logout'] )->name('logout');
 
 Route::get('/auth_req_lttr' , [Controller::class , 'auth_req_lttr'] )->name('auth_req_lttr');
 
@@ -38,7 +38,7 @@ Route::post('/login_func' , [Controller::class , 'login_func'] );
 
 
 
-//Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () {
 
 
 //Establishment Armoury
@@ -49,7 +49,7 @@ Route::post('/get-organization-armory-dt', [OrganizationArmoryController::class,
 Route::resource('/admin', AdminController::class);
 
 //organization admin view
-Route::get('/create_user' , [Controller::class , 'create_user'] )->name('create_user');
+Route::get('/create_user' , [AdminController::class , 'create_user'] )->name('create_user');
 
 //roles
 Route::resource('/roles', RoleController::class);
@@ -63,20 +63,9 @@ Route::get('/datatable_edit/{id}' , [Controller::class , 'datatable_edit'] );
 Route::post('/datatable_edit_func' , [Controller::class , 'datatable_edit_func'] );
 // Datatable
 
-//});
+});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

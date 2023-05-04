@@ -70,6 +70,25 @@
 
                                         <div class="col-md-12 ">
                                             <div class="form-group mb-3">
+                                                <label for="armoury" class="form-label">Select
+                                                    Armoury</label>
+                                                <div class="dropdown">
+                                                    <select id="armoury" name="armoury"
+                                                            class="form-select armoury-select">
+                                                        @if(isset($selectedMapData))
+                                                            <option value="{{$selectedMapData[0]->armory_api_id}}">{{$selectedMapData[0]->armory}}</option>
+                                                        @else
+                                                            <option value="">Select Armoury</option>
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                <input type="hidden" id="selected_armoury" name="selected_armoury" value="{{isset($selectedMapData[0]['armory'])?$selectedMapData[0]['armory']:''}}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12 ">
+                                            <div class="form-group mb-3">
                                                 <label for="organization_type" class="form-label">Select Organization
                                                     Type</label>
                                                 <div class="dropdown">
@@ -85,31 +104,6 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="col-md-12 ">
-                                            <div class="form-group mb-3">
-                                                <label for="armory" class="form-label">Select Armory</label>
-                                                <div class="dropdown">
-                                                    <select id="armory" name="armory" class="form-select">
-                                                        <option value="armoury-1" {{isset($selectedMapData[0]->armory)?($selectedMapData[0]->armory=='armoury-1')?'selected':'':''}}>
-                                                            Armoury 1
-                                                        </option>
-                                                        <option value="armoury-2" {{isset($selectedMapData[0]->armory)?($selectedMapData[0]->armory=='armoury-2')?'selected':'':''}}>
-                                                            Armoury 2
-                                                        </option>
-                                                        <option value="armoury-3" {{isset($selectedMapData[0]->armory)?($selectedMapData[0]->armory=='armoury-3')?'selected':'':''}}>
-                                                            Armoury 3
-                                                        </option>
-                                                        <option value="armoury-4" {{isset($selectedMapData[0]->armory)?($selectedMapData[0]->armory=='armoury-4')?'selected':'':''}}>
-                                                            Armoury 4
-                                                        </option>
-                                                        <option value="armoury-5" {{isset($selectedMapData[0]->armory)?($selectedMapData[0]->armory=='armoury-5')?'selected':'':''}}>
-                                                            Armoury 5
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-12">
                                             @if(!isset($selectedMapData[0]->id))
@@ -189,6 +183,11 @@
         .organization-select {
             height: 35px !important;
         }
+
+        .armoury-select
+        {
+            height: 35px !important;
+        }
     </style>
 @endpush
 
@@ -208,9 +207,11 @@
             organizationArmoryTable();
 
             $('.organization-select').select2({});
+            $('.armoury-select').select2({});
 
             // $("#organization").next('span').find('span:nth-child(2)').addClass("organization-select");
             $("#organization").next('span').find('span span').addClass("organization-select");
+            $("#armoury").next('span').find('span span').addClass("armoury-select");
         });
 
 
@@ -244,14 +245,13 @@
 
             //Organizations
             $(document).ready(function () {
-
                 // $('#organization').change(function () {
-
                 $.ajax({
                     url: 'https://172.16.60.51/beta/api/get_establishments/',
                     // https://172.16.60.51/beta/api/get_establishments/?&str-token=1189d8dde195a36a9c4a721a390a74e6
                     method: 'GET',
                     cache: false,
+                    async: false,
                     dataType: 'json',
                     data: {
                         "str-token": "1189d8dde195a36a9c4a721a390a74e6"
@@ -264,21 +264,53 @@
                         });
                         // console.log(organizationArray)
 
-
                         $('#organization').select2({
                             data: organizationArray
                         });
-
                         $("#organization").next('span').find('span span').addClass("organization-select");
-
-
                     },
                     error: function (e) {
                         console.log(e)
                     }
                 });
                 // });
+            });
 
+
+            $('#armoury').change(function () {
+                $('#selected_armoury').val($('#armoury').select2('data')[0].text);
+            });
+
+
+            //Armory
+            $(document).ready(function () {
+                // $('#organization').change(function () {
+                $.ajax({
+                    url: 'http://10.7.113.86/wims/api/location_wpn/read_location.php',
+                    method: 'GET',
+                    cache: false,
+                    dataType: 'json',
+                    // data: {
+                    //     "str-token": "1189d8dde195a36a9c4a721a390a74e6"
+                    // },
+                    success: function (data) {
+
+                        var armouryArray = [];
+                        $.each(data.data, function (id, name) {
+                            // console.log(name.loc_name)
+                            armouryArray.push({id: name.loc_id, text: name.loc_name});
+                        });
+
+                        $('#armoury').select2({
+                            data: armouryArray
+                        });
+                        $("#armoury").next('span').find('span span').addClass("armoury-select");
+                    },
+                    error: function (e) {
+                        // console.log(e)
+                    }
+                });
+                // });
             });
 
 

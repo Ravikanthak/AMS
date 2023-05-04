@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('organization');
             $table->string('organization_type');
             $table->string('armory');
+            $table->integer('armory_api_id');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrganizationAdmins;
+use App\Models\LogsModel;
+use App\Models\OrganizationArmory;
 use App\Models\OrganizationUsers;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +23,17 @@ class AdminController extends Controller
 
     }
 
+    public function create_user(){
+
+        $establishments = OrganizationArmory::all();
+
+//        $roles = Role::where('mess_id', Auth::user()->mess_id)
+//            ->pluck('name','id')->all();
+        $roles = Role::pluck('name','id')->all();
+
+        return view("create_user" ,compact('establishments','roles'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -28,6 +42,18 @@ class AdminController extends Controller
         //
     }
 
+    public function logout(){
+
+        // Save Logs
+        $LogsLogins = new LogsModel();
+        $LogsLogins->user = auth()->user()->username;
+        $LogsLogins->status = 'logout success';
+        $LogsLogins->save();
+
+        \Illuminate\Support\Facades\Session::flush();
+        Auth::logout();
+        return redirect('login');
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -38,12 +64,14 @@ class AdminController extends Controller
         try{
             $password = Hash::make($request['e_number']);
 
-            $newUser = User::create([
-                'user_type' => 2,
-                'username' => $request->e_number,
-                'status' => 1,
-                'password' => $password,
-            ]);
+            $input['user_type'] = 2;
+            $input['username'] = $request->e_number;
+            $input['status'] = 1;
+            $input['password'] = $password;
+            $input['email'] = 'apb.ekanayake@gmail.com';
+
+            $newUser = User::create($input);
+            $newUser->assignRole($request->input('roles'));
 
             OrganizationUsers::create([
                 'user_id' => $newUser['id'],
