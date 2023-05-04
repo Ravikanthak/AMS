@@ -30,10 +30,12 @@ class OrganizationArmoryController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request);
         OrganizationArmory::create([
             'organization'=> $request->organization,
             'organization_type'=> $request->organization_type,
-            'armory'=> $request->armory,
+            'armory'=> $request->selected_armoury,
+            'armory_api_id'=> $request->armoury,
             'created_by'=> Auth::user()->id,
         ]);
 
@@ -75,7 +77,7 @@ class OrganizationArmoryController extends Controller
     {
         $selectedMapData = OrganizationArmory::where('id',$id)
             ->get();
-
+//        dd($selectedMapData[0]->armory);
         return view('organization_armory.index', compact('selectedMapData'));
     }
 
@@ -88,7 +90,8 @@ class OrganizationArmoryController extends Controller
             ->update([
                 'organization'=> $request->organization,
                 'organization_type'=> $request->organization_type,
-                'armory'=> $request->armory,
+                'armory'=> $request->selected_armoury,
+                'armory_api_id'=> $request->armoury,
                 'updated_by'=> Auth::user()->id,
             ]);
 
