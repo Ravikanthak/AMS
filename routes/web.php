@@ -31,6 +31,11 @@ Route::post('/add_establishment_func' , [Controller::class , 'add_establishment_
 
 
 
+Route::get('/', function () {
+
+    return redirect('/login');
+});
+
 
 Route::post('/login_func' , [Controller::class , 'login_func'] );
 
@@ -50,6 +55,7 @@ Route::resource('/admin', AdminController::class);
 
 //organization admin view
 Route::get('/create_user' , [AdminController::class , 'create_user'] )->name('create_user');
+
 
 //roles
 Route::resource('/roles', RoleController::class);
