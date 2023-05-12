@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,12 +37,22 @@ class RoleController extends Controller
     public function store(Request $request)
     {
 
+
         $this->validate($request, [
-            'name' => 'required|unique:roles,name',
             'permission' => 'required',
+            'name' =>[
+                'required',
+                Rule::unique('roles')
+                    ->where('organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+            ],
+
         ]);
 
-        $role = Role::create(['name' => $request->input('name')]);
+
+        $role = Role::create([
+            'name' => $request->input('name'),
+            'organization_id' => Auth::user()->OrganizationUsers[0]['organization_id']
+            ]);
         $role->syncPermissions($request->input('permission'));
 
         return redirect()->route('roles.index')
