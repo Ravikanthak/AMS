@@ -25,13 +25,13 @@ class AdminController extends Controller
 
     public function create_user(){
 
-        $establishments = OrganizationArmory::all();
+        $organizations = OrganizationArmory::all();
 
 //        $roles = Role::where('mess_id', Auth::user()->mess_id)
 //            ->pluck('name','id')->all();
         $roles = Role::pluck('name','id')->all();
 
-        return view("create_user" ,compact('establishments','roles'));
+        return view("create_user" ,compact('organizations','roles'));
     }
 
     /**
@@ -42,18 +42,6 @@ class AdminController extends Controller
         //
     }
 
-    public function logout(){
-
-        // Save Logs
-        $LogsLogins = new LogsModel();
-        $LogsLogins->user = auth()->user()->username;
-        $LogsLogins->status = 'logout success';
-        $LogsLogins->save();
-
-        \Illuminate\Support\Facades\Session::flush();
-        Auth::logout();
-        return redirect('login');
-    }
     /**
      * Store a newly created resource in storage.
      */
@@ -69,6 +57,7 @@ class AdminController extends Controller
             $input['status'] = 1;
             $input['password'] = $password;
             $input['email'] = 'apb.ekanayake@gmail.com';
+            $input['organization_id'] = $request->establishment;
 
             $newUser = User::create($input);
             $newUser->assignRole($request->input('roles'));
@@ -122,7 +111,6 @@ class AdminController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      */

@@ -171,16 +171,6 @@
 
       </li>
 
-      
-
-
-      <li class="nav-item logout_li">
-        <a href="{{route('logout')}}" class="nav-link">
-          <i class="nav-icon fas fa-power-off"></i>
-          <p class="logout">Logout</p>
-        </a>
-      </li>
-  
 
     </ul>
 
