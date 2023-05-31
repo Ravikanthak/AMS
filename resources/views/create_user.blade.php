@@ -119,9 +119,9 @@
 
                                     <div class="col-md-12 ">
                                         <div class="form-group mb-3">
-                                            <label for="establishment" class="form-label">Select Organization</label>
+                                            <label for="organization" class="form-label">Select Organization</label>
                                             <div class="dropdown">
-                                                <select class="form-select" name="establishment" id="establishment">
+                                                <select class="form-select" name="organization" id="organization">
                                                     @foreach($organizations as $organization)
                                                         <option value="{{$organization->id}}">{{$organization->organization}}</option>
                                                     @endforeach
@@ -143,7 +143,9 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <strong>Role</strong>
-                                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+{{--                                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}--}}
+                                            {!! Form::select('roles', $roles,[], array('class' => 'form-control', 'id' => 'roles')) !!}
+                                            <input type="hidden" id="userType" value="{{Auth::user()->user_type}}">
                                         </div>
                                     </div>
 
@@ -154,11 +156,6 @@
                                     </div>
                                 </div>
                             </form>
-
-
-
-
-
 
                         </div>
 
@@ -180,15 +177,24 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Establishment</th>
-                                <th>User Name</th>
+                                <th>Name</th>
+                                <th>Organization</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
 
                             <tbody>
+                            <?php $i = 0; ?>
 
-                            </tbody>
+                            @foreach ($admins as $admin)
+                                <tr>
+                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $admin->name }}</td>
+                                    <td>{{ $admin->organization }}</td>
+                                    <td><button class="btn btn-sm btn-dark">Deactivate</button></td>
+                                </tr>
+                            @endforeach
+                            <tbody>
                         </table>
 
                     </div>
@@ -268,8 +274,65 @@
                     }
                 });
             });
-
         });
+
+
+
+        //get organization type
+        $('#organization').change(function () {
+
+            var organization = $('#organization').val();
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                dataType: 'json',
+                url: '{{route("get-organization-type")}}',
+                type: 'post',
+                data: {
+                    organization: organization,
+                },
+                success: function (data) {
+
+
+                    if(data[0].organization_type == 'estb')
+                    {
+                        jQuery("#roles option:contains('estb-')").show();
+                        jQuery("#roles option:not(:contains('estb-'))").hide();
+                    }
+                    else if(data[0].organization_type == 'bde')
+                    {
+                        jQuery("#roles option:contains('bde-')").show();
+                        jQuery("#roles option:not(:contains('bde-'))").hide();
+                    }
+                    else if(data[0].organization_type == 'div')
+                    {
+                        jQuery("#roles option:contains('div-')").show();
+                        jQuery("#roles option:not(:contains('div-'))").hide();
+                    }
+                    else if(data[0].organization_type == 'sfhq')
+                    {
+                        jQuery("#roles option:contains('sfhq-')").show();
+                        jQuery("#roles option:not(:contains('sfhq-'))").hide();
+                        // jQuery("#roles option:not(:contains('sfhq-'))").remove().end();    REMOVE
+                    }
+                    else
+                    {
+                        if ($('#userType').val() == 1)
+                        {
+                            alert(1)
+                            jQuery("#roles option:contains('dops-admin')").show();
+                        }
+                        else{
+                            alert(2)
+                        jQuery("#roles option:contains('dops-')").show();
+                        jQuery("#roles option:not(:contains('dops-'))").hide();
+                        }
+
+                    }
+
+                }
+            });
+        });
+
 
 
     </script>

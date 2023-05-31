@@ -94,7 +94,8 @@
                                                 <div class="dropdown">
                                                     <select class="form-select" name="organization_type"
                                                             id="organization_type">
-                                                        <option value="unit" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='unit'?'selected':'':'' }}>Unit</option>
+{{--                                                        <option value="unit" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='unit'?'selected':'':'' }}>Unit</option>--}}
+                                                        <option value="estb" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='estb'?'selected':'':'' }}>Establishment</option>
                                                         <option value="bde" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='bde'?'selected':'':'' }}>Bde</option>
                                                         <option value="div" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='div'?'selected':'':'' }}>Div</option>
                                                         <option value="sfq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>
@@ -248,7 +249,7 @@
                 // $('#organization').change(function () {
                 $.ajax({
                     url: 'https://172.16.60.51/beta/api/get_establishments/',
-                    // https://172.16.60.51/beta/api/get_establishments/?&str-token=1189d8dde195a36a9c4a721a390a74e6
+                    // url: 'https://172.16.60.51/beta/api/get_establishments/?&str-token=1189d8dde195a36a9c4a721a390a74e6',
                     method: 'GET',
                     cache: false,
                     async: false,
@@ -270,6 +271,7 @@
                         $("#organization").next('span').find('span span').addClass("organization-select");
                     },
                     error: function (e) {
+
                         console.log(e)
                     }
                 });

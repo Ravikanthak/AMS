@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrganizationArmory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
@@ -16,7 +17,8 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
+            ->orderBy('id','DESC')->paginate(5);
         return view('roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -27,8 +29,12 @@ class RoleController extends Controller
     public function create()
     {
 
+        $orgType = OrganizationArmory::where('id', Auth::user()->OrganizationUsers[0]['organization_id'])
+            ->get(['organization_type']);
+
         $permission = Permission::get();
-        return view('roles.create',compact('permission'));
+
+        return view('roles.create',compact('permission','orgType'));
     }
 
     /**
@@ -36,7 +42,6 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-
 
         $this->validate($request, [
             'permission' => 'required',
@@ -47,7 +52,6 @@ class RoleController extends Controller
             ],
 
         ]);
-
 
         $role = Role::create([
             'name' => $request->input('name'),
@@ -83,7 +87,10 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        $orgType = OrganizationArmory::where('id', Auth::user()->OrganizationUsers[0]['organization_id'])
+            ->get(['organization_type']);
+
+        return view('roles.edit',compact('role','permission','rolePermissions','orgType'));
     }
 
     /**

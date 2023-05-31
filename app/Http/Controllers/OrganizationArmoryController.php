@@ -42,6 +42,14 @@ class OrganizationArmoryController extends Controller
         return redirect()->route('org_armoury.index')->with('success','Record saved successfully');
     }
 
+    public function getOrganizationType(Request $request)
+    {
+        $orgType= OrganizationArmory::where('id',$request->organization)
+            ->get('organization_type');
+
+        return $orgType;
+    }
+
     public function getEstabligetOrganizationArmoryDt(Request $request)
     {
         $data =  OrganizationArmory::get();

@@ -35,7 +35,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <strong class="mb-1 mt-1">Role Name</strong>
                     <div class="form-group">
-                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control ibacor_fi' ,'id' =>'name','data-prefix'=>"{$orgType[0]['organization_type']}-")) !!}
+
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -70,5 +71,7 @@
 @endpush
 
 @push('scripts')
+
+    <script src="{{asset('/js/prefix/jquery.prefix-input.js')}}"></script>
 
 @endpush
