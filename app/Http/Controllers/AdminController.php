@@ -27,11 +27,26 @@ class AdminController extends Controller
 
         $organizations = OrganizationArmory::all();
 
-//        $roles = Role::where('mess_id', Auth::user()->mess_id)
-//            ->pluck('name','id')->all();
-        $roles = Role::pluck('name','id')->all();
+        $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
+            ->pluck('name','id')->all();
 
-        return view("create_user" ,compact('organizations','roles'));
+        //For Super User
+        if (Auth::user()->user_type ==1)
+        {
+            $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
+                ->get(['users.name','users.id','organization_armories.organization']);
+        }
+        //For Orgs Admins
+        if (Auth::user()->user_type ==2)
+        {
+            $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
+                ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->get(['users.name','users.id','organization_armories.organization']);
+        }
+
+
+
+        return view("create_user" ,compact('organizations','roles','admins'));
     }
 
     /**
@@ -48,23 +63,26 @@ class AdminController extends Controller
     public function store(Request $request)
     {
 
+//        dd($request);
+
         DB::beginTransaction();
         try{
             $password = Hash::make($request['e_number']);
 
+            $input['name'] = $request->full_name;
             $input['user_type'] = 2;
             $input['username'] = $request->e_number;
             $input['status'] = 1;
             $input['password'] = $password;
-            $input['email'] = 'apb.ekanayake@gmail.com';
-            $input['organization_id'] = $request->establishment;
+            $input['email'] = $request->e_number;
+            $input['organization_id'] = $request->organization;
 
             $newUser = User::create($input);
             $newUser->assignRole($request->input('roles'));
 
             OrganizationUsers::create([
                 'user_id' => $newUser['id'],
-                'organization_id' => $request->establishment,
+                'organization_id' => $request->organization,
                 'full_name' => $request->full_name,
                 'gender' => $request->gender,
                 'is_active_service' => $request->active_service,

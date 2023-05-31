@@ -16,9 +16,13 @@
         <div class="text-end mt-5 mb-2">
             <a class="btn btn-dark" href="{{ route('roles.create') }}"> Create New Role</a>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <table id="roleTbl" class="display" style="width:100%">
+
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+                    <div class="card auth_req_lttr_form">
+
+                <table id="roleTbl" class="table stripe hover row-border order-column">
                     <thead>
                     <tr>
                         <th>No</th>
@@ -41,7 +45,11 @@
                     @endforeach
                     <tbody>
                 </table>
-                {!! $roles->render() !!}
+{{--                {!! $roles->render() !!}--}}
+
+
+                    </div>
+                </section>
             </div>
         </div>
 
@@ -49,7 +57,7 @@
     </div>
 
     <div class="col-md-12">
-        <footer class="footer-div">
+        <footer class="main-footer">
             @include('inc/footer')
         </footer>
     </div>
@@ -61,6 +69,9 @@
 @include('inc/footer_assets')
 
 @push('page_css')
+
+    {{--datatable--}}
+    {{--<link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.5.3/css/autoFill.dataTables.min.css" />--}}
 
     <style>
         .footer-div
@@ -76,12 +87,14 @@
 
 @push('scripts')
 
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
 
     <script>
 
         $(document).ready(function () {
 
-            $('#userTbl').DataTable();
+            $('#roleTbl').DataTable();
 
 
             {{--//deactivate--}}
