@@ -26,7 +26,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Establishment Admin</h1>
+                    <h1>Create Organization Admin</h1>
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
 
                                     <div class="col-md-12 ">
                                         <div class="form-group mb-3">
-                                            <label for="establishment" class="form-label">Select Establishment</label>
+                                            <label for="establishment" class="form-label">Select Organization</label>
                                             <div class="dropdown">
                                                 <select class="form-select" name="establishment" id="establishment">
                                                     @foreach($establishments as $establishment)

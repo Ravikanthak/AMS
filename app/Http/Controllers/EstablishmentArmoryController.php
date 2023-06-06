@@ -47,7 +47,7 @@ class EstablishmentArmoryController extends Controller
             ->addColumn('action', function ($row) {
 
                 $btnEdit = '<a class="btn btn-sm btn-warning" href="'.route('estb_armoury.edit',$row->id).'">Edit</a>';
-                $btnDelete ='<form method="POST" action="'.route('estb_armoury.destroy',$row->id).'" onsubmit="return confirm(\'Delete the Record?\');" class="d-inline" >
+                $btnDelete ='<form method="POST" action="'.route('estb_armoury.destroy',$row->id).'"  onsubmit="return confirm(\'Delete the Record?\');" class="d-inline" >
                              '.csrf_field().'
                              '.method_field('DELETE').'
                             <button class="btn btn-danger btn-sm" type="submit">Delete</button>
