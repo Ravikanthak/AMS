@@ -39,13 +39,13 @@
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr')}}" class="nav-link">
+            <a href="{{route('auth_req_lttr_troops')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Create Authority Req</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr')}}" class="nav-link">
+            <a href="{{route('auth_req_lttr_troops_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>View Requests</p>
             </a>
@@ -62,19 +62,19 @@
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="../tables/simple.html" class="nav-link">
+            <a href="{{route('auth_req_lttr_weapon')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Create Authority Req</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="../tables/data.html" class="nav-link">
+            <a href="{{route('auth_req_lttr_weapon_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>View Requests</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="../tables/jsgrid.html" class="nav-link">
+            <a href="{{route('auth_req_lttr_weapon')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Explosive</p>
             </a>

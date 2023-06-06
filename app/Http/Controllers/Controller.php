@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EstablishmentArmory;
+use App\Models\OrganizationArmory;
 use App\Models\LogsModel;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -65,17 +65,16 @@ class Controller extends BaseController
         return redirect('login');
     }
 
-    public function auth_req_lttr(){
-        return view('auth_req_lttr');
-    }
 
     public function create_user(){
 
-        $establishments = EstablishmentArmory::all();
+        $establishments = OrganizationArmory::all();
+
         // $user_type = DB::table('user_type')
         // ->select('*')
         // ->where('user_type','!=','1')
         // ->get();
+
         return view("create_user" ,compact('establishments'));
     } 
 

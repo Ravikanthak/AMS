@@ -33,7 +33,6 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-
         DB::beginTransaction();
         try{
             $password = Hash::make($request['e_number']);
