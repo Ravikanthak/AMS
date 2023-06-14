@@ -52,6 +52,7 @@
 {{--{{Auth::user()->id}}--}}
                                         <div class="col-md-12 ">
                                             <div class="form-group mb-3">
+                                                <input type="hidden" id="org_text" name="org_text" value="">
                                                 <label for="organization" class="form-label">Select
                                                     Organization</label>
                                                 <div class="dropdown">
@@ -245,6 +246,11 @@
 
 
             //Organizations
+            $('#organization').change(function () {
+
+                $orgText = $('#organization').select2('data')[0].text;
+                $('#org_text').val($orgText);
+            });
             $(document).ready(function () {
                 // $('#organization').change(function () {
                 $.ajax({
@@ -261,7 +267,7 @@
 
                         var organizationArray = [];
                         $.each(data, function (id, name) {
-                            organizationArray.push({id: name.name, text: name.name});
+                            organizationArray.push({id: name.id, text: name.name});
                         });
                         // console.log(organizationArray)
 

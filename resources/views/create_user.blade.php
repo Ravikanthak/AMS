@@ -26,7 +26,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Establishment Admin</h1>
+                    @if(Auth::user()->user_type ==1)
+                        <h1>Create Establishment Admin</h1>
+                    @else
+                        <h1>Create Establishment User</h1>
+                    @endif
                 </div>
             </div>
         </div>
@@ -42,17 +46,19 @@
                         <div class="row">
 
 
-                                <div class="col-md-3 offset-md-8">
-                                    <div class="form-group">
-                                        <label for="officer_number" class="form-label">Officer Number</label>
-                                        <input placeholder="O/12345" type="text" class="form-control" value="" name="officer_number" id="officer_number">
-                                    </div>
+                            <div class="col-md-3 offset-md-8">
+                                <div class="form-group">
+                                    <label for="officer_number" class="form-label">Officer/Solder Number</label>
+                                    <input placeholder="O/12345" type="text" class="form-control" value=""
+                                           name="officer_number" id="officer_number">
                                 </div>
-                                <div class="col-md-1 mt-4 pt-2">
-                                    <div class="form-group">
-                                        <input class="btn btn-primary float-right" type="button" value="Search" id="searchOfficer">
-                                    </div>
+                            </div>
+                            <div class="col-md-1 mt-4 pt-2">
+                                <div class="form-group">
+                                    <input class="btn btn-primary float-right" type="button" value="Search"
+                                           id="searchOfficer">
                                 </div>
+                            </div>
 
 
                             <form method="POST" action="{{route('admin.store')}}">
@@ -61,32 +67,37 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="full_name" class="form-label">Full Name</label>
-                                            <input readonly type="text" class="form-control" name="full_name" id="full_name" value="">
+                                            <input readonly type="text" class="form-control" name="full_name"
+                                                   id="full_name" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="gender" class="form-label">Gender</label>
-                                            <input readonly type="text" class="form-control" name="gender" id="gender" value="">
+                                            <input readonly type="text" class="form-control" name="gender" id="gender"
+                                                   value="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="active_service" class="form-label">Active Service</label>
-                                            <input readonly type="text" class="form-control" name="active_service" id="active_service" value="">
+                                            <input readonly type="text" class="form-control" name="active_service"
+                                                   id="active_service" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="e_number" class="form-label">E-Number</label>
-                                            <input readonly type="text" class="form-control" name="e_number" id="e_number" value="">
+                                            <input readonly type="text" class="form-control" name="e_number"
+                                                   id="e_number" value="">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="service_number" class="form-label">Service Number</label>
-                                            <input readonly type="text" class="form-control" name="service_number" id="service_number" value="">
+                                            <input readonly type="text" class="form-control" name="service_number"
+                                                   id="service_number" value="">
                                             @error('service_number')
                                             <span class="text-danger">{{$message}}</span>
                                             @enderror
@@ -95,63 +106,83 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="rank" class="form-label">Rank</label>
-                                            <input readonly type="text" class="form-control" name="rank" id="rank" value="">
+                                            <input readonly type="text" class="form-control" name="rank" id="rank"
+                                                   value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="regiment" class="form-label">Regiment</label>
-                                            <input readonly type="text" class="form-control" name="regiment" id="regiment" value="">
+                                            <input readonly type="text" class="form-control" name="regiment"
+                                                   id="regiment" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="unit" class="form-label">Unit</label>
-                                            <input readonly type="text" class="form-control" name="unit" id="unit" value="">
+                                            <input readonly type="text" class="form-control" name="unit" id="unit"
+                                                   value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nic" class="form-label">NIC</label>
-                                            <input readonly type="text" class="form-control" name="nic" id="nic" value="">
+                                            <input readonly type="text" class="form-control" name="nic" id="nic"
+                                                   value="">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 ">
-                                        <div class="form-group mb-3">
-                                            <label for="organization" class="form-label">Select Organization</label>
-                                            <div class="dropdown">
-                                                <select class="form-select" name="organization" id="organization">
-                                                    @foreach($organizations as $organization)
-                                                        <option value="{{$organization->id}}">{{$organization->organization}}</option>
-                                                    @endforeach
-                                                </select>
+                                    @if(Auth::user()->user_type ==1)
+                                        <div class="col-md-12 ">
+                                            <div class="form-group mb-3">
+                                                <label for="organization" class="form-label">Select Organization</label>
+                                                <div class="dropdown">
+                                                    <select class="form-select" name="organization" id="organization">
+                                                        @foreach($organizations as $organization)
+                                                            <option value="{{$organization->id}}">{{$organization->organization}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
 
                                     <div class="col-md-12">
                                         <div class="form-group pl-4 mt-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" {{isset($admin->active)?$admin->active==1?'checked':'':'checked'}} type="checkbox" role="switch" id="admin_status" name="admin_status">
-                                                <label class="form-check-label label-font-weight" for="availability">Account Active</label>
-                                                <input type="hidden" id="active" name="active" value="{{isset($admin->active)?$admin->active==1?'1':'0':'1'}}">
+                                                <input class="form-check-input"
+                                                       {{isset($admin->active)?$admin->active==1?'checked':'':'checked'}} type="checkbox"
+                                                       role="switch" id="admin_status" name="admin_status">
+                                                <label class="form-check-label label-font-weight" for="availability">Account
+                                                    Active</label>
+                                                <input type="hidden" id="active" name="active"
+                                                       value="{{isset($admin->active)?$admin->active==1?'1':'0':'1'}}">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <div class="form-group">
-                                            <strong>Role</strong>
-{{--                                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}--}}
-                                            {!! Form::select('roles', $roles,[], array('class' => 'form-control', 'id' => 'roles')) !!}
-                                            <input type="hidden" id="userType" value="{{Auth::user()->user_type}}">
+
+                                    @if(Auth::user()->user_type !=1)
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <strong>Role</strong>
+                                                @if($roles)
+                                                    {{--                                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}--}}
+                                                    {!! Form::select('roles', $roles,[], array('class' => 'form-control', 'id' => 'roles')) !!}
+                                                    <input type="hidden" id="userType"
+                                                           value="{{Auth::user()->user_type}}">
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
+
+                                    @endif
+
 
                                     <div class="col-md-12">
                                         <div class="form-group text-right">
-                                            <button id="create_user" type="submit" class="btn btn-primary">Submit</button>
+                                            <button id="create_user" type="submit" class="btn btn-primary">Submit
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -179,6 +210,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Organization</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -191,7 +223,10 @@
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->organization }}</td>
-                                    <td><button class="btn btn-sm btn-dark">Deactivate</button></td>
+                                    <td>{{  preg_replace('/\\s+/', '', $admin->role) }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-dark">Deactivate</button>
+                                    </td>
                                 </tr>
                             @endforeach
                             <tbody>
@@ -222,10 +257,10 @@
 
         $(document).ready(function () {
 
-        var location_name = $("#location_name").val();
-        var account_type = $("#account_type").val();
-        var username = $("#username").val();
-        var password = $("#password").val();
+            var location_name = $("#location_name").val();
+            var account_type = $("#account_type").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
 
             //get user data
             $('#searchOfficer').click(function () {
@@ -243,13 +278,13 @@
                     },
                     success: function (data) {
 
-                       // Swal.fire({
-                       //      position: 'top-end',
-                       //      icon: 'success',
-                       //      title: 'Your work has been saved',
-                       //      showConfirmButton: false,
-                       //      timer: 1500
-                       //  });
+                        // Swal.fire({
+                        //      position: 'top-end',
+                        //      icon: 'success',
+                        //      title: 'Your work has been saved',
+                        //      showConfirmButton: false,
+                        //      timer: 1500
+                        //  });
 
                         $name = data[0]['name'];
                         $e_no = data[0]['e_no'];
@@ -277,7 +312,6 @@
         });
 
 
-
         //get organization type
         $('#organization').change(function () {
 
@@ -293,38 +327,32 @@
                 success: function (data) {
 
 
-                    if(data[0].organization_type == 'estb')
-                    {
+                    if (data[0].organization_type == 'estb') {
                         jQuery("#roles option:contains('estb-')").show();
                         jQuery("#roles option:not(:contains('estb-'))").hide();
                     }
-                    else if(data[0].organization_type == 'bde')
-                    {
+                    else if (data[0].organization_type == 'bde') {
                         jQuery("#roles option:contains('bde-')").show();
                         jQuery("#roles option:not(:contains('bde-'))").hide();
                     }
-                    else if(data[0].organization_type == 'div')
-                    {
+                    else if (data[0].organization_type == 'div') {
                         jQuery("#roles option:contains('div-')").show();
                         jQuery("#roles option:not(:contains('div-'))").hide();
                     }
-                    else if(data[0].organization_type == 'sfhq')
-                    {
+                    else if (data[0].organization_type == 'sfhq') {
                         jQuery("#roles option:contains('sfhq-')").show();
                         jQuery("#roles option:not(:contains('sfhq-'))").hide();
                         // jQuery("#roles option:not(:contains('sfhq-'))").remove().end();    REMOVE
                     }
-                    else
-                    {
-                        if ($('#userType').val() == 1)
-                        {
+                    else {
+                        if ($('#userType').val() == 1) {
                             alert(1)
                             jQuery("#roles option:contains('dops-admin')").show();
                         }
-                        else{
+                        else {
                             alert(2)
-                        jQuery("#roles option:contains('dops-')").show();
-                        jQuery("#roles option:not(:contains('dops-'))").hide();
+                            jQuery("#roles option:contains('dops-')").show();
+                            jQuery("#roles option:not(:contains('dops-'))").hide();
                         }
 
                     }
@@ -334,9 +362,8 @@
         });
 
 
-
     </script>
-    @endpush
+@endpush
 
-    {{--</body>--}}
-    {{--</html>--}}
+{{--</body>--}}
+{{--</html>--}}

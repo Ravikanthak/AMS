@@ -10,7 +10,7 @@
                     <h2>Edit Role</h2>
                 </div>
                 <div class="text-end">
-                    <a class="btn btn-dark mt-5 mb-2" href="{{ route('roles.index') }}"> Back</a>
+                    <a class="btn btn-dark" href="{{ route('roles.index') }}"> Back</a>
                 </div>
             </div>
         </div>
@@ -28,8 +28,13 @@
         </div>
     @endif
 
-    <div class="col-md-12">
-        <div class="row">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+
+                    <div class="card auth_req_lttr_form">
+                        <div class="row">
             {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -56,7 +61,12 @@
             </div>
             {!! Form::close() !!}
         </div>
-    </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
 
     <footer class="main-footer">
         @include('inc/footer')
