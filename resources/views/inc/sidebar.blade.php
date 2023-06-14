@@ -50,6 +50,12 @@
               <p>View Requests</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('auth_req_lttr_troops_take_action_view')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Take Action</p>
+            </a>
+          </li>
         </ul>
       </li>
 
@@ -73,12 +79,13 @@
               <p>View Requests</p>
             </a>
           </li>
-          <li class="nav-item">
+
+          <!-- <li class="nav-item">
             <a href="{{route('auth_req_lttr_weapon')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Explosive</p>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
 
@@ -106,7 +113,7 @@
       </li>
 
 
-      @if (auth()->user()->user_type == '1')
+      @if (isset(auth()->user()->user_type) && auth()->user()->user_type == '1')
         <li class="nav-item settings_li">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
@@ -134,16 +141,43 @@
       @else
       @endif
 
-      
 
-
-      <li class="nav-item logout_li">
-        <a href="{{route('logout')}}" class="nav-link">
-          <i class="nav-icon fas fa-power-off"></i>
-          <p class="logout">Logout</p>
+      <li class="nav-item settings_li">
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-cog"></i>
+          <p>User Management
+            <i class="fas fa-angle-left right"></i>
+          </p>
         </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('roles.index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Role Manage</p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('create_user')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>User Create</p>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('org_armoury.index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Organization Armoury</p>
+            </a>
+          </li>
+        </ul>
+
+
       </li>
-  
+
 
     </ul>
 

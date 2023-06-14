@@ -20,4 +20,13 @@
     </a>
     </li>
 
+
+    <li class="nav-item dropdown">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button class="btn btn-link" type="submit">            <i class="nav-icon fas fa-power-off"></i>
+            </button>
+        </form>
+    </li>
+
 </ul>

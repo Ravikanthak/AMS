@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('establishment_armories', function (Blueprint $table) {
+        Schema::create('organization_armories', function (Blueprint $table) {
             $table->id();
-            $table->string('establishment');
+            $table->string('organization');
+            $table->string('organization_type');
             $table->string('armory');
+            $table->integer('armory_api_id');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('establishment_armories');
+        Schema::dropIfExists('organization_armories');
     }
 };

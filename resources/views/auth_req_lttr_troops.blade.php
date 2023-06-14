@@ -248,7 +248,7 @@
                               @foreach($organization_users as $user)
 
                                   @if (substr($user->service_no, 0, 1) === 'S')
-                                    <option value="{{$user->service_no}}" @if($user->service_no == $escort) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
+                                    <option value="{{$user->service_no}}" @if($user->service_no == $driver) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
                                   @endif
 
                               @endforeach
@@ -295,22 +295,56 @@
                         @endif
                     </div>
                   </div>
+                  
+
+                  <div class="col-md-12 ">
+                    <div class="form-group mb-3">
+                      <label for="request_forward_by" class="form-label">16. Request Forward by</label>
+                      <select name="request_forward_by" class="selectpicker form-control" id="request_forward_by" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
+                          @if (isset($added_by))
+                            @foreach($organization_types as $type)
+
+                                @if (!in_array($type->id, [1,2,5,8,11,17]))
+                                    <option value="{{$type->id}}" @if($type->id == $added_by) selected @endif>{{$type->name}}</option>
+                                @endif
+                            
+                            @endforeach
+                          @else 
+                            @foreach($organization_types as $type)
+
+                                @if (!in_array($type->id, [1,2,5,8,11,17]))
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                @endif
+
+                            @endforeach
+                          @endif
+                      </select>
+                    </div>
+                  </div>
 
 
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
-                      <label for="request_forward" class="form-label">16. Request Forward to</label>
-                      <select name="request_forward" class="selectpicker form-control" id="request_forward" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
-                            @if (isset($driver))
-                              @foreach($organization_types as $types)
-                                <option value="{{$types->id}}" @if($types->id == $name) selected @endif>{{$types->full_name}}</option>
-                              @endforeach
-                            @else 
-                              @foreach($organization_types as $types)
-                                  <option value="{{$types->id}}">{{$types->name}}</option>
-                              @endforeach
-                            @endif
-                        </select>
+                      <label for="request_forward_to" class="form-label">17. Request Forward to</label>
+                      <select name="request_forward_to" class="selectpicker form-control" id="request_forward_to" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
+                          @if (isset($request_fwd_to))
+                            @foreach($organization_types as $type)
+
+                                @if (!in_array($type->id, [1,2,5,8,11,17]))
+                                    <option value="{{$type->id}}" @if($type->id == $request_fwd_to) selected @endif>{{$type->name}}</option>
+                                @endif
+                            
+                            @endforeach
+                          @else 
+                            @foreach($organization_types as $type)
+
+                                @if (!in_array($type->id, [1,2,5,8,11,17]))
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                @endif
+
+                            @endforeach
+                          @endif
+                      </select>
                     </div>
                   </div>
 
