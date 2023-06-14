@@ -30,9 +30,9 @@ class OrganizationArmoryController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
         OrganizationArmory::create([
-            'organization'=> $request->organization,
+            'organization'=> $request->org_text,
+            'organization_api_id'=> $request->organization,
             'organization_type'=> $request->organization_type,
             'armory'=> $request->selected_armoury,
             'armory_api_id'=> $request->armoury,

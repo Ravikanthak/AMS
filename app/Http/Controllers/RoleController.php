@@ -17,9 +17,11 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
+        $orgId = isset(Auth::user()->OrganizationUsers[0]['organization_id'])?Auth::user()->OrganizationUsers[0]['organization_id']:0;
+        $roles = Role::where('organization_id',$orgId)
             ->orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
+
+        return view('roles.index',compact('roles','orgId'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 

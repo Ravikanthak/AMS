@@ -27,23 +27,35 @@ class AdminController extends Controller
 
         $organizations = OrganizationArmory::all();
 
-        $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
-            ->pluck('name','id')->all();
+
 
         //For Super User
         if (Auth::user()->user_type ==1)
         {
+            $roles = '';
             $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
                 ->get(['users.name','users.id','organization_armories.organization']);
         }
         //For Orgs Admins
         if (Auth::user()->user_type ==2)
         {
-            $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
-                ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
-                ->get(['users.name','users.id','organization_armories.organization']);
-        }
+            $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->pluck('name','id')->all();
 
+//            $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
+//                ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+//                ->get(['users.name','users.id','organization_armories.organization']);
+
+            $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
+
+                ->leftJoin('model_has_roles','model_has_roles.model_id','=','users.id')
+
+                ->leftJoin('roles','roles.id','=','model_has_roles.role_id')
+
+                ->where('roles.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->get(['users.name','users.id','organization_armories.organization','roles.name as role']);
+        }
 
 
         return view("create_user" ,compact('organizations','roles','admins'));
@@ -62,23 +74,50 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $userType =0;
 
-//        dd($request);
+
+        if (Auth::user()->user_type == 1)
+        {
+            $userType = 2;
+        }
+        if (Auth::user()->user_type == 2)
+        {
+            $request->organization = Auth::user()->organization_id;
+            $userType = 3;
+        }
+        if (Auth::user()->user_type == 3)
+        {
+            $userType = 3;
+        }
+
+
 
         DB::beginTransaction();
         try{
+
+
+            $userExist = User::where('email',$request['e_number'])
+                ->get('id');
+
+            if (isset($userExist[0]->id))
+            {
+                return to_route('create_user')->with('error',' User already added');
+            }
+
             $password = Hash::make($request['e_number']);
 
             $input['name'] = $request->full_name;
-            $input['user_type'] = 2;
+            $input['user_type'] = $userType;
             $input['username'] = $request->e_number;
             $input['status'] = 1;
             $input['password'] = $password;
             $input['email'] = $request->e_number;
             $input['organization_id'] = $request->organization;
 
+//            dd($request->input('roles'));
             $newUser = User::create($input);
-            $newUser->assignRole($request->input('roles'));
+            $newUser->assignRole([$request->input('roles')]);
 
             OrganizationUsers::create([
                 'user_id' => $newUser['id'],
@@ -93,7 +132,7 @@ class AdminController extends Controller
                 'unit' => $request->unit,
                 'nic' => $request->nic,
                 'is_active_account' => $request->active,
-                'created_by' => 1,
+                'created_by' => Auth::user()->id,
             ]);
 
             DB::commit();

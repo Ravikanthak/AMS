@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrganizationArmory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,10 +14,14 @@ class OrganizationResourceController extends Controller
      */
     public function index()
     {
-        $orgArmoury = OrganizationArmory::where('id',Auth::user()->OrganizationUsers[0]['organization_id'])
-            ->get(['armory','armory_api_id']);
 
-        return view('organization_resources.index', compact('orgArmoury'));
+            $orgId = isset(Auth::user()->OrganizationUsers[0]['organization_id'])?Auth::user()->OrganizationUsers[0]['organization_id']:0;
+
+            $orgArmoury = OrganizationArmory::where('id', $orgId)
+                ->get(['armory','organization','armory_api_id','organization_api_id']);
+
+            return view('organization_resources.index', compact('orgArmoury'));
+
     }
 
     /**

@@ -10,13 +10,11 @@
                     <h2>Create New Role</h2>
                 </div>
                 <div class="text-end">
-                    <a class="btn btn-dark mt-5 mb-2" href="{{ route('roles.index') }}">Back</a>
+                    <a class="btn btn-dark" href="{{ route('roles.index') }}">Back</a>
                 </div>
             </div>
         </div>
     </section>
-
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             Error<br><br>
@@ -28,8 +26,13 @@
         </div>
     @endif
 
-    <div class="col-md-12">
-        <div class="row">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+
+                    <div class="card auth_req_lttr_form">
+                         <div class="row">
             {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -90,7 +93,12 @@
             </div>
             {!! Form::close() !!}
         </div>
-    </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </section>
 
 
     <footer class="main-footer">
@@ -116,6 +124,13 @@
             $('.select2-single').select2({});
 
         });
+
+
+        $('#name').on('keyup', function() {
+            var value = $(this).val();
+            $(this).val(value.toLowerCase());
+        });
+
     </script>
 
 @endpush

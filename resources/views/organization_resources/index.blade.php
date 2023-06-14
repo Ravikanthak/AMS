@@ -22,7 +22,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <input type="hidden" value="{{isset($orgArmoury)?$orgArmoury[0]['armory_api_id']:''}}" id="armory_api_id">
-                                Organization weapon details <span class="float-right">Armoury - {{isset($orgArmoury)?$orgArmoury[0]['armory']:''}}</span>
+                                <input type="hidden" value="{{isset($orgArmoury)?$orgArmoury[0]['organization_api_id']:''}}" id="org_api_id">
+                                Organization weapon details <span class="float-right">Armoury - {{isset($orgArmoury)?$orgArmoury[0]['armory']:'Not Assigned'}}</span>
                             </div>
 
                             <div class="col-md-12">
@@ -61,15 +62,16 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                Organization strength details
+                                Organization strength details <span class="float-right">Organization - {{isset($orgArmoury)?$orgArmoury[0]['organization']:'Not Assigned'}}</span>
                             </div>
 
 
 
+                            {{--officer--}}
                             <div class="col-md-12">
                                 <div class="dropdown">
-                                    <label for="strengthList" class="form-label">Select Person</label>
-                                    <select aria-hidden="true" id="strengthList" name="strengthList[]"
+                                    <label for="offcrStrengthList" class="form-label">Select Officers</label>
+                                    <select aria-hidden="true" id="offcrStrengthList" name="offcrStrengthList[]"
                                             class="form-control weapon-list" multiple="multiple">
                                         {{--@if(isset($selectedMapData))--}}
                                         {{--<option value="{{$selectedMapData[0]->armory_api_id}}">{{$selectedMapData[0]->armory}}</option>--}}
@@ -80,9 +82,29 @@
                                 </div>
                             </div>
                             <div class="button-container mt-2">
-                                <button type="button" class="btn btn-sm btn-primary" id="selectAllStrength">Select All</button>
-                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllStrength">Deselect All</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="selectAllOffcrStrength">Select All</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllOffcrStrength">Deselect All</button>
                             </div>
+
+                            {{--other--}}
+                            <div class="col-md-12">
+                                <div class="dropdown">
+                                    <label for="orStrengthList" class="form-label">Select Other Rankers</label>
+                                    <select aria-hidden="true" id="orStrengthList" name="orStrengthList[]"
+                                            class="form-control weapon-list" multiple="multiple">
+                                        {{--@if(isset($selectedMapData))--}}
+                                        {{--<option value="{{$selectedMapData[0]->armory_api_id}}">{{$selectedMapData[0]->armory}}</option>--}}
+                                        {{--@else--}}
+                                        {{--<option value="">Select Armoury</option>--}}
+                                        {{--@endif--}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="button-container mt-2">
+                                <button type="button" class="btn btn-sm btn-primary" id="selectAllOrStrength">Select All</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllOrStrength">Deselect All</button>
+                            </div>
+
                         </div>
 
                     </div>
@@ -162,9 +184,12 @@
 
 
 
-            //strength
+            //officer strength
+            let estbApiID = $('#org_api_id').val();
+            // let estbApiID = 176;
+
             $.ajax({
-                url: 'https://172.16.60.51/beta/api/get_establishments/',
+                url: 'https://172.16.60.51/beta/api/get_estab_persons/?id='+estbApiID+'&type=1',
                 method: 'GET',
                 cache: false,
                 async: false,
@@ -174,21 +199,77 @@
                 },
                 success: function (data) {
 
-                    var strengthArray = [];
+                    var offcrStrengthArray = [];
                     $.each(data, function (id, name) {
-                        strengthArray.push({id: name.id, text: name.name +' - '+name.abb});
+                        offcrStrengthArray.push({id: name.e_no, text: name.abb_rank +' - '+name.name});
                     });
 
-                    $('#strengthList').select2({
-                        data: strengthArray
+                    $('#offcrStrengthList').select2({
+                        data: offcrStrengthArray
                     });
-                    $("#strengthList").next('span').find('span span').addClass("armoury-select");
+                    $("#offcrStrengthList").next('span').find('span span').addClass("armoury-select");
                 },
                 error: function (e) {
-                    console.log(e)
+                    // console.log(e)
                 }
             });
+            $('#selectAllOffcrStrength').on('click', function () {
+                selectAllOfficers()
+            });
+            $('#deselectAllOffcrStrength').on('click', function () {
+                deselectAllOfficers()
+            });
+            function selectAllOfficers() {
+                $("#offcrStrengthList > option").prop("selected", true);
+                $("#offcrStrengthList").trigger("change");
+            }
+            function deselectAllOfficers() {
+                $("#offcrStrengthList > option").prop("selected", false);
+                $("#offcrStrengthList").trigger("change");
+            }
 
+
+            //OR strength
+            $.ajax({
+                url: 'https://172.16.60.51/beta/api/get_estab_persons/?id='+estbApiID+'&type=2',
+                method: 'GET',
+                cache: false,
+                async: false,
+                dataType: 'json',
+                data: {
+                    "str-token": "1189d8dde195a36a9c4a721a390a74e6"
+                },
+                success: function (data) {
+
+                    var orStrengthArray = [];
+                    $.each(data, function (id, name) {
+                        orStrengthArray.push({id: name.e_no, text: name.abb_rank +' - '+name.name});
+                    });
+
+                    $('#orStrengthList').select2({
+                        data: orStrengthArray
+                    });
+                    $("#orStrengthList").next('span').find('span span').addClass("armoury-select");
+                },
+                error: function (e) {
+                    // console.log(e)
+                }
+
+            });
+            $('#selectAllOrStrength').on('click', function () {
+                selectAllOrs()
+            });
+            $('#deselectAllOrStrength').on('click', function () {
+                deselectAllOrs()
+            });
+            function selectAllOrs() {
+                $("#orStrengthList > option").prop("selected", true);
+                $("#orStrengthList").trigger("change");
+            }
+            function deselectAllOrs() {
+                $("#orStrengthList > option").prop("selected", false);
+                $("#orStrengthList").trigger("change");
+            }
 
 
 
