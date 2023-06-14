@@ -45,9 +45,15 @@
                       <div class="form-group mb-3">
                       <label for="req_made_location" class="form-label">1. Request made by (location)</label>
                         <select class="selectpicker form-control" id="req_made_location" data-container="body" data-live-search="true" title="Select the Location" data-hide-disabled="true">
-                            @foreach($organizations as $org)
-                              <option value="{{$org->id}}">{{$org->organization}}</option>
-                            @endforeach
+                            @if (isset($request_made_by))
+                              @foreach($organizations as $org)
+                                <option value="{{$org->id}}" @if($org->id == $request_made_by) selected @endif>{{$org->organization}}</option>
+                              @endforeach
+                            @else 
+                              @foreach($organizations as $org)
+                                <option value="{{$org->id}}">{{$org->organization}}</option>
+                              @endforeach
+                            @endif
                         </select>
                     </div>
                   </div>
@@ -56,10 +62,23 @@
                     <div class="form-group mb-3">
                       <label for="incharge" class="form-label">2. In charge Offr</label>
                       <select class="selectpicker form-control" id="incharge" data-container="body" data-live-search="true" title="Select the In charge Offr" data-hide-disabled="true">
-                        <option value="O/33421">0/55666 MKL Kumanayake</option>
-                        <option selected value="0/88765">0/88765 GGH Rathna</option>
-                        <option value="0/66445">0/66445 HNHG Giragama</option>
-                        <option value="0/88666">0/88666 DSG Rukunayake</option>
+                            @if (isset($incharge))
+                              @foreach($organization_users as $user)
+
+                                  @if (substr($user->service_no, 0, 1) === 'O')
+                                    <option value="{{$user->service_no}}" @if($user->service_no == $incharge) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
+                                  @endif          
+
+                              @endforeach
+                            @else 
+                              @foreach($organization_users as $user)
+
+                                  @if (substr($user->service_no, 0, 1) === 'O')
+                                    <option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>
+                                  @endif 
+                                
+                              @endforeach
+                            @endif
                       </select>
                     </div>
                   </div>
@@ -67,14 +86,14 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="auth_given_by" class="form-label">3. Auth given by (ref of the ltr/msg)</label>
-                      <input id="auth_given_by" name="auth_given_by" type="text" placeholder="" class="form-control" value="TPS/G/2023/43312">
+                      <input id="auth_given_by" name="auth_given_by" type="text" placeholder="" class="form-control" value="@if (isset($auth_given_by)){{ $auth_given_by }}@endif">
                     </div>
                   </div>
 
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="transport_date" class="form-label">4. Date of transportation</label>
-                      <input class="transport_date form-control" id="transport_date" type="text" value="2023-04-11">
+                      <input class="transport_date form-control" id="transport_date" type="text" value="@if (isset($transport_date)){{ $transport_date }}@endif">
                       <script>
                           var today_date = new Date();
                           var dd = String(today_date.getDate()).padStart(2, '0');
@@ -99,9 +118,15 @@
                       <div class="form-group">
                         <label for="location_from" class="form-label">5. Location to be transported : (From)</label>
                         <select class="selectpicker form-control" id="location_from" data-container="body" data-live-search="true" title="Select the Location" data-hide-disabled="true">
-                            @foreach($organizations as $org)
-                              <option value="{{$org->id}}">{{$org->organization}}</option>
-                            @endforeach
+                            @if (isset($location_from))
+                              @foreach($organizations as $org)
+                                <option value="{{$org->id}}" @if($org->id == $location_from) selected @endif>{{$org->organization}}</option>
+                              @endforeach
+                            @else 
+                              @foreach($organizations as $org)
+                                <option value="{{$org->id}}">{{$org->organization}}</option>
+                              @endforeach
+                            @endif
                         </select>
                       </div>
                     </div>
@@ -109,9 +134,15 @@
                       <div class="form-group">
                         <label for="location_to" class="form-label">(To)</label>
                         <select class="selectpicker form-control" id="location_to" data-container="body" data-live-search="true" title="Select the Location" data-hide-disabled="true">
-                            @foreach($organizations as $org)
-                              <option value="{{$org->id}}">{{$org->organization}}</option>
-                            @endforeach
+                            @if (isset($location_to))
+                              @foreach($organizations as $org)
+                                <option value="{{$org->id}}" @if($org->id == $location_to) selected @endif>{{$org->organization}}</option>
+                              @endforeach
+                            @else 
+                              @foreach($organizations as $org)
+                                <option value="{{$org->id}}">{{$org->organization}}</option>
+                              @endforeach
+                            @endif
                         </select>
                       </div>
                     </div>
@@ -120,21 +151,21 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="route" class="form-label">6. Route</label>
-                      <input id="route" name="route" type="text" placeholder="" class="form-control" value="Panagoda - Padukka">
+                      <input id="route" name="route" type="text" placeholder="" class="form-control" value="@if (isset($route)){{ $route }}@endif">
                     </div>
                   </div>
 
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="no_of_wpn" class="form-label">7. No of wpn, ammo and explosives</label>
-                      <input id="no_of_wpn" name="no_of_wpn" type="text" placeholder="" class="form-control" value="20">
+                      <input id="no_of_wpn" name="no_of_wpn" type="text" placeholder="" class="form-control" value="@if (isset($no_of_wpn)){{ $no_of_wpn }}@endif">
                     </div>
                   </div>
 
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="wpn_details" class="form-label">Wpn details (wpn nos)</label>
-                      <textarea id="wpn_details" name="wpn_details" class="form-control"  rows="3">Wpn No - 32322442</textarea>
+                      <textarea id="wpn_details" name="wpn_details" class="form-control"  rows="3">@if (isset($wpn_details)){{ $wpn_details }}@endif</textarea>
                     </div>
                   </div>
 
@@ -143,19 +174,22 @@
                       <div class="form-group">
                         <label for="type_of_veh" class="form-label">8. (i) Type of vehicle</label>
                         <select class="selectpicker form-control" id="type_of_veh" data-container="body" data-live-search="true" title="Select the Type of Vehicle" data-hide-disabled="true">
-                            <option value="bus">Bus</option>
-                            <option selected value="truck">Truck</option>
-                            <option value="lorry">Lorry</option>
-                            <option value="cab">Cab</option>
-                            <option value="van">Van</option>
-                            <option value="other">Other</option>
+                            @if (isset($type_of_veh))
+                              @foreach($vehicle_types as $veh)
+                                <option value="{{$veh->vehicle}}" @if($veh->vehicle == $type_of_veh) selected @endif>{{$veh->vehicle}}</option>
+                              @endforeach
+                            @else 
+                              @foreach($vehicle_types as $veh)
+                                <option value="{{$veh->vehicle}}">{{$veh->vehicle}}</option>
+                              @endforeach
+                            @endif
                         </select>
                       </div>
                     </div>
                     <div class="col-md-6 m-0 float-left pr-0">
                       <div class="form-group">
                         <label for="vehicle_no" class="form-label">(ii) Vehicle No</label>
-                        <input id="vehicle_no" name="vehicle_no" type="text" placeholder="" class="form-control" value="LH-8878">
+                        <input id="vehicle_no" name="vehicle_no" type="text" placeholder="" class="form-control" value="@if (isset($vehicle_no)){{ $vehicle_no }}@endif">
                       </div>
                     </div>
                   </div>
@@ -164,10 +198,23 @@
                     <div class="form-group mb-3">
                       <label for="driver" class="form-label">9. Driver</label>
                       <select class="selectpicker form-control" id="driver" data-container="body" data-live-search="true" title="Select the Driver Name" data-hide-disabled="true">
-                            <option value="S/33421">S/33421 Kumanayake MGE</option>
-                            <option value="S/66433">S/66433 Rathna PG</option>
-                            <option value="S/85333">S/85333 Giragama HNHG</option>
-                            <option selected value="S/75578">S/75578 Rukunayake RS</option>
+                            @if (isset($driver))
+                              @foreach($organization_users as $user)
+
+                                @if (substr($user->service_no, 0, 1) === 'S')
+                                  <option value="{{$user->service_no}}" @if($user->service_no == $driver) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
+                                @endif
+
+                              @endforeach
+                            @else 
+                              @foreach($organization_users as $user)
+
+                                @if (substr($user->service_no, 0, 1) === 'S')
+                                  <option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>
+                                @endif
+
+                              @endforeach
+                            @endif
                         </select>
                     </div>
                   </div>
@@ -176,10 +223,23 @@
                     <div class="form-group mb-3">
                       <label for="escort" class="form-label">10. Escort</label>
                       <select class="selectpicker form-control" id="escort" data-container="body" data-live-search="true" title="Select the Escort Name" data-hide-disabled="true">
-                            <option value="S/33421">S/33421 Kumanayake MGE</option>
-                            <option value="S/66433">S/66433 Rathna PG</option>
-                            <option value="S/85333">S/85333 Giragama HNHG</option>
-                            <option selected value="S/75578">S/75578 Rukunayake RS</option>
+                            @if (isset($escort))
+                              @foreach($organization_users as $user)
+
+                                @if (substr($user->service_no, 0, 1) === 'S')
+                                  <option value="{{$user->service_no}}" @if($user->service_no == $escort) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
+                                @endif
+
+                              @endforeach
+                            @else 
+                              @foreach($organization_users as $user)
+
+                                @if (substr($user->service_no, 0, 1) === 'S')
+                                  <option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>
+                                @endif
+
+                              @endforeach
+                            @endif
                         </select>
                     </div>
                   </div>
@@ -188,19 +248,19 @@
                     <div class="col-md-4 m-0 float-left pl-0">
                       <div class="form-group">
                         <label for="escort_weapon_no" class="form-label">11. (i) Escort weapon no</label>
-                        <input id="escort_weapon_no" name="escort_weapon_no" type="text" placeholder="" class="form-control" value="444566444">
+                        <input id="escort_weapon_no" name="escort_weapon_no" type="text" placeholder="" class="form-control" value="@if (isset($escort_weapon_no)){{ $escort_weapon_no }}@endif">
                       </div>
                     </div>
                     <div class="col-md-4 m-0 float-left">
                       <div class="form-group">
                         <label for="no_of_magazins" class="form-label">(ii) No of magazins</label>
-                        <input id="no_of_magazins" name="no_of_magazins" type="text" placeholder="" class="form-control" value="4">
+                        <input id="no_of_magazins" name="no_of_magazins" type="text" placeholder="" class="form-control" value="@if (isset($no_of_magazins)){{ $no_of_magazins }}@endif">
                       </div>
                     </div>
                     <div class="col-md-4 m-0 float-left pr-0">
                       <div class="form-group">
                         <label for="no_of_ammo" class="form-label">(iii) Ammo</label>
-                        <input id="no_of_ammo" name="no_of_ammo" type="text" placeholder="" class="form-control" value="120">
+                        <input id="no_of_ammo" name="no_of_ammo" type="text" placeholder="" class="form-control" value="@if (isset($no_of_ammo)){{ $no_of_ammo }}@endif">
                       </div>
                     </div>
                   </div>
@@ -208,14 +268,14 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="ref_of_ltr1" class="form-label">12. If wpn and ammo/explosives are stationed at night, ref of the ltr/msg</label>
-                      <input id="ref_of_ltr1" name="ref_of_ltr1" type="text" placeholder="" class="form-control" value="-">
+                      <input id="ref_of_ltr1" name="ref_of_ltr1" type="text" placeholder="" class="form-control" value="@if (isset($ref_of_ltr1)){{ $ref_of_ltr1 }}@endif">
                     </div>
                   </div>
 
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="att1" class="form-label">13. Docs att (Q5/AFG 3-copy no 4/ AFG 2) (PDF Format)</label>
-                      <input id="att1" name="att1" type="file" placeholder="" class="form-control" value="-">
+                      <input id="att1" name="att1" type="file" placeholder="" class="form-control" value="">
                     </div>
                   </div>
 
@@ -223,7 +283,7 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="ref_of_ltr2" class="form-label">14. Ref of ltr/msg of "hiring auth to the Ay" for veh which use civil no plates</label>
-                      <input id="ref_of_ltr2" name="ref_of_ltr2" type="text" placeholder="" class="form-control" value="-">
+                      <input id="ref_of_ltr2" name="ref_of_ltr2" type="text" placeholder="" class="form-control" value="@if (isset($no_of_magazins)){{ $no_of_magazins }}@endif">
                     </div>
                   </div>
 
@@ -233,6 +293,14 @@
                       <input id="att2" name="att2" type="file" placeholder="" class="form-control" value="-">
                     </div>
                   </div>
+
+                  <div class="col-md-12 ">
+                    <div class="form-group mb-3">
+                      <label for="request_forward" class="form-label">16. Request Forward to</label>
+                      <select name="request_forward" class="selectpicker form-control" id="request_forward" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
+                        </select>
+                    </div>
+                  </div>             
 
                   <div class="col-md-12">
                     <div class="alert alert-success" role="alert"></div>
