@@ -99,7 +99,7 @@
                                                         <option value="estb" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='estb'?'selected':'':'' }}>Establishment</option>
                                                         <option value="bde" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='bde'?'selected':'':'' }}>Bde</option>
                                                         <option value="div" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='div'?'selected':'':'' }}>Div</option>
-                                                        <option value="sfq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>
+                                                        <option value="sfhq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>
                                                         <option value="dops" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='dops'?'selected':'':'' }}>D-Ops</option>
                                                     </select>
                                                 </div>
