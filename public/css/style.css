@@ -303,10 +303,44 @@ a {text-decoration: none !important;}
 [class*=sidebar-dark-] .sidebar .d-block { text-transform: uppercase; }
 
 
+.create_authority_request .alert-danger ul { margin-bottom: 0px; }
+.create_authority_request .alert-danger ul li { text-transform: capitalize; }
+
+#table_auth_req_lttr_troops { width: 100% !important;}
+#table_auth_req_lttr_troops tr td span { margin-left: 5px ;}
+
+.view_auth_req_lttr_troops_details p { display: flex; flex-direction: column;}
+.view_auth_req_lttr_troops_details p span {background-color: #dbdbdb;border-radius: 4px;padding: 2px 10px 3px 16px;margin-top: 3px;}
 
 
+.track_requests {width: 100%;display: flex;background-color: #fff;padding: 15px 40px 15px 40px;}
+.track_requestsin {width: 100%;float: left;display: flex;flex-direction: column;justify-content: center;align-items: center;}
+
+.track_requestsin .dot1 { position: relative;}
+.track_requestsin .dot1::after { content: ""; position: absolute; top: 100%; left: 50%; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid #333; /* Change the color as needed */ transform: translateX(-50%); top: -7px; }
+.track_requestsin .dot2 {width: 7px;height: 7px;background-color: #333333;border-radius: 12px;margin: 5px 0px 0px 0px;position: relative;}
 
 
+.track_requestsin .box {display: flex;height: 100px;}
+.track_requestsin .box .org {width: 290px;background-color: #333333;color: #fff;padding: 0px 10px 0px 10px;border-radius: 7px 0px 0px 7px;margin-bottom: 7px;margin-top: 7px;margin-right: 0px;text-align: center;border-right: 0px solid #000000;font-weight: 400;display: flex;justify-content: center;align-items: center;line-height: 22px; flex-direction: column;} 
+.track_requestsin .box .status {width: 250px;background-color: #f39c12;color: #fff;padding: 0px 15px 0px 15px;border-radius: 0px 7px 7px 0px;margin-bottom: 7px;margin-top: 7px;margin-left: 0px;text-align: center;border-left: 20px solid #be7500;display: flex;flex-direction: column;justify-content: center;}
+/* .track_requestsin .box .status_pending {background-color: #adadad;border-left: 20px solid #818181;} */
+.track_requestsin .box .status_approved {background-color: #27ae60;border-left: 20px solid #057635;font-weight: 400;}
+.track_requestsin .box .status_declined {background-color: #be0000;border-left: 20px solid #910000;}
+.track_requestsin .box div p { margin: 0px; font-weight: 400; }
+.track_requestsin .box div .p1 {font-size: 14px;font-weight: 400;}
+.track_requestsin .box div .p2 {font-weight: 600;color: #27ae60;font-size: 15px;text-transform: uppercase;}
+.track_requestsin .box div .p3 { font-weight: 600;color: #fff;font-size: 15px;text-transform: uppercase;}
+.track_requestsin .box div span {display: block;font-size: 12px;font-weight: 600;}
+
+.modal-content { width: 1000px !important;}
+.modal.show .modal-dialog { width: 1000px; display: flex; justify-content: center; align-items: center}
+
+.auth_req_lttr_form .uploaded_file {width: 208px;float: left;background-color: #e3e3e3;padding: 10px;border-radius: 8px;border: 1px solid #d8d8d8;display: flex;flex-wrap: wrap;justify-content: space-around;margin-bottom: 15px;align-items: center;}
+.auth_req_lttr_form .uploaded_file img {width: 23px;float: left;}
+.auth_req_lttr_form .uploaded_file a {height: 36px;padding: 4px 13px 4px 13px;}
+
+.auth_req_lttr_form .image span { font-size: 13px; font-weight: 400; color: #212121;}
 
 @media only screen and (max-width: 1100px) {
     .main_div_inner_register {}

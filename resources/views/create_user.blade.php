@@ -51,6 +51,7 @@
                                     <label for="officer_number" class="form-label">Officer/Solder Number</label>
                                     <input placeholder="O/12345" type="text" class="form-control" value=""
                                            name="officer_number" id="officer_number">
+                                    <input type="hidden" name="orgId" id="orgId" value="{{isset($orgId)?$orgId:null}}">
                                 </div>
                             </div>
                             <div class="col-md-1 mt-4 pt-2">
@@ -61,7 +62,7 @@
                             </div>
 
 
-                            <form method="POST" action="{{route('admin.store')}}">
+                            <form id="service_data_form" method="POST" action="{{route('admin.store')}}">
                                 @csrf
                                 <div class="row mt-5">
                                     <div class="col-md-8">
@@ -135,9 +136,10 @@
                                     @if(Auth::user()->user_type ==1)
                                         <div class="col-md-12 ">
                                             <div class="form-group mb-3">
-                                                <label for="organization" class="form-label">Select Organization</label>
+                                                <label for="organization" class="form-label">Organization</label>
                                                 <div class="dropdown">
                                                     <select class="form-select" name="organization" id="organization">
+                                                        <option value="0" selected="selected">Select Organization</option>
                                                         @foreach($organizations as $organization)
                                                             <option value="{{$organization->id}}">{{$organization->organization}}</option>
                                                         @endforeach
@@ -146,6 +148,14 @@
                                             </div>
                                         </div>
                                     @endif
+
+                                    <div class="col-md-12 ">
+                                        <div class="form-group mb-3">
+                                            <label for="user_type" class="form-label">User Type</label>
+                                            <select class="form-select" name="user_type" id="user_type">
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group pl-4 mt-4">
@@ -257,6 +267,12 @@
 
         $(document).ready(function () {
 
+            if ($('#orgId').val() != null)
+            {
+                let orgIdVal = $('#orgId').val();
+                getUserType(orgIdVal)
+            }
+
             var location_name = $("#location_name").val();
             var account_type = $("#account_type").val();
             var username = $("#username").val();
@@ -278,35 +294,48 @@
                     },
                     success: function (data) {
 
-                        // Swal.fire({
-                        //      position: 'top-end',
-                        //      icon: 'success',
-                        //      title: 'Your work has been saved',
-                        //      showConfirmButton: false,
-                        //      timer: 1500
-                        //  });
+                        if(typeof(data[0]) == "undefined")
+                        {
+                            Swal.fire({
+                                 position: 'top-end',
+                                 icon: 'error',
+                                 title: 'Service number not found',
+                                 showConfirmButton: false,
+                                 timer: 1500
+                             });
 
-                        $name = data[0]['name'];
-                        $e_no = data[0]['e_no'];
-                        $service_no = data[0]['service_no'];
-                        $rank = data[0]['rank'];
-                        $regiment = data[0]['regiment'];
-                        $unit = data[0]['unit'];
-                        $nic = data[0]['nic'];
-                        $gender = data[0]['gender'];
-                        $active_service = data[0]['active_service'];
+                            $('#service_data_form')[0].reset();
+                        }
+                        else {
+                            $name = data[0]['name'];
+                            $e_no = data[0]['e_no'];
+                            $service_no = data[0]['service_no'];
+                            $rank = data[0]['rank'];
+                            $regiment = data[0]['regiment'];
+                            $unit = data[0]['unit'];
+                            $nic = data[0]['nic'];
+                            $gender = data[0]['gender'];
+                            $active_service = data[0]['active_service'];
 
-                        $('#full_name').val($name);
-                        $('#e_number').val($e_no);
-                        $('#service_number').val($service_no);
-                        $('#rank').val($rank);
-                        $('#unit').val($unit);
-                        $('#regiment').val($regiment);
-                        $('#nic').val($nic);
-                        $('#gender').val($gender);
-                        $('#active_service').val($active_service);
+                            $('#full_name').val($name);
+                            $('#e_number').val($e_no);
+                            $('#service_number').val($service_no);
+                            $('#rank').val($rank);
+                            $('#unit').val($unit);
+                            $('#regiment').val($regiment);
+                            $('#nic').val($nic);
+                            $('#gender').val($gender);
+                            $('#active_service').val($active_service);
+                        }
 
+
+
+
+                    },
+                    error: function (error) {
+                        alert('2')
                     }
+
                 });
             });
         });
@@ -346,11 +375,9 @@
                     }
                     else {
                         if ($('#userType').val() == 1) {
-                            alert(1)
                             jQuery("#roles option:contains('dops-admin')").show();
                         }
                         else {
-                            alert(2)
                             jQuery("#roles option:contains('dops-')").show();
                             jQuery("#roles option:not(:contains('dops-'))").hide();
                         }
@@ -360,6 +387,41 @@
                 }
             });
         });
+
+
+        //user Type
+        $('#organization').change(function () {
+
+            let orgId = $('#organization').val();
+            getUserType(orgId)
+        });
+
+
+        function getUserType(orgId)
+        {
+
+            if (orgId !=='0')
+            {
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    dataType: 'json',
+                    url: '{{url("/get-admin-user-type")}}',
+                    type: 'POST',
+                    data: {orgId: orgId},
+                    success: function (data) {
+
+                        $('#user_type').empty();
+                        $.each(data, function (i, item) {
+                            $('#user_type').append($('<option>', {
+                                value: item.id,
+                                text : item.name
+                            }));
+                        });
+                    }
+                });
+            }
+        }
+
 
 
     </script>

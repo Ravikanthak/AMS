@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   @include('inc/header')
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css" /> -->
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -30,13 +30,28 @@
         </div>
       </div>
     </section>
-
+<!-- 
     <section class="content">
       <div class="container-fluid">
           <div class="row">
             <section class="col-lg-12 connectedSortable ui-sortable">
              
               <div class="card auth_req_lttr_form">
+
+                  <div class="col-md-12 ">
+                      <div class="form-group mb-3">
+                          <label for="establishment" class="form-label">Select Organization Type</label>
+                          <div class="dropdown">
+                              <select class="form-select" name="establishment" id="establishment">
+                                  <option value="unit">Unit</option>
+                                  <option value="bde">Bde</option>
+                                  <option value="div">Div</option>
+                                  <option value="sfq">SFHQ/1 Corps</option>
+                                  <option value="dops">D-Ops</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
 
                   <div class="col-md-12">
                     <div class="col-md-8 m-0 float-left pl-0">
@@ -65,7 +80,7 @@
           </div>
       </div>
     </section>
-
+ -->
 
 
     <section class="content table_establishments">
