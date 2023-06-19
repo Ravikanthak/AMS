@@ -28,8 +28,6 @@ class AdminController extends Controller
 
         $organizations = OrganizationArmory::all();
 
-
-
         //For Super User
         if (Auth::user()->user_type ==1)
         {
@@ -56,7 +54,6 @@ class AdminController extends Controller
                 ->where('users.id','!=',Auth::user()->id)
                 ->get(['users.name','users.id','organization_armories.organization','roles.name as role']);
         }
-
 
         return view("create_user" ,compact('organizations','roles','admins','orgId'));
     }
