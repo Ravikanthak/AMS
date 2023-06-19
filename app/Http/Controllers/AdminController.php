@@ -35,6 +35,7 @@ class AdminController extends Controller
         {
             $roles = '';
             $admins = User::leftJoin('organization_armories','organization_armories.id','=','users.organization_id')
+                ->where('users.id','!=',Auth::user()->id)
                 ->get(['users.name','users.id','organization_armories.organization']);
 
             $orgId = null;
@@ -52,6 +53,7 @@ class AdminController extends Controller
                 ->leftJoin('roles','roles.id','=','model_has_roles.role_id')
                 ->where('roles.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
                 ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->where('users.id','!=',Auth::user()->id)
                 ->get(['users.name','users.id','organization_armories.organization','roles.name as role']);
         }
 

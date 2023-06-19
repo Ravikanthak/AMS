@@ -151,8 +151,17 @@
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
-
-                @if(Auth::user()->user_type ==2 || Auth::user()->user_type ==5 || Auth::user()->user_type ==8 || Auth::user()->user_type ==11 || Auth::user()->user_type ==17 || auth()->user()->can('role-management'))
+                @if(Auth::user()->user_type ==1))
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('org_armoury.index')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Organization Armoury</p>
+                        </a>
+                    </li>
+                </ul>
+                @endif
+                @if(Auth::user()->user_type !=1 || auth()->user()->can('role-management'))
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('roles.index')}}" class="nav-link">
@@ -162,7 +171,6 @@
                         </li>
                     </ul>
                 @endif
-
                 @if(Auth::user()->user_type ==1 || Auth::user()->user_type ==2 || Auth::user()->user_type ==5 || Auth::user()->user_type ==8 || Auth::user()->user_type ==11 || Auth::user()->user_type ==17 || auth()->user()->can('user-management'))
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
@@ -173,19 +181,7 @@
                         </li>
                     </ul>
                 @endif
-
-                @if(Auth::user()->user_type ==1))
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('org_armoury.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Organization Armoury</p>
-                            </a>
-                        </li>
-                    </ul>
-                @endif
-
-                @if(Auth::user()->user_type ==2 || Auth::user()->user_type ==5 || Auth::user()->user_type ==8 || Auth::user()->user_type ==11 || Auth::user()->user_type ==17  || auth()->user()->can('view-organization-resources'))
+                @if(Auth::user()->user_type !=1  || auth()->user()->can('view-organization-resources'))
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('resource.index')}}" class="nav-link">
