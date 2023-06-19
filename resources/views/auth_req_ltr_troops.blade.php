@@ -301,11 +301,11 @@
                     <div class="form-group mb-3">
                       <label for="request_forward_by" class="form-label">16. Request Forward by</label>
                       <select name="request_forward_by" class="selectpicker form-control" id="request_forward_by" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
-                          @if (isset($added_by))
+                          @if (isset($req_fwd_by))
                             @foreach($organization_types as $type)
 
                                 @if (!in_array($type->id, [1,2,5,8,11,17]))
-                                    <option value="{{$type->id}}" @if($type->id == $added_by) selected @endif>{{$type->name}}</option>
+                                    <option value="{{$type->id}}" @if($type->id == $req_fwd_by) selected @endif>{{$type->name}}</option>
                                 @endif
                             
                             @endforeach
@@ -327,11 +327,11 @@
                     <div class="form-group mb-3">
                       <label for="request_forward_to" class="form-label">17. Request Forward to</label>
                       <select name="request_forward_to" class="selectpicker form-control" id="request_forward_to" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
-                          @if (isset($request_fwd_to))
+                          @if (isset($req_fwd_to))
                             @foreach($organization_types as $type)
 
                                 @if (!in_array($type->id, [1,2,5,8,11,17]))
-                                    <option value="{{$type->id}}" @if($type->id == $request_fwd_to) selected @endif>{{$type->name}}</option>
+                                    <option value="{{$type->id}}" @if($type->id == $req_fwd_to) selected @endif>{{$type->name}}</option>
                                 @endif
                             
                             @endforeach
@@ -413,7 +413,7 @@ $(document).ready(function() {
         formData.append('insert_or_update', insert_or_update); // Add id value in url parameter
 
         $.ajax({
-          url:"{{ url('') }}/auth_req_lttr_troops_form_func",
+          url:"{{ url('') }}/auth_req_ltr_troops_form_func",
             type: 'POST',
             data: formData,
             dataType: 'json',
