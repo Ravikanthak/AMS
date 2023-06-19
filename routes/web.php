@@ -20,7 +20,7 @@ Route::get('/dashboard' , [HomeController::class , 'index'] )->name('dashboard')
 
 Route::get('/logout' , [Controller::class , 'logout'] )->name('logout');
 
-Route::get('/auth_req_lttr' , [Controller::class , 'auth_req_lttr'] )->name('auth_req_lttr');
+Route::get('/auth_req_ltr' , [Controller::class , 'auth_req_ltr'] )->name('auth_req_ltr');
 
 
 Route::post('/register_func' , [Controller::class , 'register_func'] );
@@ -77,32 +77,32 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //Ravikantha
 
-Route::get('/auth_req_lttr_troops/{id?}' , [AuthReqController::class , 'auth_req_lttr_troops'] )->name('auth_req_lttr_troops');
-Route::get('/auth_req_lttr_troops_view' , [AuthReqController::class , 'auth_req_lttr_troops_view'] )->name('auth_req_lttr_troops_view');
-Route::get('/auth_req_lttr_troops_take_action_view' , [AuthReqController::class , 'auth_req_lttr_troops_take_action_view'] )->name('auth_req_lttr_troops_take_action_view');
-Route::get('/auth_req_lttr_troops_take_action/{id?}' , [AuthReqController::class , 'auth_req_lttr_troops_take_action'] )->name('auth_req_lttr_troops_take_action');
+Route::get('/auth_req_ltr_troops/{id?}' , [AuthReqController::class , 'auth_req_ltr_troops'] )->name('auth_req_ltr_troops');
+Route::get('/auth_req_ltr_troops_view' , [AuthReqController::class , 'auth_req_ltr_troops_view'] )->name('auth_req_ltr_troops_view');
+Route::get('/auth_req_ltr_troops_take_action_view' , [AuthReqController::class , 'auth_req_ltr_troops_take_action_view'] )->name('auth_req_ltr_troops_take_action_view');
+Route::get('/auth_req_ltr_troops_take_action/{id?}' , [AuthReqController::class , 'auth_req_ltr_troops_take_action'] )->name('auth_req_ltr_troops_take_action');
 
 
-Route::post('/auth_req_lttr_troops_form_func' , [AuthReqController::class , 'auth_req_lttr_troops_form_func'] )->name('auth_req_lttr_troops_form_func');
-Route::post('/auth_req_lttr_troops_track_btn' , [AuthReqController::class , 'auth_req_lttr_troops_track_btn'] )->name('auth_req_lttr_troops_track_btn');
+Route::post('/auth_req_ltr_troops_form_func' , [AuthReqController::class , 'auth_req_ltr_troops_form_func'] )->name('auth_req_ltr_troops_form_func');
+Route::post('/auth_req_ltr_troops_track_btn' , [AuthReqController::class , 'auth_req_ltr_troops_track_btn'] )->name('auth_req_ltr_troops_track_btn');
 
-Route::post('/auth_req_lttr_troops_view_btn' , [AuthReqController::class , 'auth_req_lttr_troops_view_btn'] )->name('auth_req_lttr_troops_view_btn');
+Route::post('/auth_req_ltr_troops_view_btn' , [AuthReqController::class , 'auth_req_ltr_troops_view_btn'] )->name('auth_req_ltr_troops_view_btn');
 
-Route::post('/auth_req_lttr_weapons_view_btn' , [AuthReqController::class , 'auth_req_lttr_weapons_view_btn'] )->name('auth_req_lttr_weapons_view_btn');
+Route::post('/auth_req_ltr_weapons_view_btn' , [AuthReqController::class , 'auth_req_ltr_weapons_view_btn'] )->name('auth_req_ltr_weapons_view_btn');
 
-Route::post('/auth_req_lttr_troops_loaddata_tofields' , [AuthReqController::class , 'auth_req_lttr_troops_loaddata_tofields'] )->name('auth_req_lttr_troops_loaddata_tofields');
+Route::post('/auth_req_ltr_troops_loaddata_tofields' , [AuthReqController::class , 'auth_req_ltr_troops_loaddata_tofields'] )->name('auth_req_ltr_troops_loaddata_tofields');
 
-Route::post('/auth_req_lttr_troops_approve_btn' , [AuthReqController::class , 'auth_req_lttr_troops_approve_btn'] )->name('auth_req_lttr_troops_approve_btn');
+Route::post('/auth_req_ltr_troops_approve_btn' , [AuthReqController::class , 'auth_req_ltr_troops_approve_btn'] )->name('auth_req_ltr_troops_approve_btn');
 
-Route::post('/auth_req_lttr_troops_decline_btn' , [AuthReqController::class , 'auth_req_lttr_troops_decline_btn'] )->name('auth_req_lttr_troops_decline_btn');
+Route::post('/auth_req_ltr_troops_decline_btn' , [AuthReqController::class , 'auth_req_ltr_troops_decline_btn'] )->name('auth_req_ltr_troops_decline_btn');
 
-Route::post('/auth_req_lttr_troops_check_status' , [AuthReqController::class , 'auth_req_lttr_troops_check_status'] )->name('auth_req_lttr_troops_check_status');
-
-
-
-Route::get('/auth_req_lttr_weapon/{id?}' , [AuthReqController::class , 'auth_req_lttr_weapon'] )->name('auth_req_lttr_weapon');
-Route::get('/auth_req_lttr_weapon_view' , [AuthReqController::class , 'auth_req_lttr_weapon_view'] )->name('auth_req_lttr_weapon_view');
+Route::post('/auth_req_ltr_troops_check_status' , [AuthReqController::class , 'auth_req_ltr_troops_check_status'] )->name('auth_req_ltr_troops_check_status');
 
 
 
-Route::post('/auth_req_lttr_weapon_form_func' , [AuthReqController::class , 'auth_req_lttr_weapon_form_func'] )->name('auth_req_lttr_weapon_form_func');
+Route::get('/auth_req_ltr_weapon/{id?}' , [AuthReqController::class , 'auth_req_ltr_weapon'] )->name('auth_req_ltr_weapon');
+Route::get('/auth_req_ltr_weapon_view' , [AuthReqController::class , 'auth_req_ltr_weapon_view'] )->name('auth_req_ltr_weapon_view');
+
+
+
+Route::post('/auth_req_ltr_weapon_form_func' , [AuthReqController::class , 'auth_req_ltr_weapon_form_func'] )->name('auth_req_ltr_weapon_form_func');
