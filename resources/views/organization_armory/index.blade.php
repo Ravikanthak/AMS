@@ -48,11 +48,11 @@
                                     @csrf
 
                                     <div class="card auth_req_lttr_form">
-{{--{{Auth::user()->id}}--}}
-{{--{{Auth::user()->id}}--}}
+                                        {{--{{Auth::user()->id}}--}}
+                                        {{--{{Auth::user()->id}}--}}
                                         <div class="col-md-12 ">
                                             <div class="form-group mb-3">
-                                                <input type="hidden" id="org_text" name="org_text" value="">
+                                                <input type="hidden" id="org_text" name="org_text" value="{{isset($selectedMapData[0]->organization)?$selectedMapData[0]->organization:''}}">
                                                 <label for="organization" class="form-label">Select
                                                     Organization</label>
                                                 <div class="dropdown">
@@ -83,7 +83,8 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <input type="hidden" id="selected_armoury" name="selected_armoury" value="{{isset($selectedMapData[0]['armory'])?$selectedMapData[0]['armory']:''}}">
+                                                <input type="hidden" id="selected_armoury" name="selected_armoury"
+                                                       value="{{isset($selectedMapData[0]['armory'])?$selectedMapData[0]['armory']:''}}">
                                             </div>
                                         </div>
 
@@ -93,14 +94,22 @@
                                                 <label for="organization_type" class="form-label">Select Organization
                                                     Type</label>
                                                 <div class="dropdown">
+                                                    {{--<select class="form-select" name="organization_type"--}}
+                                                    {{--id="organization_type">--}}
+                                                    {{--                                                        <option value="unit" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='unit'?'selected':'':'' }}>Unit</option>--}}
+                                                    {{--<option value="estb" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='estb'?'selected':'':'' }}>Establishment</option>--}}
+                                                    {{--<option value="bde" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='bde'?'selected':'':'' }}>Bde</option>--}}
+                                                    {{--<option value="div" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='div'?'selected':'':'' }}>Div</option>--}}
+                                                    {{--<option value="sfhq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>--}}
+                                                    {{--<option value="dops" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='dops'?'selected':'':'' }}>D-Ops</option>--}}
+                                                    {{--</select> --}}
+
                                                     <select class="form-select" name="organization_type"
                                                             id="organization_type">
-{{--                                                        <option value="unit" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='unit'?'selected':'':'' }}>Unit</option>--}}
-                                                        <option value="estb" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='estb'?'selected':'':'' }}>Establishment</option>
-                                                        <option value="bde" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='bde'?'selected':'':'' }}>Bde</option>
-                                                        <option value="div" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='div'?'selected':'':'' }}>Div</option>
-                                                        <option value="sfhq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>
-                                                        <option value="dops" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='dops'?'selected':'':'' }}>D-Ops</option>
+                                                        <option value="" selected="selected">Select type</option>
+                                                        @foreach($orgTypes as $orgType)
+                                                            <option value="{{$orgType->abbreviation}}" {{isset($selectedMapData[0]->organization_type)?($orgType->abbreviation==$selectedMapData[0]->organization_type)?'selected="selected"':'':''}}>{{$orgType->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -186,8 +195,7 @@
             height: 35px !important;
         }
 
-        .armoury-select
-        {
+        .armoury-select {
             height: 35px !important;
         }
     </style>

@@ -46,13 +46,15 @@ class AdminController extends Controller
 
             $orgId = Auth::user()->organization_id;
 
+
             $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
                 ->leftJoin('model_has_roles','model_has_roles.model_id','=','users.id')
                 ->leftJoin('roles','roles.id','=','model_has_roles.role_id')
-                ->where('roles.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
                 ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
                 ->where('users.id','!=',Auth::user()->id)
+                ->orWhere('roles.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
                 ->get(['users.name','users.id','organization_armories.organization','roles.name as role']);
+
         }
 
         return view("create_user" ,compact('organizations','roles','admins','orgId'));
@@ -63,6 +65,7 @@ class AdminController extends Controller
     {
         $data = OrganizationArmory::where('id',$request->orgId)
             ->get();
+
         $array =[];
 
         if($data[0]->organization_type == 'estb')
@@ -86,6 +89,10 @@ class AdminController extends Controller
                     1 => array (
                         "id" => 4,
                         "name" => 'Establishment Subject Clerk',
+                    ),
+                    2 => array (
+                        "id" => 26,
+                        "name" => 'Other',
                     ),
                 ];
             }
@@ -113,6 +120,10 @@ class AdminController extends Controller
                         "id" => 7,
                         "name" => 'BM',
                     ),
+                    2 => array (
+                        "id" => 26,
+                        "name" => 'Other',
+                    ),
                 ];
             }
 
@@ -138,6 +149,10 @@ class AdminController extends Controller
                     1 => array (
                         "id" => 10,
                         "name" => 'Div Col GS',
+                    ),
+                    2 => array (
+                        "id" => 26,
+                        "name" => 'Other',
                     ),
                 ];
             }
@@ -177,6 +192,10 @@ class AdminController extends Controller
                         "id" => 16,
                         "name" => 'SFHQ Subject Clerk',
                     ),
+                    5 => array (
+                        "id" => 26,
+                        "name" => 'Other',
+                    ),
                 ];
             }
 
@@ -215,6 +234,41 @@ class AdminController extends Controller
                     4 => array (
                         "id" => 22,
                         "name" => 'D-Ops Subject Clerk (Coordination Ops)',
+                    ),
+                    5 => array (
+                        "id" => 26,
+                        "name" => 'Other',
+                    ),
+                ];
+            }
+
+
+        }
+        elseif($data[0]->organization_type == 'dte')
+        {
+            if (Auth::user()->user_type ==1)
+            {
+                $array =[
+                    0 => array (
+                        "id" => 23,
+                        "name" => 'Dte Admin',
+                    )
+                ];
+            }
+            else
+            {
+                $array =[
+                    0 => array (
+                        "id" => 24,
+                        "name" => 'Dte Head',
+                    ),
+                    1 => array (
+                        "id" => 25,
+                        "name" => 'Dte Subject Clerk',
+                    ),
+                    2 => array (
+                        "id" => 26,
+                        "name" => 'Other',
                     ),
                 ];
             }

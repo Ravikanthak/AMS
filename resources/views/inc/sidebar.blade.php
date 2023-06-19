@@ -171,7 +171,7 @@
                         </li>
                     </ul>
                 @endif
-                @if(Auth::user()->user_type ==1 || Auth::user()->user_type ==2 || Auth::user()->user_type ==5 || Auth::user()->user_type ==8 || Auth::user()->user_type ==11 || Auth::user()->user_type ==17 || auth()->user()->can('user-management'))
+                @if(Auth::user()->user_type ==1 || Auth::user()->user_type ==2 || Auth::user()->user_type ==5 || Auth::user()->user_type ==8 || Auth::user()->user_type ==11 || Auth::user()->user_type ==17 || Auth::user()->user_type ==23 || auth()->user()->can('user-management'))
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('create_user')}}" class="nav-link">
