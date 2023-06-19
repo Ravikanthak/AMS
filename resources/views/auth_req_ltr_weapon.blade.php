@@ -378,7 +378,7 @@
 
         $.ajax({
             type: "POST",
-            url:"{{ url('') }}/auth_req_lttr_weapon_form_func",
+            url:"{{ url('') }}/auth_req_ltr_weapon_form_func",
             data: { "_token": "{{ csrf_token() }}" , req_made_location:req_made_location , incharge:incharge , auth_given_by:auth_given_by , transport_date:transport_date , location_from:location_from , location_to:location_to , route:route , no_of_wpn:no_of_wpn , wpn_details:wpn_details , type_of_veh:type_of_veh , vehicle_no:vehicle_no , driver:driver , escort:escort , escort_weapon_no:escort_weapon_no , no_of_magazins:no_of_magazins , no_of_ammo:no_of_ammo , ref_of_ltr1:ref_of_ltr1 , att1:att1 , ref_of_ltr2:ref_of_ltr2 , att2:att2 },
             dataType: "json",
             encode: true,

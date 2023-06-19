@@ -309,8 +309,8 @@ a {text-decoration: none !important;}
 #table_auth_req_lttr_troops { width: 100% !important;}
 #table_auth_req_lttr_troops tr td span { margin-left: 5px ;}
 
-.view_auth_req_lttr_troops_details p { display: flex; flex-direction: column;}
-.view_auth_req_lttr_troops_details p span {background-color: #dbdbdb;border-radius: 4px;padding: 2px 10px 3px 16px;margin-top: 3px;}
+.view_auth_req_lttr_troops_details_div p { display: flex; flex-direction: column;}
+.view_auth_req_lttr_troops_details_div p span {background-color: #dbdbdb;border-radius: 4px;padding: 2px 10px 3px 16px;margin-top: 3px;}
 
 
 .track_requests {width: 100%;display: flex;background-color: #fff;padding: 15px 40px 15px 40px;}
@@ -341,6 +341,11 @@ a {text-decoration: none !important;}
 .auth_req_lttr_form .uploaded_file a {height: 36px;padding: 4px 13px 4px 13px;}
 
 .auth_req_lttr_form .image span { font-size: 13px; font-weight: 400; color: #212121;}
+
+.auth_req_lttr_form .form-label .status {background-color: #139130;font-size: 13px;color: #fff;padding: 3px 10px 5px 10px;border-radius: 5px;}
+.auth_req_lttr_form .form-label .date {font-size: 15px;color: #8e8e8e;font-weight: 500;margin: 0px 5px 0px 5px;}
+
+.form-control .disabled { opacity: 0.5 !important; pointer-events: none !important;  }
 
 @media only screen and (max-width: 1100px) {
     .main_div_inner_register {}
