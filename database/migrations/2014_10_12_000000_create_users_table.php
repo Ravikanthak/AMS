@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->integer('user_type');
+            $table->string('organization_id')->nullable();
+            $table->string('name');
+            $table->string('email')->nullable();
+
             $table->string('username')->unique();
             $table->string('status');
             $table->timestamp('last_login');
@@ -21,6 +25,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
