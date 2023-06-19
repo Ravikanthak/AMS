@@ -1,0 +1,9 @@
+php artisan migrate:refresh --path=/database/migrations/2023_06_15_094723_create_auth_req_ltr_troops_table.php
+
+
+php artisan migrate:refresh --path=/database/migrations/2023_06_15_114907_create_auth_req_ltr_troops_fwds_table.php
+
+
+php artisan migrate:refresh --path=/database/migrations/2023_06_19_092731_create_vehicle_types_table.php
+
+

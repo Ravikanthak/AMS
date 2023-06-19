@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>View Authority Requests (Troops Transportation)</h1>
+            <h1>View Sent Authority Requests (Troops Transportation)</h1>
           </div>
         </div>
       </div>
@@ -37,64 +37,68 @@
           <section class="col-lg-12 connectedSortable ui-sortable">
             <div class="card auth_req_lttr_form">
 
-              <table class="table stripe hover row-border order-column" id="table_auth_req_lttr_troops">
+              <table class="table stripe hover row-border order-column" id="table_auth_req_ltr_troops">
                 <thead>
                 <tr>
-                  <th>#ID</th>
+                  <th>#Auth Req Ltr ID</th>
                   <th>Date</th>
-                  <th>Request Made by</th>
-                  <th>Request Fwd to</th>
+                  <th>Request From</th>
+                  <!-- <th>Status</th> -->
+                  <th>Request To</th>
+                  <!-- <th>Status</th> -->
                   <th>Action</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                @foreach($auth_req_lttr_troops as $req_lttr)
+                @foreach($auth_req_ltr_troops as $req_ltr)
                   <tr>
-                      <td>{{$req_lttr->auth_req_lttr_troops_id}}</td>
-                      <td>{{$req_lttr->date}}</td>
+                      <td>{{$req_ltr->id}}</td>
+                      <td>{{$req_ltr->created_at}}</td>
                       <td>
-                        @if($req_lttr->req_fwd_by == 3)Establishment Head
-                        @elseif($req_lttr->req_fwd_by == 4)Establishment Subject Clerk
-                        @elseif($req_lttr->req_fwd_by == 6)Bde Comd
-                        @elseif($req_lttr->req_fwd_by == 7)BM
-                        @elseif($req_lttr->req_fwd_by == 9)Div Comd
-                        @elseif($req_lttr->req_fwd_by == 10)Div Col GS
-                        @elseif($req_lttr->req_fwd_by == 12)SFHQ BGS
-                        @elseif($req_lttr->req_fwd_by == 13)SFHQ Col GS
-                        @elseif($req_lttr->req_fwd_by == 14)SFHQ GSO I
-                        @elseif($req_lttr->req_fwd_by == 15)SFHQ GSO II
-                        @elseif($req_lttr->req_fwd_by == 16)SFHQ Subject Clerk
-                        @elseif($req_lttr->req_fwd_by == 18)D-Ops Director
-                        @elseif($req_lttr->req_fwd_by == 19)D-Ops SO (Special Ops)
-                        @elseif($req_lttr->req_fwd_by == 20)D-Ops SO (Coordination Ops)
-                        @elseif($req_lttr->req_fwd_by == 21)D-Ops Subject Clerk (Special Ops)
-                        @elseif($req_lttr->req_fwd_by == 22)D-Ops Subject Clerk (Coordination Ops)
+                        @if($req_ltr->req_fwd_by == 3)Establishment Head
+                        @elseif($req_ltr->req_fwd_by == 4)Establishment Subject Clerk
+                        @elseif($req_ltr->req_fwd_by == 6)Bde Comd
+                        @elseif($req_ltr->req_fwd_by == 7)BM
+                        @elseif($req_ltr->req_fwd_by == 9)Div Comd
+                        @elseif($req_ltr->req_fwd_by == 10)Div Col GS
+                        @elseif($req_ltr->req_fwd_by == 12)SFHQ BGS
+                        @elseif($req_ltr->req_fwd_by == 13)SFHQ Col GS
+                        @elseif($req_ltr->req_fwd_by == 14)SFHQ GSO I
+                        @elseif($req_ltr->req_fwd_by == 15)SFHQ GSO II
+                        @elseif($req_ltr->req_fwd_by == 16)SFHQ Subject Clerk
+                        @elseif($req_ltr->req_fwd_by == 18)D-Ops Director
+                        @elseif($req_ltr->req_fwd_by == 19)D-Ops SO (Special Ops)
+                        @elseif($req_ltr->req_fwd_by == 20)D-Ops SO (Coordination Ops)
+                        @elseif($req_ltr->req_fwd_by == 21)D-Ops Subject Clerk (Special Ops)
+                        @elseif($req_ltr->req_fwd_by == 22)D-Ops Subject Clerk (Coordination Ops)
                         @endif
                       </td>
+                      <!-- <td>{{$req_ltr->req_fwd_by_status}}</td> -->
                       <td>
-                        @if($req_lttr->req_fwd_to == 3)Establishment Head
-                        @elseif($req_lttr->req_fwd_to == 4)Establishment Subject Clerk
-                        @elseif($req_lttr->req_fwd_to == 6)Bde Comd
-                        @elseif($req_lttr->req_fwd_to == 7)BM
-                        @elseif($req_lttr->req_fwd_to == 9)Div Comd
-                        @elseif($req_lttr->req_fwd_to == 10)Div Col GS
-                        @elseif($req_lttr->req_fwd_to == 12)SFHQ BGS
-                        @elseif($req_lttr->req_fwd_to == 13)SFHQ Col GS
-                        @elseif($req_lttr->req_fwd_to == 14)SFHQ GSO I
-                        @elseif($req_lttr->req_fwd_to == 15)SFHQ GSO II
-                        @elseif($req_lttr->req_fwd_to == 16)SFHQ Subject Clerk
-                        @elseif($req_lttr->req_fwd_to == 18)D-Ops Director
-                        @elseif($req_lttr->req_fwd_to == 19)D-Ops SO (Special Ops)
-                        @elseif($req_lttr->req_fwd_to == 20)D-Ops SO (Coordination Ops)
-                        @elseif($req_lttr->req_fwd_to == 21)D-Ops Subject Clerk (Special Ops)
-                        @elseif($req_lttr->req_fwd_to == 22)D-Ops Subject Clerk (Coordination Ops)
+                        @if($req_ltr->req_fwd_to == 3)Establishment Head
+                        @elseif($req_ltr->req_fwd_to == 4)Establishment Subject Clerk
+                        @elseif($req_ltr->req_fwd_to == 6)Bde Comd
+                        @elseif($req_ltr->req_fwd_to == 7)BM
+                        @elseif($req_ltr->req_fwd_to == 9)Div Comd
+                        @elseif($req_ltr->req_fwd_to == 10)Div Col GS
+                        @elseif($req_ltr->req_fwd_to == 12)SFHQ BGS
+                        @elseif($req_ltr->req_fwd_to == 13)SFHQ Col GS
+                        @elseif($req_ltr->req_fwd_to == 14)SFHQ GSO I
+                        @elseif($req_ltr->req_fwd_to == 15)SFHQ GSO II
+                        @elseif($req_ltr->req_fwd_to == 16)SFHQ Subject Clerk
+                        @elseif($req_ltr->req_fwd_to == 18)D-Ops Director
+                        @elseif($req_ltr->req_fwd_to == 19)D-Ops SO (Special Ops)
+                        @elseif($req_ltr->req_fwd_to == 20)D-Ops SO (Coordination Ops)
+                        @elseif($req_ltr->req_fwd_to == 21)D-Ops Subject Clerk (Special Ops)
+                        @elseif($req_ltr->req_fwd_to == 22)D-Ops Subject Clerk (Coordination Ops)
                         @endif
                       </td>
+                      <!-- <td>{{$req_ltr->req_fwd_to_status}}</td> -->
                       <td>
-                        <span id="{{$req_lttr->auth_req_lttr_troops_id}}" class="track_btn btn btn-primary view" data-toggle="modal" data-target="#TrackModal">Track</span>
-                        <span id="{{$req_lttr->auth_req_lttr_troops_id}}" class="btn btn-primary view" data-toggle="modal" data-target="#ViewModal">View</span>
-                        <a target="_blank" href="{{route('auth_req_lttr_troops')}}/{{$req_lttr->auth_req_lttr_troops_id}}" id="{{$req_lttr->auth_req_lttr_troops_id}}" class="btn btn-success edit">Edit</a>
+                        <span id="{{$req_ltr->id}}" class="track_btn btn btn-primary" data-toggle="modal" data-target="#TrackModal">Track</span>
+                        <span id="{{$req_ltr->id}}" class="view_btn btn btn-primary" data-toggle="modal" data-target="#ViewModal">View</span>
+                        <a target="_blank" href="{{route('auth_req_ltr_troops')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Edit</a>
                       </td>
                   </tr>
                 @endforeach
@@ -170,20 +174,39 @@
 
   $(document).ready(function() {
 
+
         // Datatable
-        $('#table_auth_req_lttr_troops').DataTable();
+        $('#table_auth_req_ltr_troops').DataTable();
 
-        var ReqId = "--"
 
-        // View details
-        $("body").on("click",".view",function(){
+        var ReqId = ""
+
+
+        // Track Button
+        $("body").on("click",".track_btn",function(){
+
+            ReqId = $(this).attr('id');
+
+            $.ajax({
+                url:"{{ url('') }}/auth_req_ltr_troops_track_btn",
+                method:'POST',
+                data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId },
+                success: function(response) {
+                  $('.track_requestsin').html(response)
+                }
+            });
+        });   
+
+        
+        // View Button
+        $("body").on("click",".view_btn",function(){
             
             $('#myInput').trigger('focus')
 
             ReqId = $(this).attr("id");
 
             $.ajax({
-                url:"{{ url('') }}/auth_req_lttr_troops_view_btn",
+                url:"{{ url('') }}/auth_req_ltr_troops_view_btn",
                 method:'POST',
                 // dataType:'json',
                 data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },
@@ -193,7 +216,7 @@
             });
 
             $.ajax({ // Check req ltr status to change approve and decline buttons
-                url:"{{ url('') }}/auth_req_lttr_troops_check_status",
+                url:"{{ url('') }}/auth_req_ltr_troops_check_status",
                 method:'POST',
                 // dataType:'json',
                 data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },
@@ -210,59 +233,17 @@
                     }
                 }
             });
-
-
         });
 
 
-        // Track Button
-        $("body").on("click",".track_btn",function(){
-
-            ReqId = $(this).attr('id');
-
-            $.ajax({
-                url:"{{ url('') }}/auth_req_lttr_troops_track_btn",
-                method:'POST',
-                data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId },
-                success: function(response) {
-                  $('.track_requestsin').html(response)
-                }
-            });
-
-        });
 
 
-        $("body").on("click",".take_action_btn",function(){
-       
 
-
-          // var req_fwd_ut_id = $('#request_forward').val();
-          // if (req_fwd_ut_id == '') {
-          //   alert('Please select Request Forward to')
-          // }
-          // else{
-          //   $.ajax({
-          //       url:"{{ url('') }}/auth_req_lttr_troops_take_ation_btn",
-          //       method:'POST',
-          //       dataType:'json',
-          //       data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId , req_fwd_ut_id:req_fwd_ut_id },
-          //       success: function(response) {
-          //         if (response.msg == 'Approved') {
-          //           $('.approve_btn').text('Approved');
-          //           $('.approve_btn').prop('disabled', true);
-          //           $('.decline_btn').prop('disabled', true);
-          //         }
-          //       }
-          //   });
-          // }
-
-        });
-
-
+        
         $("body").on("click",".decline_btn",function(){
           
             $.ajax({
-                url:"{{ url('') }}/auth_req_lttr_troops_decline",
+                url:"{{ url('') }}/auth_req_ltr_troops_decline",
                 method:'POST',
                 dataType:'json',
                 data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId },

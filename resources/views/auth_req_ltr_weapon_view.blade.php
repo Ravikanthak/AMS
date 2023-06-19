@@ -37,7 +37,7 @@
           <section class="col-lg-12 connectedSortable ui-sortable">
             <div class="card auth_req_lttr_form">
 
-              <table class="table stripe hover row-border order-column" id="table_auth_req_lttr_troops">
+              <table class="table stripe hover row-border order-column" id="table_auth_req_ltr_troops">
                 <thead>
                 <tr>
                   <th>#ID</th>
@@ -214,7 +214,7 @@
   $(document).ready(function() {
 
         // Datatable
-        $('#table_auth_req_lttr_troops').DataTable();
+        $('#table_auth_req_ltr_troops').DataTable();
 
 
         // View details
@@ -225,7 +225,7 @@
             var leaveID = $(this).attr("id");
 
             $.ajax({
-                url:"{{ url('') }}/auth_req_lttr_weapons_view_btn",
+                url:"{{ url('') }}/auth_req_ltr_weapons_view_btn",
                 method:'POST',
                 // dataType:'json',
                 data:{ "_token": "{{ csrf_token() }} " , leaveID:leaveID },

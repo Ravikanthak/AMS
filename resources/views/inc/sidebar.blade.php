@@ -41,19 +41,19 @@
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr_troops')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_troops')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Create Authority Req</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr_troops_view')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_troops_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>View Requests</p>
+              <p>View Sent Requests</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr_troops_take_action_view')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_troops_take_action_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Take Action</p>
             </a>
@@ -70,20 +70,20 @@
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr_weapon')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_weapon')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Create Authority Req</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('auth_req_lttr_weapon_view')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_weapon_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>View Requests</p>
             </a>
           </li>
 
           <!-- <li class="nav-item">
-            <a href="{{route('auth_req_lttr_weapon')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_weapon')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Explosive</p>
             </a>
