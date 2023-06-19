@@ -1,34 +1,36 @@
 <a href="#" class="brand-link">
-  <img src="{{ asset('/img/logo.png') }}" alt="SL ARMY" class="brand-image img-circle elevation-3" style="opacity: .8">
-  <span class="brand-text font-weight-light">WTTAM System</span>
+    <img src="{{ asset('/img/logo.png') }}" alt="SL ARMY" class="brand-image img-circle elevation-3"
+         style="opacity: .8">
+    <span class="brand-text font-weight-light">WTTAM System</span>
 </a>
 
 <div class="sidebar">
 
-  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <div class="image">
-      <!-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image text-orange">
+            <!-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+            {{ Auth::user()->name }}
+        </div>
+        <div class="info">
+        </div>
     </div>
-    <div class="info">
-    </div>
-  </div>
 
-  <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-      <li class="nav-item dashboard_li">
-        <a href="{{route('dashboard')}}" class="nav-link">
-          <i class="nav-icon fas fa-tachometer-alt"></i>
-          <p>Dashboard</p>
-        </a>
-      </li>    
+            <li class="nav-item dashboard_li">
+                <a href="{{route('dashboard')}}" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
 
-      <li class="nav-item add_establishment_li">
-        <a href="{{route('add_org')}}" class="nav-link">
-          <i class="nav-icon fas fa-solid fa-building"></i>
-          <p>Add Organization</p>
-        </a>
-      </li>  
+            <li class="nav-item add_establishment_li">
+                <a href="{{route('add_org')}}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-building"></i>
+                    <p>Add Organization</p>
+                </a>
+            </li>
 
       <li class="nav-item troops_transport_li">
         <a href="#" class="nav-link">
@@ -89,97 +91,111 @@
         </ul>
       </li>
 
-      <li class="nav-item report_li">
-        <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-file-alt"></i>
-          <p>Report
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="../tables/simple.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Troops Authority Reqs</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../tables/data.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Weapon Authority Reqs</p>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-
-      @if (isset(auth()->user()->user_type) && auth()->user()->user_type == '1')
-        <li class="nav-item settings_li">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-cog"></i>
-            <p>Settings
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{route('create_user')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Create Admin User</p>
-              </a>
+            <li class="nav-item report_li">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt"></i>
+                    <p>Report
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="../tables/simple.html" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Troops Authority Reqs</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../tables/data.html" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Weapon Authority Reqs</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
-          </ul>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="../tables/simple.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Change Password</p>
-              </a>
+
+
+            {{--@if (isset(auth()->user()->user_type) && auth()->user()->user_type == '1')--}}
+            {{--<li class="nav-item settings_li">--}}
+            {{--<a href="#" class="nav-link">--}}
+            {{--<i class="nav-icon fas fa-cog"></i>--}}
+            {{--<p>Settings--}}
+            {{--<i class="fas fa-angle-left right"></i>--}}
+            {{--</p>--}}
+            {{--</a>--}}
+            {{--<ul class="nav nav-treeview">--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="{{route('create_user')}}" class="nav-link">--}}
+            {{--<i class="far fa-circle nav-icon"></i>--}}
+            {{--<p>Create Admin User</p>--}}
+            {{--</a>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
+            {{--<ul class="nav nav-treeview">--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="../tables/simple.html" class="nav-link">--}}
+            {{--<i class="far fa-circle nav-icon"></i>--}}
+            {{--<p>Change Password</p>--}}
+            {{--</a>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
+            {{--</li>--}}
+            {{--@else--}}
+            {{--@endif--}}
+
+
+            <li class="nav-item settings_li">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-cog"></i>
+                    <p>User Management
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                @if(Auth::user()->user_type ==1))
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('org_armoury.index')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Organization Armoury</p>
+                        </a>
+                    </li>
+                </ul>
+                @endif
+                @if(Auth::user()->user_type !=1 || auth()->user()->can('role-management'))
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('roles.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Role Manage</p>
+                            </a>
+                        </li>
+                    </ul>
+                @endif
+                @if(Auth::user()->user_type ==1 || Auth::user()->user_type ==2 || Auth::user()->user_type ==5 || Auth::user()->user_type ==8 || Auth::user()->user_type ==11 || Auth::user()->user_type ==17 || auth()->user()->can('user-management'))
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('create_user')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>User Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                @endif
+                @if(Auth::user()->user_type !=1  || auth()->user()->can('view-organization-resources'))
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('resource.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Org Resources</p>
+                            </a>
+                        </li>
+                    </ul>
+                @endif
+
             </li>
-          </ul>
-        </li>
-      @else
-      @endif
 
 
-      <li class="nav-item settings_li">
-        <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-cog"></i>
-          <p>User Management
-            <i class="fas fa-angle-left right"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{route('roles.index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Role Manage</p>
-            </a>
-          </li>
-        </ul>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{route('create_user')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>User Create</p>
-            </a>
-          </li>
         </ul>
 
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{route('org_armoury.index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Organization Armoury</p>
-            </a>
-          </li>
-        </ul>
-
-
-      </li>
-
-
-    </ul>
-
-  </nav>
+    </nav>
 </div>

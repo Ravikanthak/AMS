@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('organization_armories', function (Blueprint $table) {
             $table->id();
             $table->string('organization');
+            $table->string('organization_api_id');
             $table->string('organization_type');
             $table->string('armory');
             $table->integer('armory_api_id');
