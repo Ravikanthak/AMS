@@ -7,6 +7,7 @@ use App\Http\Controllers\OrganizationArmoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthReqController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\OrganizationResourceController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -47,12 +48,17 @@ Route::group(['middleware' => 'auth'], function () {
 //Establishment Armoury
 Route::resource('/org_armoury', OrganizationArmoryController::class);
 Route::post('/get-organization-armory-dt', [OrganizationArmoryController::class,'getEstabligetOrganizationArmoryDt'])->name('get-organization-armory-dt');
+Route::post('/get-organization-type', [OrganizationArmoryController::class,'getOrganizationType'])->name('get-organization-type');
 
 //establishment admin save
 Route::resource('/admin', AdminController::class);
 
+//establishment admin save
+Route::resource('/resource', OrganizationResourceController::class);
+
 //organization admin view
 Route::get('/create_user' , [AdminController::class , 'create_user'] )->name('create_user');
+Route::post('/get-admin-user-type' , [AdminController::class , 'getAdminUserType'] )->name('get-admin-user-type');
 
 
 //roles

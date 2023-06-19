@@ -52,6 +52,7 @@
 {{--{{Auth::user()->id}}--}}
                                         <div class="col-md-12 ">
                                             <div class="form-group mb-3">
+                                                <input type="hidden" id="org_text" name="org_text" value="">
                                                 <label for="organization" class="form-label">Select
                                                     Organization</label>
                                                 <div class="dropdown">
@@ -94,10 +95,11 @@
                                                 <div class="dropdown">
                                                     <select class="form-select" name="organization_type"
                                                             id="organization_type">
-                                                        <option value="unit" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='unit'?'selected':'':'' }}>Unit</option>
+{{--                                                        <option value="unit" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='unit'?'selected':'':'' }}>Unit</option>--}}
+                                                        <option value="estb" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='estb'?'selected':'':'' }}>Establishment</option>
                                                         <option value="bde" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='bde'?'selected':'':'' }}>Bde</option>
                                                         <option value="div" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='div'?'selected':'':'' }}>Div</option>
-                                                        <option value="sfq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>
+                                                        <option value="sfhq" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='sfhq'?'selected':'':'' }}>SFHQ/1 Corps</option>
                                                         <option value="dops" {{ isset($selectedMapData[0]->organization_type)?$selectedMapData[0]->organization_type=='dops'?'selected':'':'' }}>D-Ops</option>
                                                     </select>
                                                 </div>
@@ -244,11 +246,16 @@
 
 
             //Organizations
+            $('#organization').change(function () {
+
+                $orgText = $('#organization').select2('data')[0].text;
+                $('#org_text').val($orgText);
+            });
             $(document).ready(function () {
                 // $('#organization').change(function () {
                 $.ajax({
                     url: 'https://172.16.60.51/beta/api/get_establishments/',
-                    // https://172.16.60.51/beta/api/get_establishments/?&str-token=1189d8dde195a36a9c4a721a390a74e6
+                    // url: 'https://172.16.60.51/beta/api/get_establishments/?&str-token=1189d8dde195a36a9c4a721a390a74e6',
                     method: 'GET',
                     cache: false,
                     async: false,
@@ -260,7 +267,7 @@
 
                         var organizationArray = [];
                         $.each(data, function (id, name) {
-                            organizationArray.push({id: name.name, text: name.name});
+                            organizationArray.push({id: name.id, text: name.name});
                         });
                         // console.log(organizationArray)
 
@@ -270,6 +277,7 @@
                         $("#organization").next('span').find('span span').addClass("organization-select");
                     },
                     error: function (e) {
+
                         console.log(e)
                     }
                 });

@@ -10,7 +10,7 @@
                     <h2>Edit Role</h2>
                 </div>
                 <div class="text-end">
-                    <a class="btn btn-dark mt-5 mb-2" href="{{ route('roles.index') }}"> Back</a>
+                    <a class="btn btn-dark" href="{{ route('roles.index') }}"> Back</a>
                 </div>
             </div>
         </div>
@@ -28,14 +28,20 @@
         </div>
     @endif
 
-    <div class="col-md-12">
-        <div class="row">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+
+                    <div class="card auth_req_lttr_form">
+                        <div class="row">
             {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <strong class="mb-1 mt-1">Role Name</strong>
                     <div class="form-group">
-                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control ibacor_fi' ,'id' =>'name','data-prefix'=>"{$orgType[0]['organization_type']}-")) !!}
+
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -55,7 +61,12 @@
             </div>
             {!! Form::close() !!}
         </div>
-    </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
 
     <footer class="main-footer">
         @include('inc/footer')
@@ -70,5 +81,7 @@
 @endpush
 
 @push('scripts')
+
+    <script src="{{asset('/js/prefix/jquery.prefix-input.js')}}"></script>
 
 @endpush

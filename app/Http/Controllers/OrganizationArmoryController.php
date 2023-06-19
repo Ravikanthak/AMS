@@ -30,9 +30,9 @@ class OrganizationArmoryController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
         OrganizationArmory::create([
-            'organization'=> $request->organization,
+            'organization'=> $request->org_text,
+            'organization_api_id'=> $request->organization,
             'organization_type'=> $request->organization_type,
             'armory'=> $request->selected_armoury,
             'armory_api_id'=> $request->armoury,
@@ -40,6 +40,14 @@ class OrganizationArmoryController extends Controller
         ]);
 
         return redirect()->route('org_armoury.index')->with('success','Record saved successfully');
+    }
+
+    public function getOrganizationType(Request $request)
+    {
+        $orgType= OrganizationArmory::where('id',$request->organization)
+            ->get('organization_type');
+
+        return $orgType;
     }
 
     public function getEstabligetOrganizationArmoryDt(Request $request)
