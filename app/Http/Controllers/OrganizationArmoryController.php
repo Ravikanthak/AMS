@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EstablishmentArmory;
 use App\Models\OrganizationArmory;
+use App\Models\OrganizationTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -14,7 +15,9 @@ class OrganizationArmoryController extends Controller
      */
     public function index()
     {
-        return view('organization_armory.index');
+        $orgTypes = OrganizationTypes::get();
+
+        return view('organization_armory.index',compact('orgTypes'));
     }
 
     /**
@@ -85,8 +88,10 @@ class OrganizationArmoryController extends Controller
     {
         $selectedMapData = OrganizationArmory::where('id',$id)
             ->get();
-//        dd($selectedMapData[0]->armory);
-        return view('organization_armory.index', compact('selectedMapData'));
+
+        $orgTypes = OrganizationTypes::get();
+
+        return view('organization_armory.index', compact('selectedMapData','orgTypes'));
     }
 
     /**
@@ -96,7 +101,7 @@ class OrganizationArmoryController extends Controller
     {
         OrganizationArmory::where('id',$id)
             ->update([
-                'organization'=> $request->organization,
+                'organization'=> $request->org_text,
                 'organization_type'=> $request->organization_type,
                 'armory'=> $request->selected_armoury,
                 'armory_api_id'=> $request->armoury,
