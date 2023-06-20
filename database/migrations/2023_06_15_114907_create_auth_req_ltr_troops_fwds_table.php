@@ -18,7 +18,9 @@ return new class extends Migration
             $table->integer('req_fwd_to');
             $table->string('req_fwd_by_status',255);
             $table->string('req_fwd_to_status',255);
-            $table->text('comments');
+            $table->text('comment_approve');
+            $table->text('comment_decline');
+            $table->integer('organization_id');
             $table->timestamps();
         });
     }

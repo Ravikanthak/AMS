@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('attachment', 255)->nullable();
             $table->integer('req_fwd_by');
             $table->integer('req_fwd_to');
+            $table->integer('organization_id');
             $table->string('ip', 255);
             $table->timestamps();
             $table->softDeletes();

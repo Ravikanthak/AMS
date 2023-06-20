@@ -100,6 +100,8 @@ Route::post('/auth_req_ltr_troops_loaddata_tofields' , [AuthReqController::class
 
 Route::post('/auth_req_ltr_troops_approve_btn' , [AuthReqController::class , 'auth_req_ltr_troops_approve_btn'] )->name('auth_req_ltr_troops_approve_btn');
 
+Route::post('/auth_req_ltr_troops_final_approve_btn' , [AuthReqController::class , 'auth_req_ltr_troops_final_approve_btn'] )->name('auth_req_ltr_troops_final_approve_btn');
+
 Route::post('/auth_req_ltr_troops_decline_btn' , [AuthReqController::class , 'auth_req_ltr_troops_decline_btn'] )->name('auth_req_ltr_troops_decline_btn');
 
 Route::post('/auth_req_ltr_troops_check_status' , [AuthReqController::class , 'auth_req_ltr_troops_check_status'] )->name('auth_req_ltr_troops_check_status');

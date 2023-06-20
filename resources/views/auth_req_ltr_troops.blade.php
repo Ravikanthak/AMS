@@ -353,7 +353,6 @@
 
 
                   <div class="col-md-12">
-                    <div class="alert alert-success" role="alert"></div>
                     <div class="alert alert-danger" role="alert"></div>
                   </div>
 
@@ -392,7 +391,6 @@
 
 $(document).ready(function() {
 
-    $('.alert-success').hide()
     $('.alert-danger').hide()
 
     parameter_id = '{{$id}}' // id value in url parameter
@@ -422,18 +420,47 @@ $(document).ready(function() {
             processData: false,
             success: function(data) {
               if (data.status == 0) { // save success
-                  $('.alert-success').show()
+                  $('.alert-danger').hide()
                   if (insert_or_update == 'insert') {
-                      $('.alert-success').html('Authority Request Created Successfully')
+
+                    $('#req_made_location').selectpicker('val', '');
+                    $('#reason').val('');
+                    $('#no_of_troops').val('');
+                    $('#transport_date').val('');
+                    $('#location_from').selectpicker('val', '');
+                    $('#location_to').selectpicker('val', '');
+                    $('#auth_given_by').val('');
+                    $('#route').val('');
+                    $('#type_of_veh').selectpicker('val', '');
+                    $('#no_of_seat').val('');
+                    $('#convoy').selectpicker('val', '');
+                    $('#escort').selectpicker('val', '');
+                    $('#escort_weapon_no').val('');
+                    $('#no_of_magazins').val('');
+                    $('#no_of_ammo').val('');
+                    $('#driver').selectpicker('val', '');
+                    $('#measures_taken').val('');
+                    $('#ref_of_ltr').val('');
+                    $('#request_forward_by').selectpicker('val', '');
+                    $('#request_forward_to').selectpicker('val', '');           
+
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Authority Request Created Successfully',
+                      showConfirmButton: false,
+                      timer: 2500
+                    })
                   }
                   else{
-                      $('.alert-success').html('Authority Request Updated Successfully')
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Authority Request Updated Successfully',
+                      showConfirmButton: false,
+                      timer: 2500
+                    })
                   }         
-                  $('.alert-danger').hide()
-                  setTimeout(hideMsg, 2500);
-                  function hideMsg() { 
-                      $('.alert-success').fadeOut()
-                  }
               }
               else{ // validation error
 

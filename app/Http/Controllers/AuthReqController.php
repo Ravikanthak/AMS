@@ -20,12 +20,15 @@ class AuthReqController extends Controller
         
         // Save User Type in Session
         $login_user_type_id = '';
+        $organization_id = '';
         if (empty(Auth()->user()->user_type)) {
             return redirect()->route('login');
         }
         else{
             $login_user_type_id = Auth()->user()->user_type;
+            $organization_id = Auth()->user()->organization_id;
             session(['user_type_id' => $login_user_type_id]);
+            session(['organization_id' => $organization_id]);
         }
 
         $organizations = DB::table('organization_armories')
@@ -195,6 +198,7 @@ class AuthReqController extends Controller
                     'attachment' => $imageName,
                     'req_fwd_by' => $req->request_forward_by,
                     'req_fwd_to' => $req->request_forward_to,
+                    'organization_id' => session('organization_id'),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'created_at' => Carbon::now(),
                 ]);
@@ -215,6 +219,7 @@ class AuthReqController extends Controller
                     $InsertFwdList1->req_fwd_to = $req->request_forward_to;
                     $InsertFwdList1->req_fwd_by_status = 'Request Created';
                     $InsertFwdList1->req_fwd_to_status = 'Pending';
+                    $InsertFwdList1->organization_id = session('organization_id');
                     $InsertFwdList1->save();
 
                 } else { // Update operation was performed
@@ -240,17 +245,40 @@ class AuthReqController extends Controller
 
         // Save User Type in Session
         $login_user_type_id = '';
+        $organization_id = '';
         if (empty(Auth()->user()->user_type)) {
             return redirect()->route('login');
         }
         else{
             $login_user_type_id = Auth()->user()->user_type;
+            $organization_id = Auth()->user()->organization_id;
             session(['user_type_id' => $login_user_type_id]);
+            session(['organization_id' => $organization_id]);
         }
 
+
+        // get auth_req_ltr_troops table details and alter its details
         $auth_req_ltr_troops = AuthReqLtrTroops::select('*')
         ->where('req_fwd_by' , $login_user_type_id)
+        ->where('organization_id' , session('organization_id'))
         ->get();
+
+        foreach($auth_req_ltr_troops as $dt){
+
+            $req_fwd_by_name = DB::table('user_types')->select('name')
+            ->where('id', $dt->req_fwd_by)
+            ->first();
+            
+            $req_fwd_to_name = DB::table('user_types')->select('name')
+            ->where('id', $dt->req_fwd_to)
+            ->first();
+
+            $dt->req_fwd_by = $req_fwd_by_name->name;
+            $dt->req_fwd_to = $req_fwd_to_name->name;
+        }
+        // get auth_req_ltr_troops table details and alter its details
+
+
 
         $organization_types = DB::table('user_types')
         ->select( 'id','name')
@@ -314,11 +342,15 @@ class AuthReqController extends Controller
         ->join('organization_armories AS oa', 'atl.request_made_by', '=', 'oa.id')
         ->where('atl.id', $req->ReqId)
         ->get();
-            
 
         $html = "";
 
         foreach($data as $dt){
+
+            $auth_req_ltr_troops_fwds_id = AuthReqLtrTroopsFwd::select('id')
+            ->where('auth_req_ltr_troops_id', $dt->id)
+            // ->first()
+            ->value('id');
 
             $location_from = DB::table('organization_armories')
             ->select('organization')
@@ -330,7 +362,16 @@ class AuthReqController extends Controller
             ->where('id', $dt->location_to)
             ->first();
 
-            $link = route('auth_req_ltr_troops_take_action') . '/' . $dt->id;
+
+            $link = route('auth_req_ltr_troops_take_action') . '/' . $auth_req_ltr_troops_fwds_id;
+            
+            $take_action_btn = "";
+            if (Auth()->user()->user_type != 4 ) { // 4 = Subject Clerk
+                $take_action_btn = "<a target='_blank' href='{$link}' id='{$auth_req_ltr_troops_fwds_id}' class='btn btn-success edit'>Take Action</a>";
+            }
+            else{
+            }
+            
 
             $html .= "
             <div class='modal-body view_auth_req_ltr_troops_details'>
@@ -350,12 +391,11 @@ class AuthReqController extends Controller
             <p>14. Measures taken for the sy of tps to be transported : <span>{$dt->measures}</span></p>
             <p>15. Ref of ltr/msg of 'hiring auth to the Ay' for veh which use civil no plates : <span>{$dt->ref_of_ltr}</span></p>
             </div>
-            <div class='modal-footer'>
-            <a target='_blank' href='{$link}' id='{$dt->id}' class='btn btn-success edit'>Take Action</a>
-            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+            <div class='modal-footer'>{$take_action_btn}<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
             </div>
             ";
         }
+
         print_r($html);
     }
     //// VIEW AUTH REQ LTR TROOPS ////
@@ -380,6 +420,7 @@ class AuthReqController extends Controller
 
         $auth_req_ltr_troops = AuthReqLtrTroopsFwd::select('*')
         ->where('req_fwd_to' , $login_user_type_id)
+        ->where('organization_id' , session('organization_id'))
         ->get();
 
         $organization_types = DB::table('user_types')
@@ -392,7 +433,7 @@ class AuthReqController extends Controller
 
 
     // Auth Req Ltr Troops Take Action - Page
-    public function auth_req_ltr_troops_take_action($auth_req_ltr_troops_id = null){
+    public function auth_req_ltr_troops_take_action($id = null){
 
         // Save User Type in Session
         $login_user_type_id = '';
@@ -403,58 +444,55 @@ class AuthReqController extends Controller
             $login_user_type_id = Auth()->user()->user_type;
             session(['user_type_id' => $login_user_type_id]);
         }
-
+        
          
         // get $auth_req_ltr_troops_fwds id value
-        $id = AuthReqLtrTroopsFwd::
-        select('id')
-        ->where('auth_req_ltr_troops_id',$auth_req_ltr_troops_id)
+        $auth_req_ltr_troops_id = AuthReqLtrTroopsFwd::
+        select('auth_req_ltr_troops_id')
+        ->where('id',$id)
         ->first()
-        ->value('id');
-
+        ->value('auth_req_ltr_troops_id');
  
+
         // get auth_req_ltr_troops_fwds table details and alter its details
-        $auth_req_ltr_troops_fwds = DB::table('auth_req_ltr_troops_fwds')
-        ->select('*')
-        ->where('auth_req_ltr_troops_id',$auth_req_ltr_troops_id)
+        $auth_req_ltr_troops_fwds = AuthReqLtrTroopsFwd::select('*')
+        ->where('id',$id)
         ->first();
 
-        $auth_req_ltr_troops_fwds = $auth_req_ltr_troops_fwds->req_fwd_by;
-        // dd($auth_req_ltr_troops_fwds);
+        $req_fwd_by = $auth_req_ltr_troops_fwds->req_fwd_by;
+        $req_fwd_to = $auth_req_ltr_troops_fwds->req_fwd_to;
 
-        // foreach($auth_req_ltr_troops_fwds as $dt){
+        $auth_req_ltr_troops_fwd_by_name_value =  AuthReqLtrTroopsFwd::
+        select('user_types.name', 'auth_req_ltr_troops_fwds.req_fwd_by')
+        ->join('user_types', 'auth_req_ltr_troops_fwds.req_fwd_by', '=', 'user_types.id')
+        ->where('req_fwd_by', $req_fwd_by)
+        ->value('name');
+        $auth_req_ltr_troops_fwds->req_fwd_by = $auth_req_ltr_troops_fwd_by_name_value;
 
-            $auth_req_ltr_troops_fwd_by_name_value =  DB::table('auth_req_ltr_troops_fwds')
-            ->select('user_types.name', 'auth_req_ltr_troops_fwds.req_fwd_by')
-            ->join('user_types', 'auth_req_ltr_troops_fwds.req_fwd_by', '=', 'user_types.id')
-            ->where('req_fwd_by', $auth_req_ltr_troops_fwds)
-            ->value('name');
-            $req_fwd_by = $auth_req_ltr_troops_fwd_by_name_value;
-
-            // $auth_req_ltr_troops_fwd_to_name_value =  DB::table('auth_req_ltr_troops_fwds')
-            // ->select('user_types.name', 'auth_req_ltr_troops_fwds.req_fwd_to')
-            // ->join('user_types', 'auth_req_ltr_troops_fwds.req_fwd_to', '=', 'user_types.id')
-            // ->where('req_fwd_to', $auth_req_ltr_troops_fwds->req_fwd_to)
-            // ->value('name');
-            // $req_fwd_to = $auth_req_ltr_troops_fwd_to_name_value;
-        // }
+        $auth_req_ltr_troops_fwd_to_name_value =  DB::table('auth_req_ltr_troops_fwds')
+        ->select('user_types.name', 'auth_req_ltr_troops_fwds.req_fwd_to')
+        ->join('user_types', 'auth_req_ltr_troops_fwds.req_fwd_to', '=', 'user_types.id')
+        ->where('req_fwd_to', $req_fwd_to)
+        ->value('name');
+        $auth_req_ltr_troops_fwds->req_fwd_to = $auth_req_ltr_troops_fwd_to_name_value;
+        // get auth_req_ltr_troops_fwds table details and alter its details
 
 
         // If already approved, get req_fwd_to name value
-        $req_fwd_to =  DB::table('auth_req_ltr_troops_fwds')
-        ->select('req_fwd_to', 'user_types.name')
+        $req_fwd_to_name =  AuthReqLtrTroopsFwd::
+        select('req_fwd_to', 'user_types.name')
         ->join('user_types', 'auth_req_ltr_troops_fwds.req_fwd_to', '=', 'user_types.id')
-        ->where('auth_req_ltr_troops_id', 13)
         ->offset(1)
         ->limit(1)
-        ->value('req_fwd_to');
+        ->value('name');
+
 
         // Get organization name list
         $organization_types = DB::table('user_types')
         ->select( 'id','name')
         ->get();
 
-        return view('auth_req_ltr_troops_take_action' , compact('auth_req_ltr_troops_fwds','req_fwd_to','organization_types'));
+        return view('auth_req_ltr_troops_take_action' , compact('auth_req_ltr_troops_fwds','req_fwd_to_name','organization_types'));
     }
     
 
@@ -467,12 +505,11 @@ class AuthReqController extends Controller
         
         // get $auth_req_ltr_troops_fwds id value
         $id = AuthReqLtrTroopsFwd::select('id')
-        ->where('auth_req_ltr_troops_id',$request->req_id)
+        ->where('id',$request->req_id)
         ->value('id');
 
-        $status = DB::table('auth_req_ltr_troops_fwds')
-        ->select('req_fwd_by_status' , 'req_fwd_to_status')
-        ->where('id', $id)
+        $status = AuthReqLtrTroopsFwd::select('req_fwd_by_status' , 'req_fwd_to_status')
+        ->where('id', $request->req_id)
         ->get();
 
         return response()->json(['status' => 1 , 'msg' => $status ]);
@@ -492,27 +529,22 @@ class AuthReqController extends Controller
             $login_user_type_id = Auth()->user()->user_type;
             session(['user_type_id' => $login_user_type_id]);
         }
-
-        // get $auth_req_ltr_troops_fwds id value
-        $id = AuthReqLtrTroopsFwd::select('id')
-        ->where('auth_req_ltr_troops_id',$request->req_id)
-        ->value('id');
         
         // Get the existing comments from the database
-        $existing_comments = AuthReqLtrTroopsFwd::
-        where('id', $id)
-        ->value('comments');
+        // $existing_comments = AuthReqLtrTroopsFwd::
+        // where('id', $request->req_id)
+        // ->value('comments');
 
         // Concatenate the new comments with the existing comments
-        $new_comments = $existing_comments . '|||' . $request->comments;
+        // $new_comments = $existing_comments . '|||' . $request->comments;
 
         AuthReqLtrTroopsFwd:: // Update status to Approved in 1st record
-        where('id', $id)
-        ->update(['req_fwd_to_status' => 'Approved' , 'comments' => $new_comments ]);
+        where('id', $request->req_id)
+        ->update(['req_fwd_to_status' => 'Approved' , 'comment_approve' => $request->comments ]);
 
         // Get auth_req_ltr_troops_id related to id
         $auth_req_ltr_troops_id = AuthReqLtrTroopsFwd::select('auth_req_ltr_troops_id')
-        ->where('id', $id)
+        ->where('id', $request->req_id)
         ->value('auth_req_ltr_troops_id');
 
         AuthReqLtrTroopsFwd::insert([ // Insert 2nd Request Pending record 
@@ -521,6 +553,7 @@ class AuthReqController extends Controller
             'req_fwd_to' => $request->request_forward_to,
             'req_fwd_by_status' => 'Forwarded',
             'req_fwd_to_status' => 'Pending',
+            'organization_id' => session('organization_id'),
             'created_at' => Carbon::now(),
         ]);
 
@@ -535,13 +568,59 @@ class AuthReqController extends Controller
 
         // get $auth_req_ltr_troops_fwds id value
         $id = AuthReqLtrTroopsFwd::select('id')
-        ->where('auth_req_ltr_troops_id',$request->req_id)
+        ->where('id',$request->req_id)
         ->value('id');
 
         $update = AuthReqLtrTroopsFwd::where('id', $id)
-        ->update(['req_fwd_to_status' => 'Declined' , 'comments' => $request->comments ]);
+        ->update(['req_fwd_to_status' => 'Declined' , 'comment_decline' => $request->comments ]);
 
         return response()->json(['status' => 1 , 'msg' => 'Declined']);
+    }
+
+
+
+    // Final Approve Button // Final Approve Req
+    public function auth_req_ltr_troops_final_approve_btn(Request $request){
+  
+        // Save User Type in Session
+        $login_user_type_id = '';
+        if (empty(Auth()->user()->user_type)) {
+            return redirect()->route('login');
+        }
+        else{
+            $login_user_type_id = Auth()->user()->user_type;
+            session(['user_type_id' => $login_user_type_id]);
+        }
+        
+        // Get the existing comments from the database
+        // $existing_comments = AuthReqLtrTroopsFwd::
+        // where('id', $request->req_id)
+        // ->value('comments');
+
+        // Concatenate the new comments with the existing comments
+        // $new_comments = $existing_comments . '|||' . $request->comments;
+
+        AuthReqLtrTroopsFwd:: // Update status to Approved in 1st record
+        where('id', $request->req_id)
+        ->update(['req_fwd_to_status' => 'Approved' , 'comment_approve' => $request->comments ]);
+
+        // Get auth_req_ltr_troops_id related to id
+        $auth_req_ltr_troops_id = AuthReqLtrTroopsFwd::select('auth_req_ltr_troops_id')
+        ->where('id', $request->req_id)
+        ->value('auth_req_ltr_troops_id');
+
+        AuthReqLtrTroopsFwd::insert([ // Insert 2nd Request Pending record 
+            'auth_req_ltr_troops_id' => $auth_req_ltr_troops_id,
+            'req_fwd_by' => $login_user_type_id,
+            'req_fwd_to' => $request->request_forward_to,
+            'req_fwd_by_status' => 'Forwarded',
+            'req_fwd_to_status' => 'Pending',
+            'organization_id' => session('organization_id'),
+            'created_at' => Carbon::now(),
+        ]);
+
+        return response()->json(['status' => 1 , 'msg' => 'Approved']);
+
     }
 
     //// VIEW AUTH REQ LTR TROOPS TAKE ACTION ////
