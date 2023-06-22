@@ -1,15 +1,17 @@
 <a href="#" class="brand-link">
     <img src="{{ asset('/img/logo.png') }}" alt="SL ARMY" class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text font-weight-light">WTTAM System</span>
+    <span class="brand-text font-weight-light">WTTAM System</span><br>
+    <p style="font-size: 12px; text-align: center;margin-top: 5px; color: cadetblue">{{ isset($userOrg)?$userOrg:'' }}</p>
 </a>
 
 <div class="sidebar">
 
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image text-orange">
+        <div class="image text-white">
             <!-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
-            {{ Auth::user()->name }}
+            {{ Auth::user()->name }}<br>
+
         </div>
         <div class="info">
         </div>
@@ -151,7 +153,7 @@
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
-                @if(Auth::user()->user_type ==1))
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type ==1))
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{route('org_armoury.index')}}" class="nav-link">
