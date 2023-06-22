@@ -21,9 +21,13 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="hidden" value="{{isset($orgArmoury)?$orgArmoury[0]['armory_api_id']:''}}" id="armory_api_id">
-                                <input type="hidden" value="{{isset($orgArmoury)?$orgArmoury[0]['organization_api_id']:''}}" id="org_api_id">
-                                Organization weapon details <span class="float-right">Armoury - {{isset($orgArmoury)?$orgArmoury[0]['armory']:'Not Assigned'}}</span>
+                                <input type="hidden" value="{{isset($orgArmoury)?$orgArmoury[0]['armory_api_id']:''}}"
+                                       id="armory_api_id">
+                                <input type="hidden"
+                                       value="{{isset($orgArmoury)?$orgArmoury[0]['organization_api_id']:''}}"
+                                       id="org_api_id">
+                                Organization weapon details <span
+                                        class="float-right">Armoury - {{isset($orgArmoury)?$orgArmoury[0]['armory']:'Not Assigned'}}</span>
                             </div>
 
                             <div class="col-md-12">
@@ -32,16 +36,17 @@
                                     <select aria-hidden="true" id="weaponList" name="weaponList[]"
                                             class="form-control weapon-list" multiple="multiple">
                                         {{--@if(isset($selectedMapData))--}}
-                                            {{--<option value="{{$selectedMapData[0]->armory_api_id}}">{{$selectedMapData[0]->armory}}</option>--}}
+                                        {{--<option value="{{$selectedMapData[0]->armory_api_id}}">{{$selectedMapData[0]->armory}}</option>--}}
                                         {{--@else--}}
-                                            {{--<option value="">Select Armoury</option>--}}
+                                        {{--<option value="">Select Armoury</option>--}}
                                         {{--@endif--}}
                                     </select>
                                 </div>
                             </div>
                             <div class="button-container mt-2">
                                 <button type="button" class="btn btn-sm btn-primary" id="selectAll">Select All</button>
-                                <button type="button" class="btn btn-sm btn-primary" id="deselectAll">Deselect All</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="deselectAll">Deselect All
+                                </button>
                             </div>
                         </div>
 
@@ -62,9 +67,9 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                Organization strength details <span class="float-right">Organization - {{isset($orgArmoury)?$orgArmoury[0]['organization']:'Not Assigned'}}</span>
+                                Organization strength details <span
+                                        class="float-right">Organization - {{isset($orgArmoury)?$orgArmoury[0]['organization']:'Not Assigned'}}</span>
                             </div>
-
 
 
                             {{--officer--}}
@@ -82,8 +87,12 @@
                                 </div>
                             </div>
                             <div class="button-container mt-2">
-                                <button type="button" class="btn btn-sm btn-primary" id="selectAllOffcrStrength">Select All</button>
-                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllOffcrStrength">Deselect All</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="selectAllOffcrStrength">Select
+                                    All
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllOffcrStrength">
+                                    Deselect All
+                                </button>
                             </div>
 
                             {{--other--}}
@@ -101,8 +110,12 @@
                                 </div>
                             </div>
                             <div class="button-container mt-2">
-                                <button type="button" class="btn btn-sm btn-primary" id="selectAllOrStrength">Select All</button>
-                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllOrStrength">Deselect All</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="selectAllOrStrength">Select
+                                    All
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary" id="deselectAllOrStrength">Deselect
+                                    All
+                                </button>
                             </div>
 
                         </div>
@@ -125,6 +138,17 @@
 
 @include('inc/footer_assets')
 
+
+@push('page_css')
+    <style>
+        .select2-container--default .select2-search--inline .select2-search__field {
+color: black !important;
+        }
+    </style>
+@endpush
+
+
+
 @push('scripts')
     <script src="https://172.16.60.28/omms/test2/public/js/datepicker/datepicker.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -139,7 +163,7 @@
 
             //weapons
             $.ajax({
-                url: 'http://10.7.113.86/wims/api/location_wpn/get_location_wpn.php?id='+armouryId,
+                url: 'http://10.7.113.86/wims/api/location_wpn/get_location_wpn.php?id=' + armouryId,
                 method: 'GET',
                 cache: false,
                 dataType: 'json',
@@ -150,7 +174,10 @@
                     var weaponArray = [];
                     // console.log(data)
                     $.each(data.data, function (id, name) {
-                        weaponArray.push({id: name.current_wpn_number, text: name.current_wpn_number +' - '+name.wpn_name});
+                        weaponArray.push({
+                            id: name.current_wpn_number,
+                            text: name.current_wpn_number + ' - ' + name.wpn_name
+                        });
                     });
                     $('#weaponList').select2({
                         data: weaponArray
@@ -174,14 +201,11 @@
                 $("#weaponList > option").prop("selected", true);
                 $("#weaponList").trigger("change");
             }
+
             function deselectAll() {
                 $("#weaponList > option").prop("selected", false);
                 $("#weaponList").trigger("change");
             }
-
-
-
-
 
 
             //officer strength
@@ -189,7 +213,7 @@
             // let estbApiID = 176;
 
             $.ajax({
-                url: 'https://172.16.60.51/beta/api/get_estab_persons/?id='+estbApiID+'&type=1',
+                url: 'https://172.16.60.51/beta/api/get_estab_persons/?id=' + estbApiID + '&type=1',
                 method: 'GET',
                 cache: false,
                 async: false,
@@ -201,7 +225,7 @@
 
                     var offcrStrengthArray = [];
                     $.each(data, function (id, name) {
-                        offcrStrengthArray.push({id: name.e_no, text: name.abb_rank +' - '+name.name});
+                        offcrStrengthArray.push({id: name.e_no, text: name.abb_rank + ' - ' + name.name});
                     });
 
                     $('#offcrStrengthList').select2({
@@ -219,10 +243,12 @@
             $('#deselectAllOffcrStrength').on('click', function () {
                 deselectAllOfficers()
             });
+
             function selectAllOfficers() {
                 $("#offcrStrengthList > option").prop("selected", true);
                 $("#offcrStrengthList").trigger("change");
             }
+
             function deselectAllOfficers() {
                 $("#offcrStrengthList > option").prop("selected", false);
                 $("#offcrStrengthList").trigger("change");
@@ -231,7 +257,7 @@
 
             //OR strength
             $.ajax({
-                url: 'https://172.16.60.51/beta/api/get_estab_persons/?id='+estbApiID+'&type=2',
+                url: 'https://172.16.60.51/beta/api/get_estab_persons/?id=' + estbApiID + '&type=2',
                 method: 'GET',
                 cache: false,
                 async: false,
@@ -243,7 +269,7 @@
 
                     var orStrengthArray = [];
                     $.each(data, function (id, name) {
-                        orStrengthArray.push({id: name.e_no, text: name.abb_rank +' - '+name.name});
+                        orStrengthArray.push({id: name.e_no, text: name.abb_rank + ' - ' + name.name});
                     });
 
                     $('#orStrengthList').select2({
@@ -262,15 +288,16 @@
             $('#deselectAllOrStrength').on('click', function () {
                 deselectAllOrs()
             });
+
             function selectAllOrs() {
                 $("#orStrengthList > option").prop("selected", true);
                 $("#orStrengthList").trigger("change");
             }
+
             function deselectAllOrs() {
                 $("#orStrengthList > option").prop("selected", false);
                 $("#orStrengthList").trigger("change");
             }
-
 
 
         });
@@ -280,32 +307,30 @@
 
 @push('page_css')
     <style>
-    .weapon-list
-        {
+        .weapon-list {
             height: 35px !important;
         }
 
+        .select2-container--default .select2-dropdown .select2-search__field:focus, .select2-container--default .select2-search--inline .select2-search__field:focus {
+            outline: none !important;
+            border: none !important;
+            color: #fff;
 
-    .select2-container--default .select2-dropdown .select2-search__field:focus, .select2-container--default .select2-search--inline .select2-search__field:focus {
-        outline: none !important;
-        border: none !important;
-        color: #fff;
+        }
 
-    }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #007bff;
+            border-color: #006fe6;
+            margin-left: 5px;
+            margin-right: -2px;
+            color: #fff;
+        }
 
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: #007bff;
-        border-color: #006fe6;
-        margin-left: 5px;
-        margin-right: -2px;
-        color: #fff;
-    }
-
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
-        cursor: default;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+            cursor: default;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
     </style>
 
 @endpush
