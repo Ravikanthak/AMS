@@ -24,20 +24,20 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>Approve/Decline Authority Requests (Troops Transportation)</h1>
+            <h1>Approve/Decline Authority Requests (Weapons Transportation)</h1>
           </div>
         </div>
       </div>
     </section>
 
 
-    <section class="content table_auth_req_lttr_troops">
+    <section class="content table_auth_req_lttr_weapons">
       <div class="container-fluid">
         <div class="row mb-2">
           <section class="col-lg-12 connectedSortable ui-sortable">
             <div class="card auth_req_lttr_form">
 
-              <table class="table_auth_req_ltr table stripe hover row-border order-column" id="table_auth_req_ltr_troops">
+              <table class="table_auth_req_ltr table stripe hover row-border order-column" id="table_auth_req_ltr_weapons">
                 <thead>
                 <tr>
                   <th>#Auth Req Ltr ID</th>
@@ -51,9 +51,9 @@
                 </thead>
 
                 <tbody>
-                @foreach($auth_req_ltr_troops as $req_ltr)
+                @foreach($auth_req_ltr_weapons as $req_ltr)
                   <tr>
-                      <td>{{$req_ltr->auth_req_ltr_troops_id}}</td>
+                      <td>{{$req_ltr->auth_req_ltr_weapons_id}}</td>
                       <td>{{$req_ltr->created_at}}</td>
                       <td>
                         @if($req_ltr->req_fwd_by == 3)Establishment Head
@@ -65,7 +65,6 @@
                         @elseif($req_ltr->req_fwd_by == 12)SFHQ BGS
                         @elseif($req_ltr->req_fwd_by == 13)SFHQ Col GS
                         @elseif($req_ltr->req_fwd_by == 14)SFHQ GSO I
-                        @elseif($req_ltr->req_fwd_by == 15)SFHQ GSO II
                         @elseif($req_ltr->req_fwd_by == 16)SFHQ Subject Clerk
                         @elseif($req_ltr->req_fwd_by == 18)D-Ops Director
                         @elseif($req_ltr->req_fwd_by == 19)D-Ops SO (Special Ops)
@@ -96,10 +95,10 @@
                       </td>
                       <td>{{$req_ltr->req_fwd_to_status}}</td>
                       <td class="action_td">
-                      <span id="{{$req_ltr->auth_req_ltr_troops_id}}" class="track_btn btn btn-primary" data-toggle="modal" data-target="#TrackModal">Track</span>
-                      <span id="{{$req_ltr->auth_req_ltr_troops_id}}" class="view_btn btn btn-primary" data-toggle="modal" data-target="#ViewModal">View</span>
-                      <a target="_blank" href="{{route('auth_req_ltr_troops')}}/{{$req_ltr->auth_req_ltr_troops_id}}" id="{{$req_ltr->auth_req_ltr_troops_id}}" class="btn btn-success edit">Edit</a>
-                      <a target="_blank" href="{{route('auth_req_ltr_troops_take_action')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Take Action</a>
+                      <span id="{{$req_ltr->auth_req_ltr_weapons_id}}" class="track_btn btn btn-primary" data-toggle="modal" data-target="#TrackModal">Track</span>
+                      <span id="{{$req_ltr->auth_req_ltr_weapons_id}}" class="view_btn btn btn-primary" data-toggle="modal" data-target="#ViewModal">View</span>
+                      <a target="_blank" href="{{route('auth_req_ltr_weapons')}}/{{$req_ltr->auth_req_ltr_weapons_id}}" id="{{$req_ltr->auth_req_ltr_weapons_id}}" class="btn btn-success edit">Edit</a>
+                      <a target="_blank" href="{{route('auth_req_ltr_weapons_take_action')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Take Action</a>
                       </td>
                   </tr>
                 @endforeach
@@ -113,10 +112,6 @@
     </section>
 
 
-
-
-
-
     <!-- View Authority Request Popup Model -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -127,7 +122,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="view_auth_req_lttr_troops_details_div"></div>
+          <div class="modal-body view_auth_req_lttr_weapons_details_div"></div>
         </div>
       </div>
     </div>
@@ -144,7 +139,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body view_auth_req_lttr_troops_track">
+          <div class="modal-body view_auth_req_lttr_weapons_track">
 
             <div class="track_requests">
               <div class="track_requestsin">
@@ -178,7 +173,7 @@
   $(document).ready(function() {
 
       // Datatable
-      $('#table_auth_req_ltr_troops').DataTable();
+      $('#table_auth_req_ltr_weapons').DataTable();
 
 
       var ReqId = ""
@@ -190,7 +185,7 @@
           ReqId = $(this).attr('id');
 
           $.ajax({
-              url:"{{ url('') }}/auth_req_ltr_troops_track_btn",
+              url:"{{ url('') }}/auth_req_ltr_weapons_track_btn",
               method:'POST',
               data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId },
               success: function(response) {
@@ -208,17 +203,17 @@
           ReqId = $(this).attr("id");
 
           $.ajax({
-              url:"{{ url('') }}/auth_req_ltr_troops_view_btn",
+              url:"{{ url('') }}/auth_req_ltr_weapons_view_btn",
               method:'POST',
               // dataType:'json',
               data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },
               success: function(response) {
-                  $('.view_auth_req_lttr_troops_details_div').html(response)
+                  $('.view_auth_req_lttr_weapons_details_div').html(response)
               }
           });
 
           $.ajax({ // Check req ltr status to change approve and decline buttons
-              url:"{{ url('') }}/auth_req_ltr_troops_check_status",
+              url:"{{ url('') }}/auth_req_ltr_weapons_check_status",
               method:'POST',
               // dataType:'json',
               data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },

@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>Approve/Decline Authority Requests (Troops Transportation)</h1>
+            <h1>Approve/Decline Authority Requests (Weapons Transportation)</h1>
           </div>
         </div>
       </div>
@@ -43,12 +43,12 @@
                   
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
-                        <label for="request_ref_no" class="form-label">1. Request Reference Number : 000{{$auth_req_ltr_troops_fwds->auth_req_ltr_troops_id}}</label>
+                        <label for="request_ref_no" class="form-label">1. Request Reference Number : 000{{$auth_req_ltr_weapons_fwds->auth_req_ltr_weapons_id}}</label>
 
-                        @if($auth_req_ltr_troops_fwds->req_fwd_to_status != '')
-                        </br><label for="request_status" class="form-label">2. Request Status : {{ $auth_req_ltr_troops_fwds->req_fwd_to_status }}</label>@endif
+                        @if($auth_req_ltr_weapons_fwds->req_fwd_to_status != '')
+                        </br><label for="request_status" class="form-label">2. Request Status : {{ $auth_req_ltr_weapons_fwds->req_fwd_to_status }}</label>@endif
 
-                        @if($req_fwd_to_name != '' && $auth_req_ltr_troops_fwds->req_fwd_to_status != 'Pending')
+                        @if($req_fwd_to_name != '' && $auth_req_ltr_weapons_fwds->req_fwd_to_status != 'Pending')
                         </br><label for="request_status" class="form-label">3. Request Forwarded to : {{ $req_fwd_to_name }}</label>@endif
                     </div>
                   </div>
@@ -79,11 +79,11 @@
                   <div class="col-md-12 ">
                     <div class="form-group">
                       <label for="comments">Previous Comments</label>
-                      @if($auth_req_ltr_troops_fwds->comment_approve != '')
-                        <br><i>{{ $auth_req_ltr_troops_fwds->comment_approve }}</i>
+                      @if($auth_req_ltr_weapons_fwds->comment_approve != '')
+                        <br><i>{{ $auth_req_ltr_weapons_fwds->comment_approve }}</i>
                       @endif
-                      @if($auth_req_ltr_troops_fwds->comment_decline != '')
-                        <br><i>{{ $auth_req_ltr_troops_fwds->comment_decline }}</i>
+                      @if($auth_req_ltr_weapons_fwds->comment_decline != '')
+                        <br><i>{{ $auth_req_ltr_weapons_fwds->comment_decline }}</i>
                       @endif
                     </div>
                   </div>
@@ -93,13 +93,13 @@
                     <div class="form-group text-right">
 
                       @if( Auth()->user()->user_type == 12  || Auth()->user()->user_type == 12 || Auth()->user()->user_type == 12)
-                        <a target="_blank" href="{{route('auth_req_ltr_troops')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Edit</a>
+                        <a target="_blank" href="{{route('auth_req_ltr_weapons')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Edit</a>
                       @endif
 
                       <button type="button" class="float-left btn btn-success final_approve_btn">Final Approval</button>
                       <button type="button" class="btn btn-success approve_btn">Approve and Forward</button>
                       <button type="button" class="btn btn-danger decline_btn">Decline</button>
-                      <a href="{{route('auth_req_ltr_troops_take_action_view')}}" id="" class="btn btn-secondary">Back</a>
+                      <a href="{{route('auth_req_ltr_weapons_take_action_view')}}" id="" class="btn btn-secondary">Back</a>
                     </div>
                   </div>
 
@@ -139,7 +139,7 @@ $(document).ready(function() {
 
     // Check req ltr status to modify approve and decline buttons
     $.ajax({ 
-        url:"{{ url('') }}/auth_req_ltr_troops_check_status",
+        url:"{{ url('') }}/auth_req_ltr_weapons_check_status",
         method:'POST',
         // dataType:'json',
         data:{ "_token": "{{ csrf_token() }} " , req_id:req_id },
@@ -186,7 +186,7 @@ $(document).ready(function() {
         }
         else{
           $.ajax({
-              url:"{{ url('') }}/auth_req_ltr_troops_approve_btn",
+              url:"{{ url('') }}/auth_req_ltr_weapons_approve_btn",
               method:'POST',
               dataType:'json',
               data:{ "_token": "{{ csrf_token() }}" , req_id:req_id , request_forward_by:request_forward_by , request_forward_to:request_forward_to, comments:comments },
@@ -231,7 +231,7 @@ $(document).ready(function() {
         }
         else{
           $.ajax({
-              url:"{{ url('') }}/auth_req_ltr_troops_decline_btn",
+              url:"{{ url('') }}/auth_req_ltr_weapons_decline_btn",
               method:'POST',
               dataType:'json',
               data:{ "_token": "{{ csrf_token() }}" , req_id:req_id , comments:comments},
@@ -276,7 +276,7 @@ $(document).ready(function() {
         }
         else{
           $.ajax({
-              url:"{{ url('') }}/auth_req_ltr_troops_final_approve_btn",
+              url:"{{ url('') }}/auth_req_ltr_weapons_final_approve_btn",
               method:'POST',
               dataType:'json',
               data:{ "_token": "{{ csrf_token() }}" , req_id:req_id , request_forward_by:request_forward_by , request_forward_to:request_forward_to, comments:comments },

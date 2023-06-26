@@ -70,24 +70,23 @@
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('auth_req_ltr_weapon')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_weapons')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Create Authority Req</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('auth_req_ltr_weapon_view')}}" class="nav-link">
+            <a href="{{route('auth_req_ltr_weapons_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>View Requests</p>
+              <p>View Sent Requests</p>
             </a>
           </li>
-
-          <!-- <li class="nav-item">
-            <a href="{{route('auth_req_ltr_weapon')}}" class="nav-link">
+          <li class="nav-item">
+            <a href="{{route('auth_req_ltr_weapons_take_action_view')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Explosive</p>
+              <p>Take Action</p>
             </a>
-          </li> -->
+          </li>
         </ul>
       </li>
 

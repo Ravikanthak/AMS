@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('auth_req_ltr_troops_fwds', function (Blueprint $table) {
+        Schema::create('auth_req_ltr_weapons_fwds', function (Blueprint $table) {
             $table->id();
-            $table->integer('auth_req_ltr_troops_id');
+            $table->integer('auth_req_ltr_weapons_id');
             $table->integer('req_fwd_by');
             $table->integer('req_fwd_to');
             $table->string('req_fwd_by_status',255);
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('auth_req_ltr_troops_fwds');
+        Schema::dropIfExists('auth_req_ltr_weapons_fwds');
     }
 };

@@ -24,20 +24,21 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>View Sent Authority Requests (Troops Transportation)</h1>
+            <h1>View Authority Requests (Weapon Transportation)</h1>
           </div>
         </div>
       </div>
     </section>
 
 
-    <section class="content table_auth_req_lttr_troops">
+    
+    <section class="content table_auth_req_lttr_weapons">
       <div class="container-fluid">
         <div class="row mb-2">
           <section class="col-lg-12 connectedSortable ui-sortable">
             <div class="card auth_req_lttr_form">
 
-              <table class="table stripe hover row-border order-column" id="table_auth_req_ltr_troops">
+              <table class="table stripe hover row-border order-column" id="table_auth_req_ltr_weapons">
                 <thead>
                 <tr>
                   <th>#Auth Req Ltr ID</th>
@@ -51,7 +52,7 @@
                 </thead>
 
                 <tbody>
-                @foreach($auth_req_ltr_troops as $req_ltr)
+                @foreach($auth_req_ltr_weapons as $req_ltr)
                   <tr>
                       <td>{{$req_ltr->id}}</td>
                       <td>{{$req_ltr->created_at}}</td>
@@ -59,11 +60,11 @@
                       <!-- <td>{{$req_ltr->req_fwd_by_status}}</td> -->
                       <td>{{$req_ltr->req_fwd_to}}</td>
                       <!-- <td>{{$req_ltr->req_fwd_to_status}}</td> -->
-                      <td class="action_td">
+                      <td>
                         <span id="{{$req_ltr->id}}" class="track_btn btn btn-primary" data-toggle="modal" data-target="#TrackModal">Track</span>
                         <span id="{{$req_ltr->id}}" class="view_btn btn btn-primary" data-toggle="modal" data-target="#ViewModal">View</span>
                         {{--@if( Auth()->user()->user_type != 4 )--}}
-                        <a target="_blank" href="{{route('auth_req_ltr_troops')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Edit</a>
+                        <a target="_blank" href="{{route('auth_req_ltr_weapons')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Edit</a>
                         {{--@endif--}}
                       </td>
                   </tr>
@@ -78,6 +79,8 @@
     </section>
 
 
+
+
     <!-- View Authority Request Popup Model -->
     <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -88,7 +91,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="view_auth_req_lttr_troops_details_div"></div>
+          <div class="modal-body view_auth_req_lttr_weapons_details_div"></div>
         </div>
       </div>
     </div>
@@ -105,7 +108,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body view_auth_req_lttr_troops_track">
+          <div class="modal-body view_auth_req_lttr_weapons_track">
 
             <div class="track_requests">
               <div class="track_requestsin">
@@ -124,6 +127,27 @@
 
 
 
+    <!-- View Authority Request Popup Model -->
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Authority Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body view_auth_req_lttr_weapons_details"></div> 
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Approve</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Decline</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
   </div>
 
@@ -140,7 +164,6 @@
 
   $(document).ready(function() {
 
-
         // Datatable
         $('#table_auth_req_ltr_troops').DataTable();
 
@@ -154,7 +177,7 @@
             ReqId = $(this).attr('id');
 
             $.ajax({
-                url:"{{ url('') }}/auth_req_ltr_troops_track_btn",
+                url:"{{ url('') }}/auth_req_ltr_weapons_track_btn",
                 method:'POST',
                 data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId },
                 success: function(response) {
@@ -163,26 +186,27 @@
             });
         });   
 
-        
+
+
         // View Button
         $("body").on("click",".view_btn",function(){
-            
+      
             $('#myInput').trigger('focus')
 
             ReqId = $(this).attr("id");
 
             $.ajax({
-                url:"{{ url('') }}/auth_req_ltr_troops_view_btn",
+                url:"{{ url('') }}/auth_req_ltr_weapons_view_btn",
                 method:'POST',
                 // dataType:'json',
                 data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },
                 success: function(response) {
-                    $('.view_auth_req_lttr_troops_details_div').html(response)
+                    $('.view_auth_req_lttr_weapons_details_div').html(response)
                 }
             });
 
             $.ajax({ // Check req ltr status to change approve and decline buttons
-                url:"{{ url('') }}/auth_req_ltr_troops_check_status",
+                url:"{{ url('') }}/auth_req_ltr_weapons_check_status",
                 method:'POST',
                 // dataType:'json',
                 data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },

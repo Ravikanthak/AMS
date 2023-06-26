@@ -11,27 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('auth_req_ltr_troops', function (Blueprint $table) {
+        Schema::create('auth_req_ltr_weapons', function (Blueprint $table) {
             $table->id();
-            $table->string('request_made_by', 255);
-            $table->string('reason', 255);
-            $table->integer('no_of_troops');
+            $table->integer('request_made_by');
+            $table->string('incharge', 255);
+            $table->string('auth_given_by', 255);
             $table->date('transport_date');
             $table->integer('location_from');
             $table->integer('location_to');
-            $table->string('auth_given_by', 255);
             $table->string('route', 255);
+            $table->integer('no_of_wpn');
+            $table->string('wpn_details', 255);
             $table->string('type_of_veh', 255);
-            $table->integer('no_of_seat');
-            $table->string('convoy_comd', 255);
+            $table->string('vehicle_no', 255);
+            $table->string('driver', 255);
             $table->string('escort', 255);
             $table->string('escort_weapon_no', 255);
             $table->integer('no_of_magazins');
             $table->integer('no_of_ammo');
-            $table->string('driver', 255);
-            $table->string('measures', 255);
-            $table->string('ref_of_ltr', 255);
-            $table->string('attachment', 255)->nullable();
+            $table->string('ref_of_ltr1', 255);
+            $table->string('attachment1', 255)->nullable();
+            $table->string('ref_of_ltr2', 255);
+            $table->string('attachment2', 255)->nullable();
             $table->integer('req_fwd_by');
             $table->integer('req_fwd_to');
             $table->integer('organization_id');
@@ -47,6 +48,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('auth_req_ltr_troops');
+        Schema::dropIfExists('auth_req_ltr_weapons');
     }
 };

@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AuthReqWeaponModel extends Model
+class AuthReqLtrWeaponsFwd extends Model
 {
     use HasFactory;
 
-    protected $table = 'auth_req_lttr_weapon';
-
+    protected $fillable = ['req_fwd_to_status', 'comment_approve'];
 }
