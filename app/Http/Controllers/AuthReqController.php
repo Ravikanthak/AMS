@@ -43,7 +43,6 @@ class AuthReqController extends Controller
 
         $organization_types = DB::table('user_types')
         ->select( 'id','name')
-        // ->whereNotIn('user_type_sub_cat', ['1_1','2_1','3_1','4_1','5_1','6_1'])
         ->get();
 
         $auth_req_ltr_troops = DB::table('auth_req_ltr_troops')
