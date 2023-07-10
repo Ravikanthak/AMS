@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-//Route::get('/login' , [Controller::class , 'login'] )->name('login');
-//Route::get('/register' , [Controller::class , 'register'] )->name('register');
 
 
 
@@ -139,4 +137,4 @@ Route::post('/ckeditor_edit_func' , [AuthReqWeaponsController::class , 'ckeditor
 Route::post('/ckeditor_func' , [AuthReqWeaponsController::class , 'ckeditor_func'] );
 Route::post('/ckeditor_upload_img' , [AuthReqWeaponsController::class , 'ckeditor_upload_img'] )->name('ckeditor_upload_img');
 
-Route::post('/ckeditor_upload_img', 'AuthReqWeaponsController@ckeditor_upload_img')->name('ckeditor_upload_img');
+// Route::post('/ckeditor_upload_img', 'AuthReqWeaponsController@ckeditor_upload_img')->name('ckeditor_upload_img');
