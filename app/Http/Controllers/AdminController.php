@@ -363,17 +363,25 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+//        $details = User::join('organization_users','organization_users.user_id','=','users.id')
+//            ->join('organization_armories','organization_armories.id','=','organization_users.organization_id')
+//            ->where('users.id',$id)
+//            ->get(['organization_users.full_name','organization_users.gender','organization_users.','organization_users.is_active_service','organization_users.e_number',
+//                'organization_users.service_no','organization_users.rank','organization_users.regiment','organization_users.unit','organization_users.nic',
+//                'organization_users.is_active_account','organization_armories.id as orgId','organization_armories.organization']);
+//
+//
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+
     }
     /**
      * Remove the specified resource from storage.
