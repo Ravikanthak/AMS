@@ -380,7 +380,7 @@ class AuthReqTroopsController extends Controller
 
         $auth_req_ltr_troops = AuthReqLtrTroopsFwd::select('*')
         ->where('req_fwd_to' , Auth()->user()->user_type)
-        ->where('organization_id' , Auth()->user()->organization_id)
+        // ->where('organization_id' , Auth()->user()->organization_id)
         ->get();
 
         $organization_types = UserType::select( 'id','name')
