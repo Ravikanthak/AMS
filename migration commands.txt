@@ -11,3 +11,46 @@ php artisan migrate:refresh --path=/database/migrations/2023_06_19_092731_create
 -------------
 
 
+
+INSERT INTO `organization_types` (`id`, `abbreviation`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'estb', 'Establishment', '2023-06-19 06:50:10', NULL),
+(2, 'bde', 'Brigade', '2023-06-19 06:50:10', NULL),
+(3, 'div', 'Division', '2023-06-19 06:51:39', NULL),
+(4, 'sfhq', 'Security Force Head Quarters', '2023-06-19 06:51:39', NULL),
+(5, 'dops', 'Dte of Operations', '2023-06-19 06:52:35', NULL),
+(6, 'dte', 'Directorate', '2023-06-19 06:54:03', NULL);
+
+
+INSERT INTO `user_types` VALUES (1, 'Super Admin');
+INSERT INTO `user_types` VALUES (2, 'Establishment Admin');
+INSERT INTO `user_types` VALUES (3, 'Establishment Head');
+INSERT INTO `user_types` VALUES (4, 'Establishment Subject Clerk');
+INSERT INTO `user_types` VALUES (5, 'Bde Admin');
+INSERT INTO `user_types` VALUES (6, 'Bde Comd');
+INSERT INTO `user_types` VALUES (7, 'BM');
+INSERT INTO `user_types` VALUES (8, 'Div Admin');
+INSERT INTO `user_types` VALUES (9, 'Div Comd');
+INSERT INTO `user_types` VALUES (10, 'Div Col GS');
+INSERT INTO `user_types` VALUES (11, 'SFHQ Admin');
+INSERT INTO `user_types` VALUES (12, 'SFHQ BGS');
+INSERT INTO `user_types` VALUES (13, 'SFHQ Col GS');
+INSERT INTO `user_types` VALUES (14, 'SFHQ GSO I');
+INSERT INTO `user_types` VALUES (15, 'SFHQ GSO II');
+INSERT INTO `user_types` VALUES (16, 'SFHQ Subject Clerk');
+INSERT INTO `user_types` VALUES (17, 'D-Ops Admin');
+INSERT INTO `user_types` VALUES (18, 'D-Ops Director');
+INSERT INTO `user_types` VALUES (19, 'D-Ops SO (Special Ops)');
+INSERT INTO `user_types` VALUES (20, 'D-Ops SO (Coordination Ops)');
+INSERT INTO `user_types` VALUES (21, 'D-Ops Subject Clerk (Special Ops)');
+INSERT INTO `user_types` VALUES (22, 'D-Ops Subject Clerk (Coordination Ops)');
+
+
+INSERT INTO `vehicle_types` VALUES (1, 'Bus', '2023-06-19 09:31:00', NULL);
+INSERT INTO `vehicle_types` VALUES (2, 'Truck', '2023-06-19 09:31:00', NULL);
+INSERT INTO `vehicle_types` VALUES (3, 'Lorry', '2023-06-19 09:31:00', NULL);
+INSERT INTO `vehicle_types` VALUES (4, 'Cab', '2023-06-19 09:31:00', NULL);
+INSERT INTO `vehicle_types` VALUES (5, 'Van', '2023-06-19 09:31:00', NULL);
+INSERT INTO `vehicle_types` VALUES (6, 'Other', '2023-06-19 09:31:00', NULL);
+
+---
+
