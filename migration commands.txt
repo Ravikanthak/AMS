@@ -21,28 +21,35 @@ INSERT INTO `organization_types` (`id`, `abbreviation`, `name`, `created_at`, `u
 (6, 'dte', 'Directorate', '2023-06-19 06:54:03', NULL);
 
 
-INSERT INTO `user_types` VALUES (1, 'Super Admin');
-INSERT INTO `user_types` VALUES (2, 'Establishment Admin');
-INSERT INTO `user_types` VALUES (3, 'Establishment Head');
-INSERT INTO `user_types` VALUES (4, 'Establishment Subject Clerk');
-INSERT INTO `user_types` VALUES (5, 'Bde Admin');
-INSERT INTO `user_types` VALUES (6, 'Bde Comd');
-INSERT INTO `user_types` VALUES (7, 'BM');
-INSERT INTO `user_types` VALUES (8, 'Div Admin');
-INSERT INTO `user_types` VALUES (9, 'Div Comd');
-INSERT INTO `user_types` VALUES (10, 'Div Col GS');
-INSERT INTO `user_types` VALUES (11, 'SFHQ Admin');
-INSERT INTO `user_types` VALUES (12, 'SFHQ BGS');
-INSERT INTO `user_types` VALUES (13, 'SFHQ Col GS');
-INSERT INTO `user_types` VALUES (14, 'SFHQ GSO I');
-INSERT INTO `user_types` VALUES (15, 'SFHQ GSO II');
-INSERT INTO `user_types` VALUES (16, 'SFHQ Subject Clerk');
-INSERT INTO `user_types` VALUES (17, 'D-Ops Admin');
-INSERT INTO `user_types` VALUES (18, 'D-Ops Director');
-INSERT INTO `user_types` VALUES (19, 'D-Ops SO (Special Ops)');
-INSERT INTO `user_types` VALUES (20, 'D-Ops SO (Coordination Ops)');
-INSERT INTO `user_types` VALUES (21, 'D-Ops Subject Clerk (Special Ops)');
-INSERT INTO `user_types` VALUES (22, 'D-Ops Subject Clerk (Coordination Ops)');
+
+INSERT INTO `user_types` (`id`, `name`) VALUES
+(1, 'Super Admin'),
+(2, 'Establishment Admin'),
+(3, 'Establishment Head'),
+(4, 'Establishment Subject Clerk'),
+(5, 'Bde Admin'),
+(6, 'Bde Comd'),
+(7, 'BM'),
+(8, 'Div Admin'),
+(9, 'Div Comd'),
+(10, 'Div Col GS'),
+(11, 'SFHQ Admin'),
+(12, 'SFHQ BGS'),
+(13, 'SFHQ Col GS'),
+(14, 'SFHQ GSO I'),
+(15, 'SFHQ GSO II'),
+(16, 'SFHQ Subject Clerk'),
+(17, 'D-Ops Admin'),
+(18, 'D-Ops Director'),
+(19, 'D-Ops SO (Special Ops)'),
+(20, 'D-Ops SO (Coordination Ops)'),
+(21, 'D-Ops Subject Clerk (Special Ops)'),
+(22, 'D-Ops Subject Clerk (Coordination Ops)'),
+(23, 'Dte Admin'),
+(24, 'Dte Head'),
+(25, 'Dte Subject Clerk'),
+(26, 'Other');
+
 
 
 INSERT INTO `vehicle_types` VALUES (1, 'Bus', '2023-06-19 09:31:00', NULL);
