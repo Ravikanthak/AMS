@@ -240,7 +240,7 @@
                                     <td>{{  preg_replace('/\\s+/', '', $admin->role) }}</td>
                                     <td>
                                         {{--<button class="btn btn-sm btn-dark">Deactivate</button>--}}
-                                        {{--<button class="ml-2 btn btn-sm btn-warning admin-edit">Edit</button>--}}
+                                        <button class="ml-2 btn btn-sm btn-warning admin-edit">Edit</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -266,7 +266,6 @@
 @include('inc/footer_assets')
 
 @push('scripts')
-    <script src="https://172.16.60.28/omms/test2/public/js/datepicker/datepicker.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 

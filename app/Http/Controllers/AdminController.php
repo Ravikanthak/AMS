@@ -365,14 +365,20 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-//        $details = User::join('organization_users','organization_users.user_id','=','users.id')
-//            ->join('organization_armories','organization_armories.id','=','organization_users.organization_id')
-//            ->where('users.id',$id)
-//            ->get(['organization_users.full_name','organization_users.gender','organization_users.','organization_users.is_active_service','organization_users.e_number',
-//                'organization_users.service_no','organization_users.rank','organization_users.regiment','organization_users.unit','organization_users.nic',
-//                'organization_users.is_active_account','organization_armories.id as orgId','organization_armories.organization']);
-//
-//
+
+
+        $details = User::leftJoin('organization_users','organization_users.user_id','=','users.id')
+            ->join('organization_armories','organization_armories.id','=','organization_users.organization_id')
+            ->join('user_types','user_types.id','=','users.user_type')
+            ->where('users.id',$id)
+            ->get(['organization_users.full_name','organization_users.gender','organization_users.is_active_service','organization_users.e_number',
+                'organization_users.service_no','organization_users.rank','organization_users.regiment','organization_users.unit','organization_users.nic',
+                'organization_users.is_active_account','organization_armories.id as orgId','organization_armories.organization',
+                'user_types.id as userTypeId','user_types.name as userType']);
+
+        dd($details);
+
+
 
     }
 
