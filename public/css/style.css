@@ -311,7 +311,8 @@ a {text-decoration: none !important;}
 
 .view_auth_req_lttr_troops_details_div p { display: flex; flex-direction: column;}
 .view_auth_req_lttr_troops_details_div p span {background-color: #dbdbdb;border-radius: 4px;padding: 2px 10px 3px 16px;margin-top: 3px;}
-
+.view_auth_req_lttr_weapons_details_div p { display: flex; flex-direction: column;}
+.view_auth_req_lttr_weapons_details_div p span {background-color: #dbdbdb;border-radius: 4px;padding: 2px 10px 3px 16px;margin-top: 3px;}
 
 .track_requests {width: 100%;display: flex;background-color: #fff;padding: 15px 40px 15px 40px;}
 .track_requestsin {width: 100%;float: left;display: flex;flex-direction: column;justify-content: center;align-items: center;}
@@ -346,6 +347,11 @@ a {text-decoration: none !important;}
 .auth_req_lttr_form .form-label .date {font-size: 15px;color: #8e8e8e;font-weight: 500;margin: 0px 5px 0px 5px;}
 
 .form-control .disabled { opacity: 0.5 !important; pointer-events: none !important;  }
+
+.table_auth_req_ltr .action_td { display: flex; flex-wrap: nowrap; justify-content: space-between;}
+.table_auth_req_ltr .action_td span { margin: 0px 2px 0px 2px; height: 50px; display: flex; align-items: center; padding: 0px 14px 0px 14px; line-height: 20px; font-size: 15px;}
+.table_auth_req_ltr .action_td a { margin: 0px 2px 0px 2px; height: 50px; display: flex; align-items: center; padding: 0px 14px 0px 14px; line-height: 20px; font-size: 15px;}
+.table_auth_req_ltr td { border: none; }
 
 @media only screen and (max-width: 1100px) {
     .main_div_inner_register {}

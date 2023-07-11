@@ -37,11 +37,11 @@
           <section class="col-lg-12 connectedSortable ui-sortable">
             <div class="card auth_req_lttr_form">
 
-              <table class="table stripe hover row-border order-column" id="table_auth_req_ltr_troops">
+              <table class="table_auth_req_ltr table stripe hover row-border order-column" id="table_auth_req_ltr_troops">
                 <thead>
                 <tr>
                   <th>#Auth Req Ltr ID</th>
-                  <th>Date</th>
+                  <th>Created Date</th>
                   <th>Request From</th>
                   <th>Status</th>
                   <th>Request To</th>
@@ -54,7 +54,7 @@
                 @foreach($auth_req_ltr_troops as $req_ltr)
                   <tr>
                       <td>{{$req_ltr->auth_req_ltr_troops_id}}</td>
-                      <td>{{$req_ltr->date}}</td>
+                      <td>{{$req_ltr->created_at}}</td>
                       <td>
                         @if($req_ltr->req_fwd_by == 3)Establishment Head
                         @elseif($req_ltr->req_fwd_by == 4)Establishment Subject Clerk
@@ -95,7 +95,11 @@
                         @endif
                       </td>
                       <td>{{$req_ltr->req_fwd_to_status}}</td>
-                      <td><a target="_blank" href="{{route('auth_req_ltr_troops_take_action')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Take Action</a>
+                      <td class="action_td">
+                      <span id="{{$req_ltr->auth_req_ltr_troops_id}}" class="track_btn btn btn-primary" data-toggle="modal" data-target="#TrackModal">Track</span>
+                      <span id="{{$req_ltr->auth_req_ltr_troops_id}}" class="view_btn btn btn-primary" data-toggle="modal" data-target="#ViewModal">View</span>
+                      <a target="_blank" href="{{route('auth_req_ltr_troops')}}/{{$req_ltr->auth_req_ltr_troops_id}}" id="{{$req_ltr->auth_req_ltr_troops_id}}" class="btn btn-success edit">Edit</a>
+                      <a target="_blank" href="{{route('auth_req_ltr_troops_take_action')}}/{{$req_ltr->id}}" id="{{$req_ltr->id}}" class="btn btn-success edit">Take Action</a>
                       </td>
                   </tr>
                 @endforeach
@@ -109,51 +113,53 @@
     </section>
 
 
+
+
+
+
     <!-- View Authority Request Popup Model -->
-    <!-- <div class="modal fade" id="ApproveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">Authority Request Approve/Decline</h4>
+            <h4 class="modal-title" id="myModalLabel">Authority Request</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div class="view_auth_req_lttr_troops_details_div"></div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Track Authority Request Popup Model -->
+    <div class="modal fade" id="TrackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Track Authority Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body view_auth_req_lttr_troops_track">
+
+            <div class="track_requests">
+              <div class="track_requestsin">
+                
+              </div>
+            </div>    
+
+          </div>
 
           <div class="modal-footer">
-
-            <div class="col-md-12 ">
-              <div class="form-group mb-3">
-                <label for="request_forward" class="form-label">Request Forward to</label>
-                <select name="request_forward" class="selectpicker form-control" id="request_forward" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
-                    @if (isset($request_fwd_to))
-                      @foreach($organization_types as $type)
-
-                          @if (!in_array($type->id, [1,2,5,8,11,17]))
-                              <option value="{{$type->id}}" @if($type->id == $request_fwd_to) selected @endif>{{$type->name}}</option>
-                          @endif
-                      
-                      @endforeach
-                    @else 
-                      @foreach($organization_types as $type)
-
-                          @if (!in_array($type->id, [1,2,5,8,11,17]))
-                              <option value="{{$type->id}}">{{$type->name}}</option>
-                          @endif
-
-                      @endforeach
-                    @endif
-                </select>
-              </div>
-            </div>
-
-            <button type="button" class="btn btn-success approve_btn">Approve and Forward</button>
-            <button type="button" class="btn btn-danger decline_btn">Decline</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
 
   </div>
@@ -173,6 +179,64 @@
 
       // Datatable
       $('#table_auth_req_ltr_troops').DataTable();
+
+
+      var ReqId = ""
+
+
+      // Track Button
+      $("body").on("click",".track_btn",function(){
+
+          ReqId = $(this).attr('id');
+
+          $.ajax({
+              url:"{{ url('') }}/auth_req_ltr_troops_track_btn",
+              method:'POST',
+              data:{ "_token": "{{ csrf_token() }}" , ReqId:ReqId },
+              success: function(response) {
+                $('.track_requestsin').html(response)
+              }
+          });
+      });   
+
+      
+      // View Button
+      $("body").on("click",".view_btn",function(){
+          
+          $('#myInput').trigger('focus')
+
+          ReqId = $(this).attr("id");
+
+          $.ajax({
+              url:"{{ url('') }}/auth_req_ltr_troops_view_btn",
+              method:'POST',
+              // dataType:'json',
+              data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },
+              success: function(response) {
+                  $('.view_auth_req_lttr_troops_details_div').html(response)
+              }
+          });
+
+          $.ajax({ // Check req ltr status to change approve and decline buttons
+              url:"{{ url('') }}/auth_req_ltr_troops_check_status",
+              method:'POST',
+              // dataType:'json',
+              data:{ "_token": "{{ csrf_token() }} " , ReqId:ReqId },
+              success: function(response) {
+                  if (response.msg[0].status == 'Declined') {
+                    $('.decline_btn').text('Declined');
+                    $('.decline_btn').prop('disabled', true);
+                    $('.approve_btn').prop('disabled', true);
+                  }
+                  if (response.msg[0].status == 'Approved') {
+                    $('.decline_btn').prop('disabled', true);
+                    $('.approve_btn').prop('disabled', true);
+                    $('.approve_btn').text('Approved');
+                  }
+              }
+          });
+      });
+
 
   })
 

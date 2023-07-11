@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('user_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_type');
-            $table->string('user_type_sub_cat');
             $table->string('name');
         });
     }
