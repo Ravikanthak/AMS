@@ -2,7 +2,7 @@
     <img src="{{ asset('/img/logo.png') }}" alt="SL ARMY" class="brand-image img-circle elevation-3"
          style="opacity: .8">
     <span class="brand-text font-weight-light">WTTAM System</span><br>
-    <p style="font-size: 12px; text-align: center;margin-top: 5px; color: cadetblue">{{ isset($userOrg)?$userOrg:'' }}</p>
+    <p style="font-size: 12px; text-align: center;margin-top: 5px; color: cadetblue; text-wrap: initial">{{ isset($userOrg)?$userOrg:'' }}</p>
 </a>
 
 <div class="sidebar">
