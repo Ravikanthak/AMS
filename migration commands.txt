@@ -7,3 +7,7 @@ php artisan migrate:refresh --path=/database/migrations/2023_06_15_114907_create
 php artisan migrate:refresh --path=/database/migrations/2023_06_19_092731_create_vehicle_types_table.php
 
 
+
+-------------
+
+
