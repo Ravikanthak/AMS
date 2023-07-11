@@ -403,7 +403,7 @@ class AdminController extends Controller
     {
 
 
-        $details = User::leftJoin('organization_users','organization_users.user_id','=','users.id')
+        $editUser = User::join('organization_users','organization_users.user_id','=','users.id')
             ->join('organization_armories','organization_armories.id','=','organization_users.organization_id')
             ->join('user_types','user_types.id','=','users.user_type')
             ->where('users.id',$id)
@@ -412,10 +412,34 @@ class AdminController extends Controller
                 'organization_users.is_active_account','organization_armories.id as orgId','organization_armories.organization',
                 'user_types.id as userTypeId','user_types.name as userType']);
 
-        dd($details);
+//        dd($editUser[0]->full_name);
+        $organizations = OrganizationArmory::all();
+        //For Super User
+        if (Auth::user()->user_type ==1)
+        {
+            $roles = '';
+            $admins = User::leftJoin('organization_armories','organization_armories.id','=','users.organization_id')
+                ->where('users.id','!=',Auth::user()->id)
+                ->get(['users.name','users.id','organization_armories.organization']);
+            $orgId = null;
+        }
+        //For others
+        if (Auth::user()->user_type !=1)
+        {
+            $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->pluck('name','id')->all();
+            $orgId = Auth::user()->organization_id;
+            $admins = User::join('organization_armories','organization_armories.id','=','users.organization_id')
+                ->leftJoin('model_has_roles','model_has_roles.model_id','=','users.id')
+                ->leftJoin('roles','roles.id','=','model_has_roles.role_id')
+                ->where('users.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->where('users.id','!=',Auth::user()->id)
+                ->orWhere('roles.organization_id', Auth::user()->OrganizationUsers[0]['organization_id'])
+                ->get(['users.name','users.id','organization_armories.organization','roles.name as role']);
+        }
 
 
-
+        return view('create_user',compact('organizations','roles','admins','orgId','editUser','id'));
     }
 
     /**
