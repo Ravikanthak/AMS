@@ -20,7 +20,7 @@ class AuthReqTroopsController extends Controller
     public function auth_req_ltr_troops($id = null){
         
         $organizations = DB::table('organization_armories')
-        ->select( 'id','organization')
+        ->select( 'id','organization ')
         ->get();
 
         $organization_users = DB::table('organization_users')
