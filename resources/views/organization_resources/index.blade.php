@@ -150,7 +150,6 @@ color: black !important;
 
 
 @push('scripts')
-    <script src="https://172.16.60.28/omms/test2/public/js/datepicker/datepicker.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 

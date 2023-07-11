@@ -459,7 +459,7 @@ $(document).ready(function() {
                       showConfirmButton: false,
                       timer: 2500
                     })
-                  }         
+                  }
               }
               else{ // validation error
 

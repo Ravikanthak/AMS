@@ -312,10 +312,46 @@ class AdminController extends Controller
                 return to_route('create_user')->with('error',' User already added');
             }
 
+            if (Auth::user()->user_type == 1)
+            {
+                $OrgType = OrganizationArmory::where('id',$orgId)
+                    ->get('organization_type');
+
+                if($OrgType[0]->organization_type =='estb')
+                {
+                    $user_type = 2;
+                }
+                elseif ($OrgType[0]->organization_type =='bde')
+                {
+                    $user_type = 5;
+                }
+                elseif ($OrgType[0]->organization_type =='div')
+                {
+                    $user_type = 8;
+                }
+                elseif ($OrgType[0]->organization_type =='sfhq')
+                {
+                    $user_type = 11;
+                }
+                elseif ($OrgType[0]->organization_type =='dops')
+                {
+                    $user_type = 17;
+                }
+                else
+                {
+                    $user_type = 23;
+                }
+
+            }
+            else
+            {
+                $user_type = $request->user_type;
+            }
+
             $password = Hash::make($request['e_number']);
 
             $input['name'] = $request->full_name;
-            $input['user_type'] = $request->user_type;
+            $input['user_type'] = $user_type;
             $input['username'] = $request->e_number;
             $input['status'] = 1;
             $input['password'] = $password;
@@ -363,17 +399,31 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+
+
+        $details = User::leftJoin('organization_users','organization_users.user_id','=','users.id')
+            ->join('organization_armories','organization_armories.id','=','organization_users.organization_id')
+            ->join('user_types','user_types.id','=','users.user_type')
+            ->where('users.id',$id)
+            ->get(['organization_users.full_name','organization_users.gender','organization_users.is_active_service','organization_users.e_number',
+                'organization_users.service_no','organization_users.rank','organization_users.regiment','organization_users.unit','organization_users.nic',
+                'organization_users.is_active_account','organization_armories.id as orgId','organization_armories.organization',
+                'user_types.id as userTypeId','user_types.name as userType']);
+
+        dd($details);
+
+
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+
     }
     /**
      * Remove the specified resource from storage.

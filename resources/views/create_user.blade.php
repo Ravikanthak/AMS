@@ -139,7 +139,8 @@
                                                 <label for="organization" class="form-label">Organization</label>
                                                 <div class="dropdown">
                                                     <select class="form-select" name="organization" id="organization">
-                                                        <option value="0" selected="selected">Select Organization</option>
+                                                        <option value="0" selected="selected">Select Organization
+                                                        </option>
                                                         @foreach($organizations as $organization)
                                                             <option value="{{$organization->id}}">{{$organization->organization}}</option>
                                                         @endforeach
@@ -149,13 +150,16 @@
                                         </div>
                                     @endif
 
-                                    <div class="col-md-12 ">
-                                        <div class="form-group mb-3">
-                                            <label for="user_type" class="form-label">User Type</label>
-                                            <select class="form-select" name="user_type" id="user_type">
-                                            </select>
+                                    @if(Auth::user()->user_type !=1)
+                                        <div class="col-md-12 ">
+                                            <div class="form-group mb-3">
+                                                <label for="user_type" class="form-label">User Type</label>
+                                                <select class="form-select" name="user_type" id="user_type">
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
+
 
                                     <div class="col-md-12">
                                         <div class="form-group pl-4 mt-4">
@@ -229,13 +233,14 @@
                             <?php $i = 0; ?>
 
                             @foreach ($admins as $admin)
-                                <tr>
+                                <tr id="{{$admin->id}}">
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->organization }}</td>
                                     <td>{{  preg_replace('/\\s+/', '', $admin->role) }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-dark">Deactivate</button>
+                                        {{--<button class="btn btn-sm btn-dark">Deactivate</button>--}}
+                                        <button class="ml-2 btn btn-sm btn-warning admin-edit">Edit</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -266,8 +271,7 @@
 
         $(document).ready(function () {
 
-            if ($('#orgId').val() != null)
-            {
+            if ($('#orgId').val() != null) {
                 let orgIdVal = $('#orgId').val();
                 getUserType(orgIdVal)
             }
@@ -293,15 +297,14 @@
                     },
                     success: function (data) {
 
-                        if(typeof(data[0]) == "undefined")
-                        {
+                        if (typeof(data[0]) == "undefined") {
                             Swal.fire({
-                                 position: 'top-end',
-                                 icon: 'error',
-                                 title: 'Service number not found',
-                                 showConfirmButton: false,
-                                 timer: 1500
-                             });
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Service number not found',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
 
                             $('#service_data_form')[0].reset();
                         }
@@ -328,8 +331,6 @@
                         }
 
 
-
-
                     },
                     error: function (error) {
                         alert('2')
@@ -337,6 +338,28 @@
 
                 });
             });
+
+
+            //edit user data
+            $('.admin-edit').click(function () {
+
+                let userId = $(this).closest('tr').attr('id');
+
+                var url = '{{ url("/admin/") }}/' + userId+'/edit';
+
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {userId:userId},
+                    success: function (data) {
+
+
+                    }
+                })
+            });
+
+
         });
 
 
@@ -396,11 +419,9 @@
         });
 
 
-        function getUserType(orgId)
-        {
+        function getUserType(orgId) {
 
-            if (orgId !=='0')
-            {
+            if (orgId !== '0') {
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
@@ -413,14 +434,13 @@
                         $.each(data, function (i, item) {
                             $('#user_type').append($('<option>', {
                                 value: item.id,
-                                text : item.name
+                                text: item.name
                             }));
                         });
                     }
                 });
             }
         }
-
 
 
     </script>
