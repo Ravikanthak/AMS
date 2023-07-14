@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthReqLtrTroops;
 use App\Models\AuthReqLtrTroopsFwd;
+use App\Models\OrganizationArmory;
+use App\Models\User;
 use App\Models\UserType;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -90,7 +93,22 @@ class AuthReqTroopsController extends Controller
             
         }
 
-        return view('auth_req_ltr_troops' , compact('organizations','organization_users','vehicle_types', 'organization_types' , 'id','request_made_by_id','reason','no_of_troops' ,'transport_date','location_from','location_to','auth_given_by','route','vehicle_type_name','no_of_seat','convoy_comd','escort','escort_weapon_no','no_of_magazins','no_of_ammo','driver','measures','ref_of_ltr','attachment','req_fwd_by','req_fwd_to'));
+        $loggedInUSer = User::join('user_types','user_types.id','=','users.user_type')
+            ->where('users.id', Auth::user()->id)
+            ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
+
+        $orgAppointments = User::join('user_types','user_types.id','=','users.user_type')
+            ->where('users.organization_id', Auth::user()->organization_id)
+            ->where('users.id','!=', Auth::user()->id)
+            ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
+
+        $thisOrg = OrganizationArmory::where('id', Auth::user()->organization_id)->get();
+
+        return view('auth_req_ltr_troops' , compact('organizations','organization_users','vehicle_types',
+            'organization_types' , 'id','request_made_by_id','reason','no_of_troops' ,'transport_date','location_from',
+            'location_to','auth_given_by','route','vehicle_type_name','no_of_seat','convoy_comd','escort',
+            'escort_weapon_no','no_of_magazins','no_of_ammo','driver','measures','ref_of_ltr','attachment',
+            'req_fwd_by','req_fwd_to','loggedInUSer','orgAppointments','thisOrg'));
     }
 
 
@@ -98,6 +116,7 @@ class AuthReqTroopsController extends Controller
 
     // Submit Button // Save Data
     public function auth_req_ltr_troops_form_func(Request $req){
+
 
         $validator = Validator::make($req->all(), [
             'req_made_location' => 'required|min:1|max:50',
@@ -173,11 +192,11 @@ class AuthReqTroopsController extends Controller
                     'type_of_veh' => $req->type_of_veh,
                     'no_of_seat' => $req->no_of_seat,
                     'convoy_comd' => $req->convoy,
-                    'escort' => $req->escort,
-                    'escort_weapon_no' => $req->escort_weapon_no,
+                    'escort' => json_encode($req->escort),
+                    'escort_weapon_no' => json_encode($req->escort_weapon_no),
                     'no_of_magazins' => $req->no_of_magazins,
                     'no_of_ammo' => $req->no_of_ammo,
-                    'driver' => $req->driver,
+                    'driver' => json_encode($req->driver),
                     'measures' => $req->measures_taken,
                     'ref_of_ltr' => $req->ref_of_ltr,
                     'attachment' => $imageName,
@@ -379,12 +398,13 @@ class AuthReqTroopsController extends Controller
     public function auth_req_ltr_troops_take_action_view(){
 
         $auth_req_ltr_troops = AuthReqLtrTroopsFwd::select('*')
-        ->where('req_fwd_to' , Auth()->user()->user_type)
+        ->where('req_fwd_to' , Auth()->user()->id)
         // ->where('organization_id' , Auth()->user()->organization_id)
         ->get();
 
         $organization_types = UserType::select( 'id','name')
         ->get();
+
 
         return view('auth_req_ltr_troops_take_action_view' , compact('auth_req_ltr_troops','organization_types'));
     }

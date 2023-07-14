@@ -43,30 +43,26 @@ Route::post('/login_func' , [Controller::class , 'login_func'] );
 
 Route::group(['middleware' => 'auth'], function () {
 
+//AE ROUTE
 
 //Establishment Armoury
 Route::resource('/org_armoury', OrganizationArmoryController::class);
 Route::post('/get-organization-armory-dt', [OrganizationArmoryController::class,'getEstabligetOrganizationArmoryDt'])->name('get-organization-armory-dt');
 Route::post('/get-organization-type', [OrganizationArmoryController::class,'getOrganizationType'])->name('get-organization-type');
-
 //establishment admin save
 Route::resource('/admin', AdminController::class);
-
 //establishment admin save
 Route::resource('/resource', OrganizationResourceController::class);
-
 //organization admin view
 Route::get('/create_user' , [AdminController::class , 'create_user'] )->name('create_user');
 Route::post('/get-admin-user-type' , [AdminController::class , 'getAdminUserType'] )->name('get-admin-user-type');
-
-
 //roles
 Route::resource('/roles', RoleController::class);
 
+//END AE ROUTE
 
 
 // Datatable
-Route::get('/add_org' , [Controller::class , 'add_org'] )->name('add_org');
 Route::get('/delete_sup_func/{id}' , [Controller::class , 'delete_sup_func'] );
 Route::get('/datatable_edit/{id}' , [Controller::class , 'datatable_edit'] );
 Route::post('/datatable_edit_func' , [Controller::class , 'datatable_edit_func'] );

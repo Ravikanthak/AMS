@@ -59,9 +59,9 @@
                       <label for="request_forward_to" class="form-label">Request Approve and Forward to</label>
                       <select name="request_forward_to" class="selectpicker form-control" id="request_forward_to" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
                             @foreach($organization_types as $type)
-                                @if (!in_array($type->id, [1,2,5,8,11,17]))
+{{--                                @if (!in_array($type->id, [1,2,5,8,11,17]))--}}
                                     <option value="{{$type->id}}">{{$type->name}}</option>
-                                @endif
+                                {{--@endif--}}
                             @endforeach
                       </select>
                     </div>

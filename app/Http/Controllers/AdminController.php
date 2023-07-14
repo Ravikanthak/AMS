@@ -41,6 +41,7 @@ class AdminController extends Controller
         //For others
         if (Auth::user()->user_type !=1)
         {
+
             $roles = Role::where('organization_id',Auth::user()->OrganizationUsers[0]['organization_id'])
                 ->pluck('name','id')->all();
 
@@ -84,14 +85,22 @@ class AdminController extends Controller
                 $array =[
                     0 => array (
                         "id" => 3,
-                        "name" => 'Establishment Head',
+                        "name" => 'Establishment Subject Clerk',
                     ),
                     1 => array (
                         "id" => 4,
-                        "name" => 'Establishment Subject Clerk',
+                        "name" => 'Establishment Adjutant',
                     ),
                     2 => array (
-                        "id" => 26,
+                        "id" => 5,
+                        "name" => 'Establishment 2 In Command',
+                    ),
+                    3 => array (
+                        "id" => 6,
+                        "name" => 'Establishment Head (Commanding Officer)',
+                    ),
+                    4 => array (
+                        "id" => 31,
                         "name" => 'Other',
                     ),
                 ];
@@ -104,7 +113,7 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 5,
+                        "id" => 7,
                         "name" => 'Bde Admin',
                     )
                 ];
@@ -113,15 +122,23 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 6,
-                        "name" => 'Bde Comd',
+                        "id" => 8,
+                        "name" => 'Bde Subject Clerk',
                     ),
                     1 => array (
-                        "id" => 7,
-                        "name" => 'BM',
+                        "id" => 9,
+                        "name" => 'Bde Major',
                     ),
                     2 => array (
-                        "id" => 26,
+                        "id" => 10,
+                        "name" => 'Bde SSO',
+                    ),
+                    3 => array (
+                        "id" => 11,
+                        "name" => 'Bde Commander',
+                    ),
+                    4=> array (
+                        "id" => 31,
                         "name" => 'Other',
                     ),
                 ];
@@ -134,7 +151,7 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 8,
+                        "id" => 12,
                         "name" => 'Div Admin',
                     ),
                 ];
@@ -143,15 +160,27 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 9,
-                        "name" => 'Div Comd',
+                        "id" => 13,
+                        "name" => 'Div Subject Clerk',
                     ),
                     1 => array (
-                        "id" => 10,
-                        "name" => 'Div Col GS',
+                        "id" => 14,
+                        "name" => 'Div GSO 2 - OPS',
                     ),
                     2 => array (
-                        "id" => 26,
+                        "id" => 15,
+                        "name" => 'Div GSO 1 - OPS',
+                    ),
+                    3 => array (
+                        "id" => 16,
+                        "name" => 'Div Col GS',
+                    ),
+                    4 => array (
+                        "id" => 17,
+                        "name" => 'Div Commander',
+                    ),
+                    5 => array (
+                        "id" => 31,
                         "name" => 'Other',
                     ),
                 ];
@@ -164,7 +193,7 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 11,
+                        "id" => 18,
                         "name" => 'SFHQ Admin',
                     )
                 ];
@@ -173,27 +202,31 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 12,
-                        "name" => 'SFHQ BGS',
-                    ),
-                    1 => array (
-                        "id" => 13,
-                        "name" => 'SFHQ Col GS',
-                    ),
-                    2 => array (
-                        "id" => 14,
-                        "name" => 'SFHQ GSO I',
-                    ),
-                    3 => array (
-                        "id" => 15,
-                        "name" => 'SFHQ GSO II',
-                    ),
-                    4 => array (
-                        "id" => 16,
+                        "id" => 19,
                         "name" => 'SFHQ Subject Clerk',
                     ),
+                    1 => array (
+                        "id" => 20,
+                        "name" => 'SFHQ GSO 2 - OPS',
+                    ),
+                    2 => array (
+                        "id" => 21,
+                        "name" => 'SFHQ GSO 1 - OPS',
+                    ),
+                    3 => array (
+                        "id" => 22,
+                        "name" => 'SFHQ Col GS',
+                    ),
+                    4 => array (
+                        "id" => 23,
+                        "name" => 'SGHQ BGS',
+                    ),
                     5 => array (
-                        "id" => 26,
+                        "id" => 24,
+                        "name" => 'SFHQ Commander',
+                    ),
+                    6 => array (
+                        "id" => 31,
                         "name" => 'Other',
                     ),
                 ];
@@ -207,7 +240,7 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 17,
+                        "id" => 25,
                         "name" => 'D-Ops Admin',
                     )
                 ];
@@ -216,27 +249,27 @@ class AdminController extends Controller
             {
                 $array =[
                     0 => array (
-                        "id" => 18,
-                        "name" => 'D-Ops Director',
+                        "id" => 26,
+                        "name" => 'D-Ops Subject Clerk',
                     ),
                     1 => array (
-                        "id" => 19,
-                        "name" => 'D-Ops SO (Special Ops)',
+                        "id" => 27,
+                        "name" => 'D-Ops G 2 - OPS',
                     ),
                     2 => array (
-                        "id" => 20,
-                        "name" => 'D-Ops SO (Coordination Ops)',
+                        "id" => 28,
+                        "name" => 'D-Ops G 1 - OPS',
                     ),
                     3 => array (
-                        "id" => 21,
-                        "name" => 'D-Ops Subject Clerk (Special Ops)',
+                        "id" => 29,
+                        "name" => 'D-Ops Col GS',
                     ),
                     4 => array (
-                        "id" => 22,
-                        "name" => 'D-Ops Subject Clerk (Coordination Ops)',
+                        "id" => 30,
+                        "name" => 'D-Ops DOPS',
                     ),
                     5 => array (
-                        "id" => 26,
+                        "id" => 31,
                         "name" => 'Other',
                     ),
                 ];
@@ -267,7 +300,7 @@ class AdminController extends Controller
                         "name" => 'Dte Subject Clerk',
                     ),
                     2 => array (
-                        "id" => 26,
+                        "id" => 31,
                         "name" => 'Other',
                     ),
                 ];
@@ -297,7 +330,6 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-
         $orgId = isset($request->organization)?$request->organization:Auth::user()->organization_id;
 
         DB::beginTransaction();
@@ -321,25 +353,21 @@ class AdminController extends Controller
                 {
                     $user_type = 2;
                 }
-                elseif ($OrgType[0]->organization_type =='bde')
+                if ($OrgType[0]->organization_type =='bde')
                 {
-                    $user_type = 5;
+                    $user_type = 7;
                 }
-                elseif ($OrgType[0]->organization_type =='div')
+                if ($OrgType[0]->organization_type =='div')
                 {
-                    $user_type = 8;
+                    $user_type = 12;
                 }
-                elseif ($OrgType[0]->organization_type =='sfhq')
+                if ($OrgType[0]->organization_type =='sfhq')
                 {
-                    $user_type = 11;
+                    $user_type = 18;
                 }
-                elseif ($OrgType[0]->organization_type =='dops')
+                if ($OrgType[0]->organization_type =='dops')
                 {
-                    $user_type = 17;
-                }
-                else
-                {
-                    $user_type = 23;
+                    $user_type = 25;
                 }
 
             }

@@ -12,10 +12,12 @@
 <link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('/css/jquery.dataTables.min.css') }}" />
 
+
 <link rel="stylesheet" href="{{ asset('/css/mc-calendar.min.css') }}" /> 
 
 <script src="{{ asset('/js/js.cookie.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.min.js') }}"></script>
 <script src="{{ asset('/js/mc-calendar.min.js') }}"></script>
 <script src="{{ asset('/js/sweetalert2.all.min.js') }}"></script>
+
 

@@ -61,3 +61,47 @@ INSERT INTO `vehicle_types` VALUES (6, 'Other', '2023-06-19 09:31:00', NULL);
 
 ---
 
+
+AE
+
+INSERT INTO `user_types` (`id`, `name`) VALUES
+(1, 'Super Admin'),
+
+(2, 'Establishment Admin'),
+(3, 'Establishment Subject Clerk'),
+(4, 'Establishment Adjutant'),
+(5, 'Establishment 2 In Command'),
+(6, 'Establishment Head (Commanding Officer)'),
+
+(7, 'Bde Admin'),
+(8, 'Bde Subject Clerk'),
+(9, 'Bde Major'),
+(10, 'Bde SSO'),
+(11, 'Bde Commander'),
+
+(12, 'Div Admin'),
+(13, 'Div Subject Clerk'),
+(14, 'Div GSO 2 - OPS'),
+(15, 'Div GSO 1 - OPS'),
+(16, 'Div Col GS'),
+(17, 'Div Commander'),
+
+(18, 'SFHQ Admin'),
+(19, 'SFHQ Subject Clerk'),
+(20, 'SFHQ GSO 2 - OPS'),
+(21, 'SFHQ GSO 1 - OPS'),
+(22, 'SFHQ Col GS'),
+(23, 'SGHQ BGS'),
+(24, 'SFHQ Commander'),
+
+
+(25, 'D-Ops Admin'),
+(26, 'D-Ops Subject Clerk'),
+(27, 'D-Ops G 2 - OPS'),
+(28, 'D-Ops G 1 - OPS'),
+(29, 'D-Ops Col GS'),
+(30, 'D-Ops DOPS'),
+
+(31, 'Other');
+
+
