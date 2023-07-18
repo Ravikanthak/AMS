@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthReqLtrWeapons;
 use App\Models\AuthReqLtrWeaponsFwd;
+use App\Models\OrganizationArmory;
+use App\Models\User;
 use App\Models\UserType;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -81,8 +84,19 @@ class AuthReqWeaponsController extends Controller
             $ref_of_ltr1 = $dt->ref_of_ltr1;
             $attachment1 = $dt->attachment1;
         }
+        //AE
+        $loggedInUSer = User::join('user_types','user_types.id','=','users.user_type')
+            ->where('users.id', Auth::user()->id)
+            ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
 
-        return view('auth_req_ltr_weapons' , compact('organizations','organization_users','vehicle_types', 'organization_types' , 'id','request_made_by','incharge','auth_given_by' ,'transport_date','location_from','location_to','route','no_of_wpn','wpn_details','type_of_veh','vehicle_no','driver','escort','escort_weapon_no','no_of_magazins','no_of_ammo','ref_of_ltr1','attachment1'));
+        $orgAppointments = User::join('user_types','user_types.id','=','users.user_type')
+            ->where('users.organization_id', Auth::user()->organization_id)
+            ->where('users.id','!=', Auth::user()->id)
+            ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
+        $thisOrg = OrganizationArmory::where('id', Auth::user()->organization_id)->get();
+        //END AE
+
+        return view('auth_req_ltr_weapons' , compact('thisOrg','orgAppointments','loggedInUSer','organizations','organization_users','vehicle_types', 'organization_types' , 'id','request_made_by','incharge','auth_given_by' ,'transport_date','location_from','location_to','route','no_of_wpn','wpn_details','type_of_veh','vehicle_no','driver','escort','escort_weapon_no','no_of_magazins','no_of_ammo','ref_of_ltr1','attachment1'));
     }
 
 
@@ -161,12 +175,12 @@ class AuthReqWeaponsController extends Controller
                     'location_to' => $req->location_to,
                     'route' => $req->route,
                     'no_of_wpn' => $req->no_of_wpn,
-                    'wpn_details' => $req->wpn_details,
+                    'wpn_details' => json_encode($req->wpn_details),
                     'type_of_veh' => $req->type_of_veh,
                     'vehicle_no' => $req->vehicle_no,
-                    'driver' => $req->driver,
-                    'escort' => $req->escort,
-                    'escort_weapon_no' => $req->escort_weapon_no,
+                    'driver' => json_encode($req->driver),
+                    'escort' => json_encode($req->escort),
+                    'escort_weapon_no' => json_encode($req->escort_weapon_no),
                     'no_of_magazins' => $req->no_of_magazins,
                     'no_of_ammo' => $req->no_of_ammo,
                     'ref_of_ltr1' => $req->ref_of_ltr1,
@@ -223,19 +237,24 @@ class AuthReqWeaponsController extends Controller
 
         // get auth_req_ltr_weapons table details and alter its details
         $auth_req_ltr_weapons = AuthReqLtrWeapons::select('*')
-        ->where('req_fwd_by' , Auth()->user()->user_type)
+        ->where('req_fwd_by' , Auth()->user()->id)
         ->where('organization_id' , Auth()->user()->organization_id)
         ->get();
 
         foreach($auth_req_ltr_weapons as $dt){
 
-            $req_fwd_by_name = UserType::select('name')
-            ->where('id', $dt->req_fwd_by)
-            ->first();
+//            $req_fwd_by_name = UserType::select('name')
+//            ->where('id', $dt->req_fwd_by)
+//            ->first();
+            $req_fwd_by_name = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $dt->req_fwd_by)->first('user_types.name');
             
-            $req_fwd_to_name = UserType::select('name')
-            ->where('id', $dt->req_fwd_to)
-            ->first();
+//            $req_fwd_to_name = UserType::select('name')
+//            ->where('id', $dt->req_fwd_to)
+//            ->first();
+
+            $req_fwd_to_name = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $dt->req_fwd_to)->first('user_types.name');
 
             $dt->req_fwd_by = $req_fwd_by_name->name;
             $dt->req_fwd_to = $req_fwd_to_name->name;
@@ -266,13 +285,20 @@ class AuthReqWeaponsController extends Controller
 
         foreach($data as $dt){
 
-            $req_fwd_by = UserType::select('name')
-            ->where('id', $dt->req_fwd_by )
-            ->first(); 
+//            $req_fwd_by = UserType::select('name')
+//            ->where('id', $dt->req_fwd_by )
+//            ->first();
+//
+//            $req_fwd_to = UserType::select('name')
+//            ->where('id', $dt->req_fwd_to )
+//            ->first();
 
-            $req_fwd_to = UserType::select('name')
-            ->where('id', $dt->req_fwd_to )
-            ->first(); 
+
+            $req_fwd_by = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $dt->req_fwd_by)->first('user_types.name');
+
+            $req_fwd_to = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $dt->req_fwd_to)->first('user_types.name');
 
             if ($dt->req_fwd_to_status == 'Approved' || $dt->req_fwd_to_status == 'Request Created') {
                 $status_class = 'status_approved';
@@ -358,9 +384,23 @@ class AuthReqWeaponsController extends Controller
     public function auth_req_ltr_weapons_take_action_view(){
 
         $auth_req_ltr_weapons = AuthReqLtrWeaponsFwd::select('*')
-        ->where('req_fwd_to' , Auth()->user()->user_type)
+        ->where('req_fwd_to' , Auth()->user()->id)
         ->where('organization_id' , Auth()->user()->organization_id)
         ->get();
+
+        foreach ($auth_req_ltr_weapons as $auth_req_ltr_weapon)
+        {
+
+            $req_fwd_by = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $auth_req_ltr_weapon->req_fwd_by)->first('user_types.name');
+
+            $req_fwd_to = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $auth_req_ltr_weapon->req_fwd_to)->first('user_types.name');
+
+            $auth_req_ltr_weapon->req_fwd_to = $req_fwd_to->name;
+            $auth_req_ltr_weapon->req_fwd_by = $req_fwd_by->name;
+        }
+//        dd($auth_req_ltr_weapons);
 
         $organization_types = UserType::select( 'id','name')
         ->get();

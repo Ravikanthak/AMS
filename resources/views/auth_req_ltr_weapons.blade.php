@@ -2,6 +2,36 @@
 <html lang="en">
 <head>
   @include('inc/header')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 38px !important;
+        }
+        .weapon-list {
+            height: 35px !important;
+        }
+
+        .select2-container--default .select2-dropdown .select2-search__field:focus, .select2-container--default .select2-search--inline .select2-search__field:focus {
+            outline: none !important;
+            border: none !important;
+            color: #fff;
+
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #007bff;
+            border-color: #006fe6;
+            margin-left: 5px;
+            margin-right: -2px;
+            color: #fff;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+            cursor: default;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -25,6 +55,9 @@
         <div class="row mb-2">
           <div class="col-sm-12">
             <h1>Create Authority Request (Weapon & Ammo/Explosive) </h1>
+              <input type="hidden" value="{{$thisOrg[0]->organization_api_id}}" id="org_api_id">
+              <input type="hidden" value="{{$thisOrg[0]->armory_api_id}}" id="armory_api_id">
+              {{auth()->user()->organization_id}}
           </div>
         </div>
       </div>
@@ -45,15 +78,16 @@
                       <div class="form-group mb-3">
                       <label for="req_made_location" class="form-label">1. Request made by (location)</label>
                         <select name="req_made_location" class="selectpicker form-control" id="req_made_location" data-container="body" data-live-search="true" title="Select the Location" data-hide-disabled="true">
-                            @if (isset($request_made_by))
-                              @foreach($organizations as $org)
-                                <option value="{{$org->id}}" @if($org->id == $request_made_by) selected @endif>{{$org->organization}}</option>
-                              @endforeach
-                            @else 
-                              @foreach($organizations as $org)
-                                <option value="{{$org->id}}">{{$org->organization}}</option>
-                              @endforeach
-                            @endif
+                            {{--@if (isset($request_made_by))--}}
+                              {{--@foreach($organizations as $org)--}}
+                                {{--<option value="{{$org->id}}" @if($org->id == $request_made_by) selected @endif>{{$org->organization}}</option>--}}
+                              {{--@endforeach--}}
+                            {{--@else --}}
+                              {{--@foreach($organizations as $org)--}}
+                                {{--<option value="{{$org->id}}">{{$org->organization}}</option>--}}
+                              {{--@endforeach--}}
+                            {{--@endif--}}
+                            <option selected="selected" value="{{$thisOrg[0]->id}}">{{$thisOrg[0]->organization}}</option>
                         </select>
                     </div>
                   </div>
@@ -61,24 +95,24 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="incharge" class="form-label">2. In charge Offr</label>
-                      <select name="incharge" class="selectpicker form-control" id="incharge" data-container="body" data-live-search="true" title="Select the In charge Offr" data-hide-disabled="true">
-                            @if (isset($incharge))
-                              @foreach($organization_users as $user)
+                      <select name="incharge" class="form-control" id="incharge" data-container="body" data-live-search="true" data-hide-disabled="true">
+                            {{--@if (isset($incharge))--}}
+                              {{--@foreach($organization_users as $user)--}}
 
-                                  @if (substr($user->service_no, 0, 1) === 'O')
-                                    <option value="{{$user->service_no}}" @if($user->service_no == $incharge) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
-                                  @endif          
+                                  {{--@if (substr($user->service_no, 0, 1) === 'O')--}}
+                                    {{--<option value="{{$user->service_no}}" @if($user->service_no == $incharge) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>--}}
+                                  {{--@endif          --}}
 
-                              @endforeach
-                            @else 
-                              @foreach($organization_users as $user)
+                              {{--@endforeach--}}
+                            {{--@else --}}
+                              {{--@foreach($organization_users as $user)--}}
 
-                                  @if (substr($user->service_no, 0, 1) === 'O')
-                                    <option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>
-                                  @endif 
-                                
-                              @endforeach
-                            @endif
+                                  {{--@if (substr($user->service_no, 0, 1) === 'O')--}}
+                                    {{--<option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>--}}
+                                  {{--@endif --}}
+                                {{----}}
+                              {{--@endforeach--}}
+                            {{--@endif--}}
                       </select>
                     </div>
                   </div>
@@ -118,15 +152,16 @@
                       <div class="form-group">
                         <label for="location_from" class="form-label">5. Location to be transported : (From)</label>
                         <select name="location_from" class="selectpicker form-control" id="location_from" data-container="body" data-live-search="true" title="Select the Location" data-hide-disabled="true">
-                            @if (isset($location_from))
-                              @foreach($organizations as $org)
-                                <option value="{{$org->id}}" @if($org->id == $location_from) selected @endif>{{$org->organization}}</option>
-                              @endforeach
-                            @else 
-                              @foreach($organizations as $org)
-                                <option value="{{$org->id}}">{{$org->organization}}</option>
-                              @endforeach
-                            @endif
+                            {{--@if (isset($location_from))--}}
+                              {{--@foreach($organizations as $org)--}}
+                                {{--<option value="{{$org->id}}" @if($org->id == $location_from) selected @endif>{{$org->organization}}</option>--}}
+                              {{--@endforeach--}}
+                            {{--@else --}}
+                              {{--@foreach($organizations as $org)--}}
+                                {{--<option value="{{$org->id}}">{{$org->organization}}</option>--}}
+                              {{--@endforeach--}}
+                            {{--@endif--}}
+                            <option selected="selected" value="{{$thisOrg[0]->id}}">{{$thisOrg[0]->organization}}</option>
                         </select>
                       </div>
                     </div>
@@ -165,8 +200,16 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="wpn_details" class="form-label">Wpn details (wpn nos)</label>
-                      <textarea id="wpn_details" name="wpn_details" class="form-control"  rows="3">@if (isset($wpn_details)){{ $wpn_details }}@endif</textarea>
+                            <select name="wpn_details[]" class="form-control" id="wpn_details" data-container="body"
+                                  multiple="multiple"  data-live-search="true" title="Select the Escort Name" data-hide-disabled="true">
+
+                        </select>
                     </div>
+                      <div class="button-container mt-2 mb-2">
+                          <button type="button" class="btn btn-outline-dark" id="selectAll">Select All</button>
+                          <button type="button" class="btn btn-outline-dark" id="deselectAll">Deselect All
+                          </button>
+                      </div>
                   </div>
 
                   <div class="col-md-12">
@@ -197,49 +240,50 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="driver" class="form-label">9. Driver</label>
-                      <select name="driver" class="selectpicker form-control" id="driver" data-container="body" data-live-search="true" title="Select the Driver Name" data-hide-disabled="true">
-                            @if (isset($driver))
-                              @foreach($organization_users as $user)
+                      <select name="driver[]" multiple="multiple" class="form-control" id="driver" data-container="body" data-live-search="true" title="Select the Driver Name" data-hide-disabled="true">
+                            {{--@if (isset($driver))--}}
+                              {{--@foreach($organization_users as $user)--}}
 
-                                @if (substr($user->service_no, 0, 1) === 'S')
-                                  <option value="{{$user->service_no}}" @if($user->service_no == $driver) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
-                                @endif
+                                {{--@if (substr($user->service_no, 0, 1) === 'S')--}}
+                                  {{--<option value="{{$user->service_no}}" @if($user->service_no == $driver) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>--}}
+                                {{--@endif--}}
 
-                              @endforeach
-                            @else 
-                              @foreach($organization_users as $user)
+                              {{--@endforeach--}}
+                            {{--@else --}}
+                              {{--@foreach($organization_users as $user)--}}
 
-                                @if (substr($user->service_no, 0, 1) === 'S')
-                                  <option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>
-                                @endif
+                                {{--@if (substr($user->service_no, 0, 1) === 'S')--}}
+                                  {{--<option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>--}}
+                                {{--@endif--}}
 
-                              @endforeach
-                            @endif
+                              {{--@endforeach--}}
+                            {{--@endif--}}
                         </select>
                     </div>
                   </div>
 
-                  <div class="col-md-12 ">
+                  <div class="col-md-12">
                     <div class="form-group mb-3">
                       <label for="escort" class="form-label">10. Escort</label>
-                      <select name="escort" class="selectpicker form-control" id="escort" data-container="body" data-live-search="true" title="Select the Escort Name" data-hide-disabled="true">
-                            @if (isset($escort))
-                              @foreach($organization_users as $user)
+                      <select name="escort[]" class="form-control" id="escort" data-container="body"
+                              multiple="multiple" data-live-search="true" title="Select the Escort Name" data-hide-disabled="true">
+                            {{--@if (isset($escort))--}}
+                              {{--@foreach($organization_users as $user)--}}
 
-                                @if (substr($user->service_no, 0, 1) === 'S')
-                                  <option value="{{$user->service_no}}" @if($user->service_no == $escort) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>
-                                @endif
+                                {{--@if (substr($user->service_no, 0, 1) === 'S')--}}
+                                  {{--<option value="{{$user->service_no}}" @if($user->service_no == $escort) selected @endif>{{$user->service_no}} {{$user->full_name}}</option>--}}
+                                {{--@endif--}}
 
-                              @endforeach
-                            @else 
-                              @foreach($organization_users as $user)
+                              {{--@endforeach--}}
+                            {{--@else --}}
+                              {{--@foreach($organization_users as $user)--}}
 
-                                @if (substr($user->service_no, 0, 1) === 'S')
-                                  <option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>
-                                @endif
+                                {{--@if (substr($user->service_no, 0, 1) === 'S')--}}
+                                  {{--<option value="{{$user->service_no}}">{{$user->service_no}} {{$user->full_name}}</option>--}}
+                                {{--@endif--}}
 
-                              @endforeach
-                            @endif
+                              {{--@endforeach--}}
+                            {{--@endif--}}
                         </select>
                     </div>
                   </div>
@@ -248,7 +292,10 @@
                     <div class="col-md-4 m-0 float-left pl-0">
                       <div class="form-group">
                         <label for="escort_weapon_no" class="form-label">11. (i) Escort weapon no</label>
-                        <input id="escort_weapon_no" name="escort_weapon_no" type="text" placeholder="" class="form-control" value="@if (isset($escort_weapon_no)){{ $escort_weapon_no }}@endif">
+                        {{--<input id="" name="escort_weapon_no" type="text" placeholder="" class="form-control" value="@if (isset($escort_weapon_no)){{ $escort_weapon_no }}@endif">--}}
+                          <select name="escort_weapon_no[]" class="form-control" id="escort_weapon_no" data-container="body"
+                                  multiple="multiple" data-live-search="true" title="Select the Escort Name" data-hide-disabled="true">
+                          </select>
                       </div>
                     </div>
                     <div class="col-md-4 m-0 float-left">
@@ -298,24 +345,28 @@
                   <div class="col-md-12 ">
                     <div class="form-group mb-3">
                       <label for="request_forward_by" class="form-label">16. Request Forward by</label>
-                      <select name="request_forward_by" class="selectpicker form-control" id="request_forward_by" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
-                          @if (isset($req_fwd_by))
-                            @foreach($organization_types as $type)
+                      <select name="request_forward_by" class="selectpicker form-control" id="request_forward_by"
+                              data-container="body" title="Select the Org Name" data-hide-disabled="true">
+                          {{--@if (isset($req_fwd_by))--}}
+                            {{--@foreach($organization_types as $type)--}}
 
-                                @if (!in_array($type->id, [1,2,5,8,11,17]))
-                                    <option value="{{$type->id}}" @if($type->id == $req_fwd_by) selected @endif>{{$type->name}}</option>
-                                @endif
-                            
-                            @endforeach
-                          @else 
-                            @foreach($organization_types as $type)
+                                {{--@if (!in_array($type->id, [1,2,5,8,11,17]))--}}
+                                    {{--<option value="{{$type->id}}" @if($type->id == $req_fwd_by) selected @endif>{{$type->name}}</option>--}}
+                                {{--@endif--}}
+                            {{----}}
+                            {{--@endforeach--}}
+                          {{--@else --}}
+                            {{--@foreach($organization_types as $type)--}}
 
-                                @if (!in_array($type->id, [1,2,5,8,11,17]))
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                @endif
+                                {{--@if (!in_array($type->id, [1,2,5,8,11,17]))--}}
+                                    {{--<option value="{{$type->id}}">{{$type->name}}</option>--}}
+                                {{--@endif--}}
 
-                            @endforeach
-                          @endif
+                            {{--@endforeach--}}
+                          {{--@endif--}}
+                          <option selected="selected"
+                                  value="{{$loggedInUSer[0]->userId}}">{{$loggedInUSer[0]->userName}}
+                              - {{ $loggedInUSer[0]->userAppointment}}</option>
                       </select>
                     </div>
                   </div>
@@ -325,23 +376,28 @@
                     <div class="form-group mb-3">
                       <label for="request_forward_to" class="form-label">17. Request Forward to</label>
                       <select name="request_forward_to" class="selectpicker form-control" id="request_forward_to" data-container="body" data-live-search="true" title="Select the Org Name" data-hide-disabled="true">
-                          @if (isset($req_fwd_to))
-                            @foreach($organization_types as $type)
+                          {{--@if (isset($req_fwd_to))--}}
+                            {{--@foreach($organization_types as $type)--}}
 
-                                @if (!in_array($type->id, [1,2,5,8,11,17]))
-                                    <option value="{{$type->id}}" @if($type->id == $req_fwd_to) selected @endif>{{$type->name}}</option>
-                                @endif
-                            
-                            @endforeach
-                          @else 
-                            @foreach($organization_types as $type)
+                                {{--@if (!in_array($type->id, [1,2,5,8,11,17]))--}}
+                                    {{--<option value="{{$type->id}}" @if($type->id == $req_fwd_to) selected @endif>{{$type->name}}</option>--}}
+                                {{--@endif--}}
+                            {{----}}
+                            {{--@endforeach--}}
+                          {{--@else --}}
+                            {{--@foreach($organization_types as $type)--}}
 
-                                @if (!in_array($type->id, [1,2,5,8,11,17]))
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                @endif
+                                {{--@if (!in_array($type->id, [1,2,5,8,11,17]))--}}
+                                    {{--<option value="{{$type->id}}">{{$type->name}}</option>--}}
+                                {{--@endif--}}
 
-                            @endforeach
-                          @endif
+                            {{--@endforeach--}}
+                          {{--@endif--}}
+                          @foreach($orgAppointments as $orgAppointment)
+                              <option
+                                      value="{{$orgAppointment->userId}}">{{$orgAppointment->userName}}
+                                  - {{ $orgAppointment->userAppointment}}</option>
+                          @endforeach
                       </select>
                     </div>
                   </div>            
@@ -380,9 +436,121 @@
 
 @include('inc/footer_assets')
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 
+
 $(document).ready(function() {
+
+
+    //API Data
+
+    $('#selectAll').on('click', function () {
+        selectAll()
+    });
+    $('#deselectAll').on('click', function () {
+        deselectAll()
+    });
+    function selectAll() {
+        $("#wpn_details > option").prop("selected", true);
+        $("#wpn_details").trigger("change");
+    }
+    function deselectAll() {
+        $("#wpn_details > option").prop("selected", false);
+        $("#wpn_details").trigger("change");
+    }
+
+    let estbApiID = $('#org_api_id').val();
+    let armouryId = $('#armory_api_id').val();
+
+    //Officers
+    $.ajax({
+        url: 'https://172.16.60.51/beta/api/get_estab_persons/?id=' + estbApiID + '&type=1',
+        method: 'GET',
+        cache: false,
+        async: false,
+        dataType: 'json',
+        data: {
+            "str-token": "1189d8dde195a36a9c4a721a390a74e6"
+        },
+        success: function (data) {
+
+            var offcrStrengthArray = [];
+            $.each(data, function (id, name) {
+                offcrStrengthArray.push({id: name.e_no, text: name.abb_rank + ' - ' + name.name});
+            });
+            $('#incharge').select2({
+                data: offcrStrengthArray,
+                // placeholder: "Select an Officer",
+            });
+        },
+        error: function (e) {
+            // console.log(e)
+        }
+    });
+    //OR's
+    $.ajax({
+        url: 'https://172.16.60.51/beta/api/get_estab_persons/?id=' + estbApiID + '&type=2',
+        method: 'GET',
+        cache: false,
+        async: false,
+        dataType: 'json',
+        data: {
+            "str-token": "1189d8dde195a36a9c4a721a390a74e6"
+        },
+        success: function (data) {
+            var orStrengthArray = [];
+            $.each(data, function (id, name) {
+                orStrengthArray.push({id: name.e_no, text: name.abb_rank + ' - ' + name.name});
+            });
+            $('#escort').select2({
+                data: orStrengthArray,
+                placeholder: "Select an OR",
+            });
+
+            $('#driver').select2({
+                data: orStrengthArray,
+                placeholder: "Select an OR",
+            });
+        },
+        error: function (e) {
+            // console.log(e)
+        }
+    });
+    //weapons
+    $.ajax({
+        url: 'http://10.7.113.86/wims/api/location_wpn/get_location_wpn.php?id=' + armouryId,
+        method: 'GET',
+        cache: false,
+        dataType: 'json',
+        // data: {
+        //     "str-token": "1189d8dde195a36a9c4a721a390a74e6"
+        // },
+        success: function (data) {
+            var weaponArray = [];
+            // console.log(data)
+            $.each(data.data, function (id, name) {
+                weaponArray.push({
+                    id:  name.current_wpn_number + ' ; ' + name.wpn_name,
+                    text: name.current_wpn_number + ' - ' + name.wpn_name
+                });
+            });
+            $('#wpn_details').select2({
+                data: weaponArray,
+                placeholder: "Select weapons"
+            });
+            $('#escort_weapon_no').select2({
+                data: weaponArray,
+                placeholder: "Select weapons"
+            });
+        },
+        error: function (e) {
+            // console.log(e)
+        }
+    });
+
+
+    //END API DATA
 
     $('.alert-danger').hide()
 

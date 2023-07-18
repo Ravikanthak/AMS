@@ -266,7 +266,7 @@
                                         <select multiple name="escort[]" class="form-control" id="escort"
                                                 data-container="body" data-live-search="true"
                                                 title="Select the Escort Name" data-hide-disabled="true">
-                                                <option value="" selected="selected">Select an option</option>
+                                                <option value="">Select an option</option>
                                             {{--@if (isset($escort))--}}
                                                 {{--@foreach($organization_users as $user)--}}
 
@@ -571,7 +571,7 @@
                 // console.log(data)
                 $.each(data.data, function (id, name) {
                     weaponArray.push({
-                        id: name.current_wpn_number,
+                        id:  name.current_wpn_number + ' ; ' + name.wpn_name,
                         text: name.current_wpn_number + ' - ' + name.wpn_name
                     });
                 });
