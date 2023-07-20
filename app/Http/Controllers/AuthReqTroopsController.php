@@ -152,6 +152,7 @@ class AuthReqTroopsController extends Controller
             ->where('users.id','!=', Auth::user()->id)
             ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
         $thisOrg = OrganizationArmory::where('id', Auth::user()->organization_id)->get();
+        //END AE
 
         $organizationTypes = OrganizationTypes::get();
         //END AE
