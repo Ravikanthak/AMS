@@ -55,7 +55,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1>Create Authority Request (Troops Transportation) </h1>
+                        <h1>Create Authority Request (Troops Transportation)</h1>
                         <input type="hidden" value="{{$thisOrg[0]->organization_api_id}}" id="org_api_id">
                         <input type="hidden" value="{{$thisOrg[0]->armory_api_id}}" id="armory_api_id">
                     </div>
@@ -233,7 +233,8 @@
 
                                 <div class="col-md-12 ">
                                     <div class="form-group mb-3">
-                                        <label for="convoy" class="selectpicker form-label">9. Vehicle/Convoy comd name</label>
+                                        <label for="convoy" class="selectpicker form-label">9. Vehicle/Convoy comd name </label>
+                                        <input type="hidden" id="selected_convoy" value="{{isset($convoy_comd)?$convoy_comd:''}}">
                                         <select name="convoy" class="form-control" id="convoy"
                                                 data-container="body" data-live-search="true"
                                                 title="Select the Vehicle/Convoy Comd Name" data-hide-disabled="true">
@@ -263,10 +264,11 @@
                                 <div class="col-md-12 ">
                                     <div class="form-group mb-3">
                                         <label for="escort" class="form-label">10. Escort name</label>
+                                        <input type="hidden" id="selected_escort" value="{{isset($escort)?$escort:''}}">
                                         <select multiple name="escort[]" class="form-control" id="escort"
                                                 data-container="body" data-live-search="true"
                                                 title="Select the Escort Name" data-hide-disabled="true">
-                                                <option value="" selected="selected">Select an option</option>
+                                                <option value="">Select an option</option>
                                             {{--@if (isset($escort))--}}
                                                 {{--@foreach($organization_users as $user)--}}
 
@@ -294,6 +296,7 @@
                                         <div class="form-group">
                                             <label for="escort_weapon_no" class="form-label">11. (i) Escort weapon
                                                 no</label>
+                                            <input type="hidden" id="selected_weapon" value="{{isset($escort_weapon_no)?$escort_weapon_no:''}}">
                                             {{--<input id="escort_weapon_no" name="escort_weapon_no" type="text"--}}
                                                    {{--placeholder="" class="form-control"--}}
                                                    {{--value="@if (isset($escort_weapon_no)){{ $escort_weapon_no }}@endif">--}}
@@ -326,6 +329,8 @@
                                 <div class="col-md-12 ">
                                     <div class="form-group mb-3">
                                         <label for="driver" class="form-label">12. Driver name</label>
+                                        <input type="hidden" id="selected_driver" value="{{isset($driver)?$driver:''}}">
+
                                         <select multiple name="driver[]" class="form-control" id="driver"
                                                 data-container="body" data-live-search="true"
                                                 title="Select the Driver Name" data-hide-disabled="true">
@@ -449,9 +454,27 @@
                                             {{--@endif--}}
 
                                             @foreach($orgAppointments as $orgAppointment)
-                                                <option
+                                                <option selected="{{isset($req_fwd_to)? ($req_fwd_to==$orgAppointment->userId)?'selected':'':''}}"
                                                         value="{{$orgAppointment->userId}}">{{$orgAppointment->userName}}
                                                     - {{ $orgAppointment->userAppointment}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                {{--FOR ADMIN AND CLERK ONLY--}}
+
+                                <div class="col-md-12 ">
+                                    <div class="form-group mb-3">
+                                        <label for="request_forward_to" class="form-label">17. Request to Another Organization</label>
+                                        <select name="request_forward_to" class="selectpicker form-control"
+                                                id="request_forward_to" data-container="body" data-live-search="true"
+                                                title="Select the Org Name" data-hide-disabled="true">
+
+                                            @foreach($organizationTypes as $organizationType)
+                                                <option selected=""
+                                                        value="{{$organizationType->userId}}">{{$organizationType->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -523,6 +546,10 @@
                     data: offcrStrengthArray,
                     placeholder: "Select an Officer",
                 });
+
+                $selected_convoy = $('#selected_convoy').val();
+                $('#convoy').val($selected_convoy).trigger('change');
+
             },
             error: function (e) {
                 // console.log(e)
@@ -552,6 +579,13 @@
                     data: orStrengthArray,
                     placeholder: "Select an OR",
                 });
+
+
+                $selected_escort = JSON.parse($('#selected_escort').val());
+                $('#escort').val($selected_escort).trigger('change');
+
+                $selected_driver = JSON.parse($('#selected_driver').val());
+                $('#driver').val($selected_driver).trigger('change');
             },
             error: function (e) {
                 // console.log(e)
@@ -571,13 +605,16 @@
                 // console.log(data)
                 $.each(data.data, function (id, name) {
                     weaponArray.push({
-                        id: name.current_wpn_number,
+                        id:  name.current_wpn_number + ' ; ' + name.wpn_name,
                         text: name.current_wpn_number + ' - ' + name.wpn_name
                     });
                 });
                 $('#escort_weapon_no').select2({
                     data: weaponArray
                 });
+
+                $selected_weapon = JSON.parse($('#selected_weapon').val());
+                $('#escort_weapon_no').val($selected_weapon).trigger('change');
             },
             error: function (e) {
                 // console.log(e)

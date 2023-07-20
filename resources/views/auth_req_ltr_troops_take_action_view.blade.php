@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>Approve/Decline Authority Requests (Troops Transportation)44</h1>
+            <h1>Approve/Decline Authority Requests (Troops Transportation)</h1>
           </div>
         </div>
       </div>
@@ -56,43 +56,45 @@
                       <td>{{$req_ltr->auth_req_ltr_troops_id}}</td>
                       <td>{{$req_ltr->created_at}}</td>
                       <td>
-                        @if($req_ltr->req_fwd_by == 3)Establishment Head
-                        @elseif($req_ltr->req_fwd_by == 4)Establishment Subject Clerk
-                        @elseif($req_ltr->req_fwd_by == 6)Bde Comd
-                        @elseif($req_ltr->req_fwd_by == 7)BM
-                        @elseif($req_ltr->req_fwd_by == 9)Div Comd
-                        @elseif($req_ltr->req_fwd_by == 10)Div Col GS
-                        @elseif($req_ltr->req_fwd_by == 12)SFHQ BGS
-                        @elseif($req_ltr->req_fwd_by == 13)SFHQ Col GS
-                        @elseif($req_ltr->req_fwd_by == 14)SFHQ GSO I
-                        @elseif($req_ltr->req_fwd_by == 15)SFHQ GSO II
-                        @elseif($req_ltr->req_fwd_by == 16)SFHQ Subject Clerk
-                        @elseif($req_ltr->req_fwd_by == 18)D-Ops Director
-                        @elseif($req_ltr->req_fwd_by == 19)D-Ops SO (Special Ops)
-                        @elseif($req_ltr->req_fwd_by == 20)D-Ops SO (Coordination Ops)
-                        @elseif($req_ltr->req_fwd_by == 21)D-Ops Subject Clerk (Special Ops)
-                        @elseif($req_ltr->req_fwd_by == 22)D-Ops Subject Clerk (Coordination Ops)
-                        @endif
+                        {{$req_ltr->req_fwd_by}}
+                        {{--@if($req_ltr->req_fwd_by == 3)Establishment Head--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 4)Establishment Subject Clerk--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 6)Bde Comd--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 7)BM--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 9)Div Comd--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 10)Div Col GS--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 12)SFHQ BGS--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 13)SFHQ Col GS--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 14)SFHQ GSO I--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 15)SFHQ GSO II--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 16)SFHQ Subject Clerk--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 18)D-Ops Director--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 19)D-Ops SO (Special Ops)--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 20)D-Ops SO (Coordination Ops)--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 21)D-Ops Subject Clerk (Special Ops)--}}
+                        {{--@elseif($req_ltr->req_fwd_by == 22)D-Ops Subject Clerk (Coordination Ops)--}}
+                        {{--@endif--}}
                       </td>
                       <td>{{$req_ltr->req_fwd_by_status}}</td>
                       <td>
-                        @if($req_ltr->req_fwd_to == 3)Establishment Head
-                        @elseif($req_ltr->req_fwd_to == 4)Establishment Subject Clerk
-                        @elseif($req_ltr->req_fwd_to == 6)Bde Comd
-                        @elseif($req_ltr->req_fwd_to == 7)BM
-                        @elseif($req_ltr->req_fwd_to == 9)Div Comd
-                        @elseif($req_ltr->req_fwd_to == 10)Div Col GS
-                        @elseif($req_ltr->req_fwd_to == 12)SFHQ BGS
-                        @elseif($req_ltr->req_fwd_to == 13)SFHQ Col GS
-                        @elseif($req_ltr->req_fwd_to == 14)SFHQ GSO I
-                        @elseif($req_ltr->req_fwd_to == 15)SFHQ GSO II
-                        @elseif($req_ltr->req_fwd_to == 16)SFHQ Subject Clerk
-                        @elseif($req_ltr->req_fwd_to == 18)D-Ops Director
-                        @elseif($req_ltr->req_fwd_to == 19)D-Ops SO (Special Ops)
-                        @elseif($req_ltr->req_fwd_to == 20)D-Ops SO (Coordination Ops)
-                        @elseif($req_ltr->req_fwd_to == 21)D-Ops Subject Clerk (Special Ops)
-                        @elseif($req_ltr->req_fwd_to == 22)D-Ops Subject Clerk (Coordination Ops)
-                        @endif
+                        {{$req_ltr->req_fwd_to}}
+                        {{--@if($req_ltr->req_fwd_to == 3)Establishment Head--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 4)Establishment Subject Clerk--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 6)Bde Comd--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 7)BM--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 9)Div Comd--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 10)Div Col GS--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 12)SFHQ BGS--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 13)SFHQ Col GS--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 14)SFHQ GSO I--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 15)SFHQ GSO II--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 16)SFHQ Subject Clerk--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 18)D-Ops Director--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 19)D-Ops SO (Special Ops)--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 20)D-Ops SO (Coordination Ops)--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 21)D-Ops Subject Clerk (Special Ops)--}}
+                        {{--@elseif($req_ltr->req_fwd_to == 22)D-Ops Subject Clerk (Coordination Ops)--}}
+                        {{--@endif--}}
                       </td>
                       <td>{{$req_ltr->req_fwd_to_status}}</td>
                       <td class="action_td">

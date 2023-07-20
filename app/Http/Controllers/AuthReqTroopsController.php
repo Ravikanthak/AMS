@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuthReqLtrTroops;
 use App\Models\AuthReqLtrTroopsFwd;
 use App\Models\OrganizationArmory;
+use App\Models\OrganizationTypes;
 use App\Models\User;
 use App\Models\UserType;
 use App\Models\VehicleType;
@@ -17,11 +18,59 @@ use Carbon\Carbon;
 class AuthReqTroopsController extends Controller
 {
 
+
+    //AE
+
+    public function searchPerson($id)
+    {
+        $url = 'https://str.army.lk/api/get_person/?str-token=1189d8dde195a36a9c4a721a390a74e6&service_no=o/11666';
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+    }
+
+    public function searchWeapon($id)
+    {
+        $url = 'https://str.army.lk/api/get_person/?str-token=1189d8dde195a36a9c4a721a390a74e6&service_no=o/11666';
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+    }
+
+    //END AE
+
     //// CREATE AUTH REQ LTR TROOPS ////
 
     // Auth Req Ltr Troops - Page
     public function auth_req_ltr_troops($id = null){
-        
+
+
         $organizations = DB::table('organization_armories')
         ->select( 'id','organization')
         ->get();
@@ -93,6 +142,7 @@ class AuthReqTroopsController extends Controller
             
         }
 
+        //AE
         $loggedInUSer = User::join('user_types','user_types.id','=','users.user_type')
             ->where('users.id', Auth::user()->id)
             ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
@@ -101,14 +151,17 @@ class AuthReqTroopsController extends Controller
             ->where('users.organization_id', Auth::user()->organization_id)
             ->where('users.id','!=', Auth::user()->id)
             ->get(['users.id as userId','user_types.name as userAppointment','users.name as userName']);
-
         $thisOrg = OrganizationArmory::where('id', Auth::user()->organization_id)->get();
+
+        $organizationTypes = OrganizationTypes::get();
+        //END AE
 
         return view('auth_req_ltr_troops' , compact('organizations','organization_users','vehicle_types',
             'organization_types' , 'id','request_made_by_id','reason','no_of_troops' ,'transport_date','location_from',
             'location_to','auth_given_by','route','vehicle_type_name','no_of_seat','convoy_comd','escort',
             'escort_weapon_no','no_of_magazins','no_of_ammo','driver','measures','ref_of_ltr','attachment',
-            'req_fwd_by','req_fwd_to','loggedInUSer','orgAppointments','thisOrg'));
+            'req_fwd_by','req_fwd_to','loggedInUSer','orgAppointments','thisOrg',
+            'organizationTypes'));
     }
 
 
@@ -116,7 +169,6 @@ class AuthReqTroopsController extends Controller
 
     // Submit Button // Save Data
     public function auth_req_ltr_troops_form_func(Request $req){
-
 
         $validator = Validator::make($req->all(), [
             'req_made_location' => 'required|min:1|max:50',
@@ -250,7 +302,7 @@ class AuthReqTroopsController extends Controller
 
         // get auth_req_ltr_troops table details and alter its details
         $auth_req_ltr_troops = AuthReqLtrTroops::select('*')
-        ->where('req_fwd_by' , Auth()->user()->user_type)
+        ->where('req_fwd_by' , Auth()->user()->id)
         ->where('organization_id' , Auth()->user()->organization_id)
         ->get();
 
@@ -401,6 +453,19 @@ class AuthReqTroopsController extends Controller
         ->where('req_fwd_to' , Auth()->user()->id)
         // ->where('organization_id' , Auth()->user()->organization_id)
         ->get();
+
+        foreach ($auth_req_ltr_troops as $auth_req_ltr_troop)
+        {
+
+            $req_fwd_by = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $auth_req_ltr_troop->req_fwd_by)->first('user_types.name');
+
+            $req_fwd_to = User::join('user_types','user_types.id','=','users.user_type')
+                ->where('users.id', $auth_req_ltr_troop->req_fwd_to)->first('user_types.name');
+
+            $auth_req_ltr_troop->req_fwd_to = $req_fwd_to->name;
+            $auth_req_ltr_troop->req_fwd_by = $req_fwd_by->name;
+        }
 
         $organization_types = UserType::select( 'id','name')
         ->get();

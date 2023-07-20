@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>View Authority Requests (Weapon Transportation)</h1>
+            <h1>View Authority Requests (Weapon Transportation)5</h1>
           </div>
         </div>
       </div>
